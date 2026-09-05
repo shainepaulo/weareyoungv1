@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# raw source clips at the repo root — the web copies live in public/videos/
+/*.mp4
+
 # debug
 npm-debug.log*
 yarn-debug.log*

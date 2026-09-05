@@ -1,26 +1,180 @@
 @import "tailwindcss";
 
+/* Fluid rem system mirrored from waytv.paris: 1rem tracks the viewport width, so
+   every `Nrem` size below is a direct port of the studio's own spec values. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  font-size: 0.2666666667vw;
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (min-width: 480px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    font-size: 0.2083333333vw;
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    font-size: 0.1302083333vw;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    font-size: 0.078125vw;
+  }
+}
+@media (min-width: 1280px) {
+  :root {
+    font-size: 0.0694444444vw;
+  }
+}
+@media (min-width: 1920px) {
+  :root {
+    font-size: 0.0595238095vw;
   }
 }
 
+@theme inline {
+  --color-ink: #0b0b0b;
+  --color-red: #be0808;
+  --color-bone: #eae9e6;
+  --font-display: var(--font-gt-america);
+}
+
+html {
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #0b0b0b;
+  color: #be0808;
+  font-family: var(--font-gt-america), sans-serif;
+  font-size: 14rem;
+  line-height: 1.2;
+  letter-spacing: -0.12rem;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 1024px) {
+  body {
+    font-size: 11rem;
+  }
+}
+
+/* Display type scale. The 1024px step restores the studio's exact desktop spec;
+   the smaller steps keep each line inside the viewport. */
+.type-hero {
+  font-size: 76rem;
+  line-height: 0.85;
+  letter-spacing: -4rem;
+}
+.type-case {
+  font-size: 62rem;
+  line-height: 0.9;
+  letter-spacing: -3rem;
+}
+.type-pulse {
+  font-size: 27rem;
+  line-height: 1;
+  letter-spacing: -1.5rem;
+}
+.type-manifesto {
+  font-size: 26rem;
+  line-height: 1.05;
+  letter-spacing: -1rem;
+}
+.type-marquee {
+  font-size: 24rem;
+  letter-spacing: -1rem;
+}
+
+:root {
+  --pulse-dot: 20rem;
+}
+
+@media (min-width: 768px) {
+  .type-hero {
+    font-size: 108rem;
+    letter-spacing: -8rem;
+  }
+  .type-case {
+    font-size: 104rem;
+    letter-spacing: -6rem;
+  }
+  .type-pulse {
+    font-size: 52rem;
+    letter-spacing: -3rem;
+  }
+  .type-manifesto {
+    font-size: 40rem;
+    letter-spacing: -2rem;
+  }
+  .type-marquee {
+    font-size: 34rem;
+    letter-spacing: -2rem;
+  }
+  :root {
+    --pulse-dot: 32rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .type-hero {
+    font-size: 180rem;
+    line-height: 0.8;
+    letter-spacing: -18rem;
+  }
+  .type-case {
+    font-size: 200rem;
+    line-height: 0.8;
+    letter-spacing: -16rem;
+  }
+  .type-pulse {
+    font-size: 88rem;
+    line-height: 0.95;
+    letter-spacing: -5rem;
+  }
+  .type-manifesto {
+    font-size: 64rem;
+    line-height: 1;
+    letter-spacing: -4rem;
+  }
+  .type-marquee {
+    font-size: 48rem;
+    letter-spacing: -3rem;
+  }
+  :root {
+    --pulse-dot: 52rem;
+  }
+}
+
+/* Mask sizes ported from the studio's own loader spec. */
+.title-mask {
+  --mask-size: 80%;
+}
+@media (min-width: 1024px) {
+  .title-mask {
+    --mask-size: 60%;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 38s linear infinite;
 }
