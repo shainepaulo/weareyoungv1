@@ -79,7 +79,7 @@
 
 .wayto--hero .wayto__word {
   /* Bumped: at 2.9vw the ending was losing against the still beside it. */
-  font-size: clamp(1.7rem, 4vw, 4.4rem);
+  font-size: clamp(1.6rem, 3.6vw, 4rem);
   color: var(--fg);
 }
 

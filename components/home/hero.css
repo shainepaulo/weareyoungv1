@@ -163,6 +163,13 @@
   gap: 20px;
 }
 
+/* No shrinking: if the cell is ever shorter than the claim, the slot must
+   overflow (downward, per flex-start) rather than be squeezed and clip its
+   own longest ending. */
+.ghero__cell--claim > * {
+  flex: none;
+}
+
 .ghero__scroll {
   display: inline-flex;
   align-items: center;
@@ -182,15 +189,23 @@
 
   .ghero__grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    grid-template-rows: repeat(6, minmax(0, 1fr));
-    /* Six rows so the two notes get their own band without stealing height
-       from the stills. Every named area has to stay a rectangle or the browser
-       drops the whole declaration. */
+    /* Eight equal rows rather than four, so the claim gets three of them.
+       Its box is sized by the longest ending — "BRING PEOPLE TOGETHER" runs to
+       three lines in a column this narrow — and two rows left it a few pixels
+       short, which it spilled upward over the note above.
+
+       The rows have to stay `fr`, not `auto`: the square still spans this band
+       and its 1:1 would ask for a height equal to the column width, which
+       collapses the whole top band to nothing. */
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    /* Every named area has to stay a rectangle or the browser drops the lot. */
     grid-template-areas:
       "ca ma ma pp hw hw"
       "ca ma ma pp hw hw"
       "ca ma ma pp hw hw"
       "ca wd wd mb mb wq"
+      "ca wd wd mb mb wq"
+      "ca wt wt mb mb wq"
       "ca wt wt mb mb wq"
       "ca wt wt mb mb wq";
   }
@@ -210,6 +225,10 @@
   }
 
   .ghero__cell--claim {
+    /* Top aligned on purpose: if the longest ending ever outgrows the cell,
+       the spill goes down into the hero's own padding instead of up over
+       the note. */
+    justify-content: flex-start;
     padding-right: clamp(16px, 3vw, 48px);
   }
 
