@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState, type CSSProperties } from "react";
 import { WayTo } from "@/components/about/WayTo";
 import { useIntroDone } from "@/components/motion/useIntroDone";
-import type { Project } from "@/lib/projects";
+import { SITE, type Project } from "@/lib/projects";
 import "./hero.css";
 
 const DWELL = 4600;
@@ -40,6 +40,8 @@ function TextColumn({
           <div className="ghero__run" key={copy}>
             {pattern.map((on, i) => (
               <span className="ghero__line" key={i}>
+                {/* Non-breaking: a lone space collapses away and the blank line
+                    loses its line box, which flattens the whole rhythm. */}
                 {on ? word : " "}
               </span>
             ))}
@@ -50,19 +52,29 @@ function TextColumn({
   );
 }
 
-/** Eleven marks down the left edge, spaced — the count the sketch calls for. */
-const CREATIVE = [1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1];
-/** Far fewer on the right, in Skin and Bones' sparse rhythm. */
-const PARTNER = [0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0];
+/**
+ * Alternating runs of marks and blank lines: rhythm(3, 4, 1) is three marks,
+ * four empty lines, one mark. The comp's rhythm is tight clusters with a lot
+ * of air between them, so each pattern is cut to roughly its column's height.
+ */
+const rhythm = (...runs: number[]) =>
+  runs.flatMap((n, i) => Array.from({ length: n }, () => (i % 2 === 0 ? 1 : 0)));
+
+const CREATIVE = rhythm(3, 4, 1, 6, 2, 8, 1, 13);
+const PARTNER = rhythm(3, 4, 1, 6, 2, 3);
+const WHAT = rhythm(1, 3, 2, 4, 1, 8);
 
 /**
- * The home, as a grid that breathes.
+ * The landing, laid out to the design comp.
  *
- * Top band: a still on the left, the partner credits drifting on the right.
- * Bottom band inverts it — the rotating claim on the left, a wider still
- * pushed to the right edge. The two stills are the five featured projects,
- * one leading and one a step behind, so the diagonal is never static and
- * both tiles always lead somewhere.
+ * Top band: a still, the partner credits pulled in tight against it, and the
+ * agency's answer to "how are we" out at the right edge. Bottom band: what we
+ * do and the rotating claim on the left, a square still, and the same words
+ * drifting past it. Most of the grid is deliberately empty — the space is what
+ * the comp is actually about.
+ *
+ * The two stills carry the five featured projects, one leading and one a step
+ * behind, so the diagonal is never static and both tiles lead somewhere.
  */
 export function GridHero({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState(0);
@@ -80,10 +92,10 @@ export function GridHero({ projects }: { projects: Project[] }) {
   const lead = projects[active];
   const echo = projects[(active + 1) % projects.length];
 
-  const still = (project: Project, index: number, area: string, priority: boolean) => (
+  const still = (project: Project, index: number, area: string, variant: string, priority: boolean) => (
     <Link
       href={`/projects/${project.slug}`}
-      className="ghero__cell ghero__cell--media"
+      className={`ghero__cell ghero__cell--media ghero__cell--${variant}`}
       style={{ gridArea: area }}
       data-cursor="Open"
       onMouseEnter={() => setHeld(true)}
@@ -114,18 +126,32 @@ export function GridHero({ projects }: { projects: Project[] }) {
       <h1 className="sr-only">Creative agency for brands who dare to go their own WAY</h1>
 
       <div className="ghero__grid">
-        <TextColumn word="Creative agency" area="ca" pattern={CREATIVE} seconds={38} />
-        {still(lead, active, "ma", true)}
+        <TextColumn word="Creative agency" area="ca" pattern={CREATIVE} seconds={40} />
+
+        {still(lead, active, "ma", "wide", true)}
+
         <TextColumn word="Production partner" area="pp" pattern={PARTNER} reverse seconds={46} />
+
+        <div className="ghero__cell ghero__note" style={{ gridArea: "hw" }}>
+          <h2 className="mono-xs">How are we</h2>
+          <p className="mono-s muted">{SITE.how}</p>
+        </div>
+
+        <div className="ghero__cell ghero__note" style={{ gridArea: "wd" }}>
+          <h2 className="mono-xs">What we do</h2>
+          <p className="mono-s muted">{SITE.what}</p>
+        </div>
 
         <div className="ghero__cell ghero__cell--claim" style={{ gridArea: "wt" }}>
           <WayTo variant="hero" />
-          <a href="#work" className="ghero__scroll mono-xs">
+          <Link href="/roster#work" className="ghero__scroll mono-xs">
             All work <span className="dot dot--live" />
-          </a>
+          </Link>
         </div>
 
-        {still(echo, (active + 1) % projects.length, "mb", false)}
+        {still(echo, (active + 1) % projects.length, "mb", "square", false)}
+
+        <TextColumn word="What we do" area="wq" pattern={WHAT} seconds={34} />
       </div>
     </section>
   );

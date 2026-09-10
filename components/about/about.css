@@ -71,14 +71,15 @@
 
 .wayto--hero .wayto__lead {
   font-family: var(--font-mono);
-  font-size: var(--m-xs);
+  font-size: var(--m-s);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
 .wayto--hero .wayto__word {
-  font-size: clamp(1.3rem, 2.9vw, 3.1rem);
+  /* Bumped: at 2.9vw the ending was losing against the still beside it. */
+  font-size: clamp(1.7rem, 4vw, 4.4rem);
   color: var(--fg);
 }
 

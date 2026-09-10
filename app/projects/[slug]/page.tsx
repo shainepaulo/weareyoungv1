@@ -128,7 +128,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <span className="display d3">{prev.name}</span>
           </Link>
         )}
-        <Link href="/#work" className="case__nav-all mono-xs">
+        <Link href="/roster#work" className="case__nav-all mono-xs">
           All projects <span className="blink">_</span>
         </Link>
         {next && (

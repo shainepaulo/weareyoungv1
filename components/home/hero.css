@@ -1,6 +1,8 @@
 /* ==========================================================================
-   Grid hero — a still and the partner credits above, the rotating claim and a
-   wider still below. Space is the point: most of the grid is deliberately empty.
+   Landing hero, laid out to the design comp.
+
+   Top band   still · partner credits · how are we
+   Bottom band  what we do + the rotating claim · square still · what we do
    ========================================================================== */
 
 .ghero {
@@ -15,15 +17,17 @@
 .ghero__grid {
   flex: 1;
   display: grid;
-  gap: clamp(12px, 1.4vw, 26px);
-  /* Mobile: the two stills with the claim between them; the drifting columns
-     are texture and would only get in the way stacked. */
+  gap: clamp(14px, 1.4vw, 26px);
+  /* Mobile: one column, every block in reading order. The drifting columns are
+     texture, not content, and are the only thing that drops. */
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 38vh auto 34vh;
+  grid-template-rows: auto;
   grid-template-areas:
     "ma"
+    "wd"
     "wt"
-    "mb";
+    "mb"
+    "hw";
 }
 
 .ghero__cell {
@@ -61,8 +65,8 @@
   font-size: var(--m-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  /* Generous leading: the air between the marks is what makes it texture. */
-  line-height: 3.4;
+  /* Tight inside a cluster; the pattern's empty lines make the gaps between. */
+  line-height: 1.9;
   white-space: nowrap;
   color: var(--muted);
 }
@@ -77,6 +81,18 @@
   overflow: hidden;
   background: #111;
   display: block;
+}
+
+.ghero__cell--wide {
+  aspect-ratio: 16 / 10;
+}
+
+/* Square, and held to the left of its area so the space it frees is on the
+   right — where the drifting words go. */
+.ghero__cell--square {
+  aspect-ratio: 1;
+  justify-self: start;
+  width: 100%;
 }
 
 .ghero__frame {
@@ -121,6 +137,24 @@
   transform: none;
 }
 
+/* --- The two notes ------------------------------------------------------- */
+.ghero__note {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.ghero__note h2 {
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.ghero__note p {
+  max-width: 34ch;
+  line-height: 1.6;
+}
+
 /* --- The rotating claim -------------------------------------------------- */
 .ghero__cell--claim {
   display: flex;
@@ -141,30 +175,46 @@
 /* --- Desktop ------------------------------------------------------------- */
 @media (min-width: 900px) {
   /* A firm height, not just a floor: with `min-height` alone the section sizes
-     to its content and the 1fr rows resolve against that instead of the screen. */
+     to its content and the fr rows resolve against that instead of the screen. */
   .ghero {
     height: 100svh;
   }
 
   .ghero__grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    grid-template-rows: repeat(4, minmax(0, 1fr));
-    /* Column 4 is left empty on the top band on purpose — it is the gap that
-       separates the still from the credits and lets the screen breathe.
-       Every named area has to stay a rectangle or the browser drops the lot. */
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    /* Six rows so the two notes get their own band without stealing height
+       from the stills. Every named area has to stay a rectangle or the browser
+       drops the whole declaration. */
     grid-template-areas:
-      "ca ma ma .  pp pp"
-      "ca ma ma .  pp pp"
-      "ca wt wt mb mb mb"
-      "ca wt wt mb mb mb";
+      "ca ma ma pp hw hw"
+      "ca ma ma pp hw hw"
+      "ca ma ma pp hw hw"
+      "ca wd wd mb mb wq"
+      "ca wt wt mb mb wq"
+      "ca wt wt mb mb wq";
   }
 
   .ghero__cell--text {
     display: block;
   }
 
+  /* Both stills fill their area on desktop; the square is squared by height. */
+  .ghero__cell--wide {
+    aspect-ratio: auto;
+  }
+
+  .ghero__cell--square {
+    height: 100%;
+    width: auto;
+  }
+
   .ghero__cell--claim {
     padding-right: clamp(16px, 3vw, 48px);
+  }
+
+  .ghero__note {
+    align-content: center;
   }
 }
 

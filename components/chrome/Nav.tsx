@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Pulse } from "@/components/brand/Pulse";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { SITE, STATS } from "@/lib/projects";
 
@@ -66,6 +67,11 @@ export function Nav() {
               <span className="blink" aria-hidden="true">_</span>
             </Link>
           ))}
+
+          {/* Parked: the mark is in place, the destination is not decided yet. */}
+          <button type="button" className="nav__pulse" aria-label="Pulse — coming soon" disabled>
+            <Pulse />
+          </button>
         </nav>
 
         <button

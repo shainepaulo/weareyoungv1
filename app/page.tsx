@@ -1,19 +1,6 @@
 import { GridHero } from "@/components/home/GridHero";
-import { ProjectExplorer, type Card } from "@/components/home/ProjectExplorer";
 import { PulseBand } from "@/components/motion/PulseBand";
-import { FEATURED_PROJECTS, PROJECT_LIST, YEAR_RANGE } from "@/lib/projects";
-
-/** Only what the grid paints; the case copy stays on the server. */
-const CARDS: Card[] = PROJECT_LIST.map((p) => ({
-  slug: p.slug,
-  index: p.index,
-  title: p.title,
-  client: p.client,
-  year: p.year,
-  cover: p.cover,
-  types: p.types,
-  tags: p.tags,
-}));
+import { FEATURED_PROJECTS } from "@/lib/projects";
 
 export default function HomePage() {
   return (
@@ -21,7 +8,8 @@ export default function HomePage() {
       <GridHero projects={FEATURED_PROJECTS} />
 
       {/* The claim, given the full Kalkbrenner treatment: white on black, a dot
-          in front of every fragment, and the mark itself closing the sentence. */}
+          in front of every fragment, and the mark itself closing the sentence.
+          The work itself now lives on /roster. */}
       <PulseBand
         tone="dark"
         perRow={2}
@@ -29,8 +17,6 @@ export default function HomePage() {
         logoTail
         words={["Creative", "agency", "for brands", "who dare", "to go their", "own"]}
       />
-
-      <ProjectExplorer cards={CARDS} years={YEAR_RANGE} />
     </>
   );
 }

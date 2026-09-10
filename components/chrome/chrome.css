@@ -533,3 +533,22 @@ html.has-cursor * {
     opacity: 0;
   }
 }
+
+/* The pulse mark, parked beside Contact until it has somewhere to go. */
+.nav__pulse {
+  display: none;
+  align-items: center;
+  color: inherit;
+  /* Disabled, but it must not read as unavailable — it is simply not wired yet. */
+  opacity: 1;
+  cursor: default;
+}
+
+.nav__pulse svg {
+  width: 30px;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .nav__pulse { display: inline-flex; }
+}

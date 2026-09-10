@@ -61,7 +61,7 @@ export default function AboutPage() {
             const sample = sampleOf(type);
             return (
               <Reveal as="li" kind="up" delay={i * 60} key={type} className="service">
-                <Link href="/#work" className="service__row">
+                <Link href="/roster#work" className="service__row">
                   <span className="mono-xs accent">{String(i + 1).padStart(2, "0")}</span>
                   <span className="display d2 service__name">{type}</span>
                   <span className="mono-xs muted service__count">{String(countOf(type)).padStart(2, "0")} projects</span>
