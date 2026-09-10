@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WAY — projects page, local clone + video intro
 
-## Getting Started
-
-First, run the development server:
+A local Next.js rebuild of [weareyoung-agency.com/projects/](https://www.weareyoung-agency.com/projects/),
+served as the index route, with one addition: a full-screen video preloader that
+plays the studio's clips inside the WAY logo.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # http://localhost:3000
+npm run build   # static prerender, webpack
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What is a clone and what is not
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The page is a faithful rebuild, not an interpretation. Every box, font size and
+scroll height was measured against production at 1280×800 and matches exactly,
+including the 6448px document height.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/vendor/` — the production stylesheets, copied verbatim. Asset URLs are
+  rewritten to `/way/*`; the only other change is a stray comment terminator in
+  `way-theme.css` that browsers drop as an error token but Lightning CSS
+  rejects. Do not hand-edit these.
+- `components/way/` — the production DOM, rebuilt in React. The class names are
+  the contract the vendored CSS addresses, so they are reproduced literally
+  (`.scrollTool`, `.mixitup-control-active`, `.slick-track`, `nvisible1`…).
+  The jQuery plugins behind them — mixitup, slick, viewportChecker,
+  s4preload, the custom cursor — are reimplemented rather than loaded.
+- `lib/way-data.ts` — the 5 featured slides, the filter tree and all 61
+  projects, extracted from the production HTML.
+- `app/globals.css` — the only hand-written stylesheet. Holds the preloader and
+  a handful of rules the original got from a runtime side effect (the arrow SVG
+  is inlined here instead of being fetched and injected by `main.js`).
 
-## Learn More
+Deliberate deviations, all invisible on screen:
 
-To learn more about Next.js, take a look at the following resources:
+- **Images** are local WebP at 1800px instead of the originals' PNG/JPEG:
+  143 MB → 8.9 MB across 131 files.
+- **Covers load lazily.** Production writes all 61 into the initial markup; here
+  each waits until its tile is within 600px of the viewport (6 loaded at the top
+  of the page instead of 61). The theme's own scroll reveal keeps its own,
+  tighter threshold so the fade still fires exactly where the original's does.
+- **Filtering unmounts** hidden tiles; mixitup keeps them at `display:none`.
+- **Project links** still point at the live site — only `/projects/` was in
+  scope, so the 61 detail pages do not exist locally.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## The preloader
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`components/way/Preloader.tsx` + the `.preloader` rules in `app/globals.css`.
+The only element on the page that is not in the original.
 
-## Deploy on Vercel
+`public/way-logo-mask.png` is an alpha mask generated from `WAY LOGO B&W.jpg`
+(trimmed, contrast-boosted, luminance moved into the alpha channel), used as a
+`mask-image` so only the letterforms are ever painted. Two clips from
+`public/videos/` play behind it.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Timeline, all in `Preloader.tsx`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| t | |
+|---|---|
+| 0ms | hard cut in, TV glitch — chroma split, scanlines, one tracking bar |
+| 0–2900ms | continuous slow zoom, `scale(1.02 → 1.16)` |
+| 1350ms | hand off from the first clip to the second |
+| 2400ms | fade out begins (380ms) |
+| 2780ms | removed from the DOM |
+
+The clock never waits on the videos: if the second clip has not buffered, the
+first one simply keeps playing. Scroll is locked while it is up, and it is
+unmounted rather than hidden, so nothing is left to intercept a click. Click or
+press any key to skip. Honours `prefers-reduced-motion` (zoom only, no glitch).
+
+## Regenerating from production
+
+If the source page changes, re-scrape it and rebuild `lib/way-data.ts`. The
+generator flattens `wp-content/uploads/<path>` to `/way/uploads/<path>.webp`;
+watch for basename collisions across extensions (`on.jpg` and `on.png` already
+collide and are disambiguated by hand).
+
+## Previous build
+
+The earlier immersive WAY.TV site is still on disk — `components/Hero.tsx`,
+`SlidwaayBlock`, `PulseGrid`, `InfiniteMarquee`, `ManifestoFooter`, `Loader`,
+`hooks/`, `lib/media.ts`, `lib/brands.ts`, `public/content/` — but nothing
+imports it any more. Delete it, or move it behind its own route.

@@ -1,180 +1,352 @@
-@import "tailwindcss";
+/* ==========================================================================
+   Local additions on top of the vendored WAY theme.
+   Everything above this file is a verbatim copy of production; everything here
+   is either (a) a rule the production site got for free from a runtime side
+   effect we reproduce statically, or (b) the video preloader, which is the one
+   deliberate addition to the clone.
+   ========================================================================== */
 
-/* Fluid rem system mirrored from waytv.paris: 1rem tracks the viewport width, so
-   every `Nrem` size below is a direct port of the studio's own spec values. */
-:root {
-  font-size: 0.2666666667vw;
-}
-@media (min-width: 480px) {
-  :root {
-    font-size: 0.2083333333vw;
-  }
-}
-@media (min-width: 768px) {
-  :root {
-    font-size: 0.1302083333vw;
-  }
-}
-@media (min-width: 1024px) {
-  :root {
-    font-size: 0.078125vw;
-  }
-}
-@media (min-width: 1280px) {
-  :root {
-    font-size: 0.0694444444vw;
-  }
-}
-@media (min-width: 1920px) {
-  :root {
-    font-size: 0.0595238095vw;
-  }
+/* --------------------------------------------------------------------------
+   (a) Runtime side effects of the original theme
+
+   main.js swaps every <img class="svg"> for the SVG file's markup, which drags
+   the arrow's internal <style> into the document. We inline the same markup in
+   <Arrow />, so the rule it carried lives here instead of being duplicated in
+   every instance.
+   -------------------------------------------------------------------------- */
+.cls-1 {
+  fill: none;
+  stroke: #000;
+  stroke-miterlimit: 10;
+  stroke-width: 5px;
 }
 
-@theme inline {
-  --color-ink: #0b0b0b;
-  --color-red: #be0808;
-  --color-bone: #eae9e6;
-  --font-display: var(--font-gt-america);
-}
-
-html {
-  scrollbar-width: none;
-}
-
-*::-webkit-scrollbar {
-  display: none;
-}
-
-body {
-  background: #0b0b0b;
-  color: #be0808;
-  font-family: var(--font-gt-america), sans-serif;
-  font-size: 14rem;
-  line-height: 1.2;
-  letter-spacing: -0.12rem;
-  text-transform: uppercase;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-synthesis: none;
-  overscroll-behavior: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-@media (min-width: 1024px) {
-  body {
-    font-size: 11rem;
+/* The cursor plugin sets cursor:none on the document and draws #circle_cursor
+   in its place. Pointer devices only — a touch screen has no cursor to hide. */
+@media (hover: hover) and (pointer: fine) {
+  html.has-circle-cursor,
+  html.has-circle-cursor * {
+    cursor: none;
   }
 }
 
-/* Display type scale. The 1024px step restores the studio's exact desktop spec;
-   the smaller steps keep each line inside the viewport. */
-.type-hero {
-  font-size: 76rem;
-  line-height: 0.85;
-  letter-spacing: -4rem;
-}
-.type-case {
-  font-size: 62rem;
-  line-height: 0.9;
-  letter-spacing: -3rem;
-}
-.type-pulse {
-  font-size: 27rem;
-  line-height: 1;
-  letter-spacing: -1.5rem;
-}
-.type-manifesto {
-  font-size: 26rem;
-  line-height: 1.05;
-  letter-spacing: -1rem;
-}
-.type-marquee {
-  font-size: 24rem;
-  letter-spacing: -1rem;
+/* --------------------------------------------------------------------------
+   (b) Video preloader
+   -------------------------------------------------------------------------- */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: grid;
+  place-items: center;
+  background: #000;
+  overflow: hidden;
+  cursor: none;
+  /* The fade to the site. Kept short so the hand-off feels like a cut. */
+  transition: opacity 380ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-:root {
-  --pulse-dot: 20rem;
+.preloader[data-state="leaving"] {
+  opacity: 0;
+  pointer-events: none;
 }
 
-@media (min-width: 768px) {
-  .type-hero {
-    font-size: 108rem;
-    letter-spacing: -8rem;
-  }
-  .type-case {
-    font-size: 104rem;
-    letter-spacing: -6rem;
-  }
-  .type-pulse {
-    font-size: 52rem;
-    letter-spacing: -3rem;
-  }
-  .type-manifesto {
-    font-size: 40rem;
-    letter-spacing: -2rem;
-  }
-  .type-marquee {
-    font-size: 34rem;
-    letter-spacing: -2rem;
-  }
-  :root {
-    --pulse-dot: 32rem;
-  }
+/* Outer layer owns the TV/glitch jitter so the zoom below it never restarts. */
+.preloader__glitch {
+  position: relative;
+  animation: preloader-glitch 620ms steps(1, end) 1 both;
+  will-change: transform, opacity, filter;
 }
 
-@media (min-width: 1024px) {
-  .type-hero {
-    font-size: 180rem;
-    line-height: 0.8;
-    letter-spacing: -18rem;
-  }
-  .type-case {
-    font-size: 200rem;
-    line-height: 0.8;
-    letter-spacing: -16rem;
-  }
-  .type-pulse {
-    font-size: 88rem;
-    line-height: 0.95;
-    letter-spacing: -5rem;
-  }
-  .type-manifesto {
-    font-size: 64rem;
-    line-height: 1;
-    letter-spacing: -4rem;
-  }
-  .type-marquee {
-    font-size: 48rem;
-    letter-spacing: -3rem;
-  }
-  :root {
-    --pulse-dot: 52rem;
-  }
+/* Inner layer owns the slow continuous zoom across the whole preloader. */
+.preloader__mask {
+  position: relative;
+  width: min(38vw, 46vh);
+  aspect-ratio: 2048 / 2485;
+  overflow: hidden;
+  animation: preloader-zoom 2900ms cubic-bezier(0.22, 0.61, 0.36, 1) 1 both;
+  will-change: transform;
+
+  /* The letterforms are the window: only what falls inside them is painted. */
+  -webkit-mask-image: url("/way-logo-mask.png");
+  mask-image: url("/way-logo-mask.png");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
-/* Mask sizes ported from the studio's own loader spec. */
-.title-mask {
-  --mask-size: 80%;
-}
-@media (min-width: 1024px) {
-  .title-mask {
-    --mask-size: 60%;
-  }
+.preloader__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 420ms linear;
 }
 
-@keyframes marquee {
+.preloader__video[data-visible="true"] {
+  opacity: 1;
+}
+
+/* Chroma split: two flat colour plates cut to the same letterforms, screened
+   over the video and offset for the length of the glitch. Cheaper than
+   duplicating the video layer three times, and reads the same. */
+.preloader__ghost {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  -webkit-mask-image: url("/way-logo-mask.png");
+  mask-image: url("/way-logo-mask.png");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: preloader-ghost 700ms steps(1, end) 1 both;
+  will-change: transform, opacity;
+}
+
+.preloader__ghost--cyan {
+  background: #00e5ff;
+  animation-name: preloader-ghost-cyan;
+}
+
+.preloader__ghost--red {
+  background: #ff0033;
+  animation-name: preloader-ghost-red;
+}
+
+/* Scanlines + a single tracking bar sweeping down, over the whole screen. */
+.preloader__scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.055) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: overlay;
+  animation: preloader-scan 2900ms linear infinite;
+}
+
+.preloader__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 14vh;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.09),
+    transparent
+  );
+  animation: preloader-bar 1100ms cubic-bezier(0.5, 0, 0.5, 1) 1 both;
+}
+
+@keyframes preloader-zoom {
   from {
-    transform: translateX(0);
+    transform: scale(1.02);
   }
   to {
-    transform: translateX(-100%);
+    transform: scale(1.16);
   }
 }
 
-.animate-marquee {
-  animation: marquee 38s linear infinite;
+/* Hard cuts rather than eases — a dropped signal, not a dissolve. */
+@keyframes preloader-glitch {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    filter: brightness(2.6) contrast(1.6);
+  }
+  6% {
+    opacity: 1;
+    transform: translate3d(-1.4%, 0, 0);
+  }
+  12% {
+    opacity: 0.15;
+    transform: translate3d(2.2%, -0.4%, 0);
+    filter: brightness(0.4) contrast(2.4);
+  }
+  18% {
+    opacity: 1;
+    transform: translate3d(-0.8%, 0.5%, 0);
+    filter: brightness(1.8) contrast(1.2);
+  }
+  26% {
+    opacity: 1;
+    transform: translate3d(1.6%, 0, 0) skewX(-1.6deg);
+  }
+  33% {
+    opacity: 0.35;
+    transform: translate3d(-2.4%, 0, 0);
+    filter: brightness(0.6) contrast(2);
+  }
+  41% {
+    opacity: 1;
+    transform: translate3d(0.6%, -0.3%, 0);
+    filter: none;
+  }
+  52% {
+    opacity: 1;
+    transform: translate3d(-0.5%, 0, 0) skewX(0.8deg);
+  }
+  64% {
+    opacity: 0.7;
+    transform: translate3d(1%, 0, 0);
+  }
+  78% {
+    opacity: 1;
+    transform: translate3d(-0.2%, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: none;
+  }
+}
+
+@keyframes preloader-ghost-cyan {
+  0% {
+    opacity: 0.85;
+    transform: translate3d(-2.5%, 0, 0);
+  }
+  20% {
+    opacity: 0.6;
+    transform: translate3d(1.8%, -0.6%, 0);
+  }
+  45% {
+    opacity: 0.45;
+    transform: translate3d(-1.2%, 0, 0);
+  }
+  70% {
+    opacity: 0.2;
+    transform: translate3d(0.6%, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes preloader-ghost-red {
+  0% {
+    opacity: 0.85;
+    transform: translate3d(2.5%, 0, 0);
+  }
+  20% {
+    opacity: 0.6;
+    transform: translate3d(-1.8%, 0.6%, 0);
+  }
+  45% {
+    opacity: 0.45;
+    transform: translate3d(1.2%, 0, 0);
+  }
+  70% {
+    opacity: 0.2;
+    transform: translate3d(-0.6%, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes preloader-scan {
+  from {
+    background-position-y: 0;
+  }
+  to {
+    background-position-y: 60px;
+  }
+}
+
+@keyframes preloader-bar {
+  from {
+    transform: translateY(-20vh);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader__glitch,
+  .preloader__ghost,
+  .preloader__scan,
+  .preloader__bar {
+    animation: none;
+  }
+
+  .preloader__ghost,
+  .preloader__bar {
+    opacity: 0;
+  }
+
+  .preloader__mask {
+    animation: preloader-zoom 2900ms linear 1 both;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Button standing in for the theme's clickable <div>
+
+   The burger is a real button here rather than a div, so it is reachable by
+   keyboard. This strips the UA chrome that would otherwise show through — the
+   theme's own rules then style it exactly as they style the original.
+   -------------------------------------------------------------------------- */
+#header .burger {
+  padding: 0;
+  border: 0;
+  background: none;
+  -webkit-appearance: none;
+  appearance: none;
+  color: inherit;
+  font: inherit;
+}
+
+/* Clickable affordance for pointers that never get the custom cursor. */
+#Projets #filters .titre,
+#Projets #filters .content li,
+#Projets #sliderResponsive .next {
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile featured slider
+
+   <ResponsiveSlider /> keeps slick's DOM shape so the theme's `.slick-*` rules
+   still land, but drives the track itself. slick.css assumes its JS ran — it
+   floats the slides and leaves them display:none until `.slick-initialized`
+   appears — so the track's own layout is restated here.
+   -------------------------------------------------------------------------- */
+#Projets #sliderResponsive .slick-list {
+  overflow: hidden;
+  height: 100%;
+}
+
+#Projets #sliderResponsive .slick-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
+}
+
+#Projets #sliderResponsive .slick-slide {
+  display: block;
+  float: none;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
