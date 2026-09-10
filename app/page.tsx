@@ -1,49 +1,32 @@
-import { FEATURED } from "@/lib/way-data";
-import { Arrow } from "@/components/way/Arrow";
-import { CircleCursor } from "@/components/way/CircleCursor";
-import { FeaturedSlider } from "@/components/way/FeaturedSlider";
-import { FooterProjects } from "@/components/way/FooterProjects";
-import { Header } from "@/components/way/Header";
-import { Preloader } from "@/components/way/Preloader";
-import { ProjectsBrowser } from "@/components/way/ProjectsBrowser";
-import { ResponsiveSlider } from "@/components/way/ResponsiveSlider";
-import { ScrollLink } from "@/components/way/ScrollLink";
+import { FeaturedHero } from "@/components/home/FeaturedHero";
+import { ProjectExplorer, type Card } from "@/components/home/ProjectExplorer";
+import { PulseBand } from "@/components/motion/PulseBand";
+import { FEATURED_PROJECTS, PROJECT_LIST, YEAR_RANGE } from "@/lib/projects";
 
-/**
- * weareyoung-agency.com/projects/, rebuilt as the local index.
- *
- * The DOM tree and class names below are the production ones — the vendored
- * stylesheets in app/vendor address them directly, so the markup is the
- * contract. The only element that is not in the original is <Preloader />.
- */
-export default function Page() {
+/** Only what the grid paints; the case copy stays on the server. */
+const CARDS: Card[] = PROJECT_LIST.map((p) => ({
+  slug: p.slug,
+  index: p.index,
+  title: p.title,
+  client: p.client,
+  year: p.year,
+  cover: p.cover,
+  types: p.types,
+  tags: p.tags,
+}));
+
+export default function HomePage() {
   return (
     <>
-      <Header />
+      <FeaturedHero projects={FEATURED_PROJECTS} />
 
-      <div id="containerAllPage">
-        <div id="AllPage">
-          <main id="Projets">
-            <FeaturedSlider items={FEATURED} />
-            <ResponsiveSlider items={FEATURED} />
+      <PulseBand
+        tone="light"
+        perRow={2}
+        words={["A creative", "agency", "for brands", "who dare", "to go their", "own WAY"]}
+      />
 
-            <ProjectsBrowser />
-
-            <ScrollLink
-              className="arrow noAjax scrollTo"
-              id="footerResponsiveArrow"
-              href="#sliderResponsive"
-            >
-              <Arrow className="svg" />
-            </ScrollLink>
-
-            <FooterProjects />
-          </main>
-        </div>
-      </div>
-
-      <CircleCursor />
-      <Preloader />
+      <ProjectExplorer cards={CARDS} years={YEAR_RANGE} />
     </>
   );
 }

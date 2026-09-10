@@ -1,352 +1,445 @@
 /* ==========================================================================
-   Local additions on top of the vendored WAY theme.
-   Everything above this file is a verbatim copy of production; everything here
-   is either (a) a rule the production site got for free from a runtime side
-   effect we reproduce statically, or (b) the video preloader, which is the one
-   deliberate addition to the clone.
+   WAY — design system, V1 reboot
+   Two voices: Druk Wide for anything that shouts, Monospace Typewriter for
+   anything that whispers. Black or white, one accent. An 8-column grid whose
+   lines are allowed to show.
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   (a) Runtime side effects of the original theme
+:root {
+  --black: #000;
+  --white: #fff;
+  --accent: #ff3d00;
 
-   main.js swaps every <img class="svg"> for the SVG file's markup, which drags
-   the arrow's internal <style> into the document. We inline the same markup in
-   <Arrow />, so the rule it carried lives here instead of being duplicated in
-   every instance.
-   -------------------------------------------------------------------------- */
-.cls-1 {
-  fill: none;
-  stroke: #000;
-  stroke-miterlimit: 10;
-  stroke-width: 5px;
+  --font-display: var(--font-druk), "Arial Black", Impact, sans-serif;
+  --font-mono: var(--font-mono-tw), "Courier New", Courier, monospace;
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --nav-h: 72px;
+  --cols: 4;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-snap: cubic-bezier(0.7, 0, 0.2, 1);
+
+  --d1: clamp(2.6rem, 10vw, 10.5rem);
+  --d2: clamp(2rem, 6.4vw, 6rem);
+  --d3: clamp(1.35rem, 3.2vw, 3rem);
+  --d4: clamp(1rem, 1.5vw, 1.25rem);
+  --d5: clamp(0.8rem, 1vw, 0.9rem);
+
+  --m-xs: 10px;
+  --m-s: 12px;
+  --m-m: 13.5px;
+  --m-l: clamp(15px, 1.35vw, 19px);
+  --m-xl: clamp(18px, 2vw, 26px);
+
+  /* tone: dark by default, sections flip it */
+  --bg: var(--black);
+  --fg: var(--white);
+  --line: rgba(255, 255, 255, 0.14);
+  --line-strong: rgba(255, 255, 255, 0.3);
+  --muted: rgba(255, 255, 255, 0.55);
 }
 
-/* The cursor plugin sets cursor:none on the document and draws #circle_cursor
-   in its place. Pointer devices only — a touch screen has no cursor to hide. */
-@media (hover: hover) and (pointer: fine) {
-  html.has-circle-cursor,
-  html.has-circle-cursor * {
-    cursor: none;
+@media (min-width: 768px) {
+  :root {
+    --cols: 8;
+    --nav-h: 84px;
   }
 }
 
-/* --------------------------------------------------------------------------
-   (b) Video preloader
-   -------------------------------------------------------------------------- */
+.tone-light {
+  --bg: var(--white);
+  --fg: var(--black);
+  --line: rgba(0, 0, 0, 0.14);
+  --line-strong: rgba(0, 0, 0, 0.35);
+  --muted: rgba(0, 0, 0, 0.55);
+}
 
-.preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 2147483000;
-  display: grid;
-  place-items: center;
-  background: #000;
+.tone-dark {
+  --bg: var(--black);
+  --fg: var(--white);
+  --line: rgba(255, 255, 255, 0.14);
+  --line-strong: rgba(255, 255, 255, 0.3);
+  --muted: rgba(255, 255, 255, 0.55);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  background: var(--black);
+}
+
+html[data-lock="1"] {
   overflow: hidden;
-  cursor: none;
-  /* The fade to the site. Kept short so the hand-off feels like a cut. */
-  transition: opacity 380ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.preloader[data-state="leaving"] {
-  opacity: 0;
-  pointer-events: none;
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: var(--m-m);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  overflow-x: hidden;
 }
 
-/* Outer layer owns the TV/glitch jitter so the zoom below it never restarts. */
-.preloader__glitch {
-  position: relative;
-  animation: preloader-glitch 620ms steps(1, end) 1 both;
-  will-change: transform, opacity, filter;
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
 }
 
-/* Inner layer owns the slow continuous zoom across the whole preloader. */
-.preloader__mask {
-  position: relative;
-  width: min(38vw, 46vh);
-  aspect-ratio: 2048 / 2485;
-  overflow: hidden;
-  animation: preloader-zoom 2900ms cubic-bezier(0.22, 0.61, 0.36, 1) 1 both;
-  will-change: transform;
-
-  /* The letterforms are the window: only what falls inside them is painted. */
-  -webkit-mask-image: url("/way-logo-mask.png");
-  mask-image: url("/way-logo-mask.png");
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-}
-
-.preloader__video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 420ms linear;
-}
-
-.preloader__video[data-visible="true"] {
-  opacity: 1;
-}
-
-/* Chroma split: two flat colour plates cut to the same letterforms, screened
-   over the video and offset for the length of the glitch. Cheaper than
-   duplicating the video layer three times, and reads the same. */
-.preloader__ghost {
-  position: absolute;
-  inset: 0;
-  mix-blend-mode: screen;
-  pointer-events: none;
-  -webkit-mask-image: url("/way-logo-mask.png");
-  mask-image: url("/way-logo-mask.png");
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  animation: preloader-ghost 700ms steps(1, end) 1 both;
-  will-change: transform, opacity;
-}
-
-.preloader__ghost--cyan {
-  background: #00e5ff;
-  animation-name: preloader-ghost-cyan;
-}
-
-.preloader__ghost--red {
-  background: #ff0033;
-  animation-name: preloader-ghost-red;
-}
-
-/* Scanlines + a single tracking bar sweeping down, over the whole screen. */
-.preloader__scan {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.055) 0 1px,
-    transparent 1px 3px
-  );
-  mix-blend-mode: overlay;
-  animation: preloader-scan 2900ms linear infinite;
-}
-
-.preloader__bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 14vh;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 255, 255, 0.09),
-    transparent
-  );
-  animation: preloader-bar 1100ms cubic-bezier(0.5, 0, 0.5, 1) 1 both;
-}
-
-@keyframes preloader-zoom {
-  from {
-    transform: scale(1.02);
-  }
-  to {
-    transform: scale(1.16);
-  }
-}
-
-/* Hard cuts rather than eases — a dropped signal, not a dissolve. */
-@keyframes preloader-glitch {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0);
-    filter: brightness(2.6) contrast(1.6);
-  }
-  6% {
-    opacity: 1;
-    transform: translate3d(-1.4%, 0, 0);
-  }
-  12% {
-    opacity: 0.15;
-    transform: translate3d(2.2%, -0.4%, 0);
-    filter: brightness(0.4) contrast(2.4);
-  }
-  18% {
-    opacity: 1;
-    transform: translate3d(-0.8%, 0.5%, 0);
-    filter: brightness(1.8) contrast(1.2);
-  }
-  26% {
-    opacity: 1;
-    transform: translate3d(1.6%, 0, 0) skewX(-1.6deg);
-  }
-  33% {
-    opacity: 0.35;
-    transform: translate3d(-2.4%, 0, 0);
-    filter: brightness(0.6) contrast(2);
-  }
-  41% {
-    opacity: 1;
-    transform: translate3d(0.6%, -0.3%, 0);
-    filter: none;
-  }
-  52% {
-    opacity: 1;
-    transform: translate3d(-0.5%, 0, 0) skewX(0.8deg);
-  }
-  64% {
-    opacity: 0.7;
-    transform: translate3d(1%, 0, 0);
-  }
-  78% {
-    opacity: 1;
-    transform: translate3d(-0.2%, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-    filter: none;
-  }
-}
-
-@keyframes preloader-ghost-cyan {
-  0% {
-    opacity: 0.85;
-    transform: translate3d(-2.5%, 0, 0);
-  }
-  20% {
-    opacity: 0.6;
-    transform: translate3d(1.8%, -0.6%, 0);
-  }
-  45% {
-    opacity: 0.45;
-    transform: translate3d(-1.2%, 0, 0);
-  }
-  70% {
-    opacity: 0.2;
-    transform: translate3d(0.6%, 0, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes preloader-ghost-red {
-  0% {
-    opacity: 0.85;
-    transform: translate3d(2.5%, 0, 0);
-  }
-  20% {
-    opacity: 0.6;
-    transform: translate3d(-1.8%, 0.6%, 0);
-  }
-  45% {
-    opacity: 0.45;
-    transform: translate3d(1.2%, 0, 0);
-  }
-  70% {
-    opacity: 0.2;
-    transform: translate3d(-0.6%, 0, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes preloader-scan {
-  from {
-    background-position-y: 0;
-  }
-  to {
-    background-position-y: 60px;
-  }
-}
-
-@keyframes preloader-bar {
-  from {
-    transform: translateY(-20vh);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(110vh);
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .preloader__glitch,
-  .preloader__ghost,
-  .preloader__scan,
-  .preloader__bar {
-    animation: none;
-  }
-
-  .preloader__ghost,
-  .preloader__bar {
-    opacity: 0;
-  }
-
-  .preloader__mask {
-    animation: preloader-zoom 2900ms linear 1 both;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   Button standing in for the theme's clickable <div>
-
-   The burger is a real button here rather than a div, so it is reachable by
-   keyboard. This strips the UA chrome that would otherwise show through — the
-   theme's own rules then style it exactly as they style the original.
-   -------------------------------------------------------------------------- */
-#header .burger {
+ul,
+ol {
   padding: 0;
-  border: 0;
-  background: none;
-  -webkit-appearance: none;
-  appearance: none;
-  color: inherit;
-  font: inherit;
+  list-style: none;
 }
 
-/* Clickable affordance for pointers that never get the custom cursor. */
-#Projets #filters .titre,
-#Projets #filters .content li,
-#Projets #sliderResponsive .next {
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
   cursor: pointer;
 }
 
-/* --------------------------------------------------------------------------
-   Mobile featured slider
-
-   <ResponsiveSlider /> keeps slick's DOM shape so the theme's `.slick-*` rules
-   still land, but drives the track itself. slick.css assumes its JS ran — it
-   floats the slides and leaves them display:none until `.slick-initialized`
-   appears — so the track's own layout is restated here.
-   -------------------------------------------------------------------------- */
-#Projets #sliderResponsive .slick-list {
-  overflow: hidden;
-  height: 100%;
-}
-
-#Projets #sliderResponsive .slick-track {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  transition: transform 500ms cubic-bezier(0.65, 0, 0.35, 1);
-  will-change: transform;
-}
-
-#Projets #sliderResponsive .slick-slide {
+img,
+video {
   display: block;
-  float: none;
-  flex: 0 0 100%;
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.skip {
+  position: fixed;
+  top: -100px;
+  left: var(--gutter);
+  z-index: 10000;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: var(--m-s);
+}
+
+.skip:focus {
+  top: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Type
+   -------------------------------------------------------------------------- */
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+
+.d1 { font-size: var(--d1); }
+.d2 { font-size: var(--d2); }
+.d3 { font-size: var(--d3); }
+.d4 { font-size: var(--d4); line-height: 1.1; }
+.d5 { font-size: var(--d5); line-height: 1.2; letter-spacing: 0.02em; }
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--m-m);
+  line-height: 1.5;
+}
+
+.mono-xs { font-size: var(--m-xs); letter-spacing: 0.06em; text-transform: uppercase; }
+.mono-s { font-size: var(--m-s); }
+.mono-l { font-size: var(--m-l); line-height: 1.55; }
+.mono-xl { font-size: var(--m-xl); line-height: 1.4; }
+
+.muted { color: var(--muted); }
+.accent { color: var(--accent); }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--m-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* The studio's underscore. It has blinked since the first site; it keeps blinking. */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.blink {
+  display: inline-block;
+  animation: blink 1s steps(1) infinite;
+}
+
+.measure {
+  max-width: 62ch;
+}
+
+.measure-wide {
+  max-width: 90ch;
+}
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+.section {
   position: relative;
+  background: var(--bg);
+  color: var(--fg);
+  padding: clamp(64px, 10vh, 140px) var(--gutter);
+}
+
+.section--flush {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.section--tight {
+  padding-top: clamp(32px, 6vh, 72px);
+  padding-bottom: clamp(32px, 6vh, 72px);
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1760px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: clamp(12px, 1.5vw, 24px);
+  row-gap: clamp(24px, 3vw, 48px);
+}
+
+.gridlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to right, var(--line) 1px, transparent 1px);
+  background-size: calc(100% / var(--cols)) 100%;
+  background-position: -1px 0;
+}
+
+.gridlines--rows {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size:
+    calc(100% / var(--cols)) 100%,
+    100% var(--row, 25vh);
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+.rule--strong {
+  border-top-color: var(--line-strong);
+}
+
+.row-between {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Motion primitives
+   [data-reveal] elements wait for <Reveal /> to add .is-in
+   -------------------------------------------------------------------------- */
+[data-reveal] {
+  --delay: 0ms;
+  transition:
+    opacity 0.9s var(--ease-out) var(--delay),
+    transform 0.9s var(--ease-out) var(--delay),
+    clip-path 1s var(--ease-inout) var(--delay);
+}
+
+[data-reveal="up"] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+
+[data-reveal="fade"] {
+  opacity: 0;
+}
+
+[data-reveal="clip"] {
+  clip-path: inset(0 0 100% 0);
+}
+
+[data-reveal="wipe"] {
+  clip-path: inset(0 100% 0 0);
+}
+
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+
+/* Word-by-word rise. <SplitWords /> wraps each word; the parent's .is-in
+   (or html[data-intro="done"] for the hero) lets them through. */
+.words {
+  display: inline;
+}
+
+.words .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.words .w > span {
+  display: inline-block;
+  transform: translate3d(0, 110%, 0);
+  transition: transform 1s var(--ease-out) calc(var(--i) * 45ms + var(--delay, 0ms));
+}
+
+.is-in .words .w > span,
+.words.is-in .w > span,
+html[data-intro="done"] .words--hero .w > span {
+  transform: none;
+}
+
+/* Link underline that draws in from the left. */
+.u {
+  position: relative;
+  display: inline-block;
+}
+
+.u::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-inout);
+}
+
+.u:hover::after,
+.u:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* The pulse: the dot that goes everywhere. */
+.dot {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 0.05em;
+  transition: background 0.3s, transform 0.5s var(--ease-out);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+.dot--live {
+  position: relative;
+  background: var(--accent);
+}
+
+.dot--live::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.6s var(--ease-out) infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Page enter (template.tsx)
+   -------------------------------------------------------------------------- */
+@keyframes page-in {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.page {
+  animation: page-in 0.8s var(--ease-out) both;
+  min-height: 100vh;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion: keep the layout, drop the choreography
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  [data-reveal],
+  .words .w > span,
+  .page,
+  .dot--live::after,
+  .blink {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    clip-path: none !important;
+  }
 }

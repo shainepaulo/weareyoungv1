@@ -1,0 +1,27 @@
+/**
+ * The horizontal WAY wordmark (img/logoSvg.svg from the current site), as an
+ * inline SVG painted in currentColor so it can sit on either tone and inside
+ * a mix-blend-mode: difference nav without carrying its own fill.
+ */
+export function Wordmark({
+  className,
+  title = "WAY — We Are Young",
+}: {
+  className?: string;
+  title?: string;
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 449.91 145.74"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label={title}
+    >
+      <path
+        fill="currentColor"
+        d="M396.34,145.11V68.43L449.91.09H428.38L385.69,53.23,342.86.09h-.16l0-.09H321.41L306,36.45H238.44L222,0H200.81l0,.09h-.08l-39.54,100L120.82.09h-19.7l-40.22,100L21,.09H0L58.48,145.74h4.46l47.94-118,47.41,117.27h4.6L211.7,24.32l54.1,120.87h14.6L335.18,17.6,375,68.43v76.68ZM273.29,114l-26.6-59.2h51.59Z"
+      />
+    </svg>
+  );
+}
