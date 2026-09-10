@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { WayTo } from "@/components/about/WayTo";
 import { PulseBand } from "@/components/motion/PulseBand";
 import { Reveal } from "@/components/motion/Reveal";
-import { SplitWords } from "@/components/motion/SplitWords";
 import { PROJECT_LIST, SITE, STATS, TYPES } from "@/lib/projects";
 import "../pages.css";
 
@@ -12,11 +12,14 @@ export const metadata: Metadata = {
   description: `${SITE.claim}. Paris, ${STATS.years} years, ${STATS.brands} brands.`,
 };
 
-/* V1 copy — to be validated with the agency. Every figure comes from the project data. */
-const STORY = [
-  "We Are Young is a Paris creative agency. For more than fifteen years we have built brand experiences for people who would rather be surprised than convinced — from a street-basketball tournament that became an institution to an arena that carries the names of the kids of its neighbourhood.",
-  "Six ways of working — 360, brand influence, creative content, event design, roadshow, shopper experience — and one rule: the idea has to travel. Into the street, onto the shelf, across a feed, and back into a room full of people.",
-  `${STATS.brands} brands have trusted us with ${STATS.projects} projects. Film runs through all of it: our studio, ${SITE.studio.label}, shoots and cuts what the agency dreams up, so the story never has to leave the building.`,
+/**
+ * The manifesto, verbatim from the current /agency/ page. This is the agency's
+ * own voice — nothing here is written for the reboot.
+ */
+const MANIFESTO = [
+  "A creative agency for brands who dare to go their own WAY.",
+  "We’ve been called an event agency, an experiential agency, a content agency and a bunch of other names.",
+  "Truth is, we’re a collective of rebellious humans, all working as one to push boundaries and make provocative ideas happen.",
 ];
 
 export default function AboutPage() {
@@ -25,17 +28,10 @@ export default function AboutPage() {
 
   return (
     <>
-      <section className="section tone-dark page-hero">
+      <section className="section tone-dark page-hero about__hero">
         <div className="gridlines" />
         <span className="eyebrow">About</span>
-        <h1 className="display d1">
-          <SplitWords text="We are" hero />
-          <br />
-          <SplitWords text="Young." hero start={2} />
-        </h1>
-        <p className="mono-l measure muted">
-          {SITE.claim}. Paris, since more than fifteen years, for {STATS.brands} brands and counting.
-        </p>
+        <WayTo />
       </section>
 
       <PulseBand tone="light" perRow={2} words={["Dare", "to go", "your", "own", "WAY", "since", "day", "one"]} />
@@ -46,9 +42,9 @@ export default function AboutPage() {
           {STATS.years} years of going our own way
         </Reveal>
         <div className="about__story-body">
-          {STORY.map((p, i) => (
-            <Reveal as="p" kind="up" delay={i * 120} key={i} className="mono-l">
-              {p}
+          {MANIFESTO.map((line, i) => (
+            <Reveal as="p" kind="up" delay={i * 120} key={i} className="mono-xl">
+              {line}
             </Reveal>
           ))}
         </div>

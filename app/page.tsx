@@ -1,4 +1,4 @@
-import { FeaturedHero } from "@/components/home/FeaturedHero";
+import { GridHero } from "@/components/home/GridHero";
 import { ProjectExplorer, type Card } from "@/components/home/ProjectExplorer";
 import { PulseBand } from "@/components/motion/PulseBand";
 import { FEATURED_PROJECTS, PROJECT_LIST, YEAR_RANGE } from "@/lib/projects";
@@ -18,12 +18,16 @@ const CARDS: Card[] = PROJECT_LIST.map((p) => ({
 export default function HomePage() {
   return (
     <>
-      <FeaturedHero projects={FEATURED_PROJECTS} />
+      <GridHero projects={FEATURED_PROJECTS} />
 
+      {/* The claim, given the full Kalkbrenner treatment: white on black, a dot
+          in front of every fragment, and the mark itself closing the sentence. */}
       <PulseBand
-        tone="light"
+        tone="dark"
         perRow={2}
-        words={["A creative", "agency", "for brands", "who dare", "to go their", "own WAY"]}
+        amplitude={0.06}
+        logoTail
+        words={["Creative", "agency", "for brands", "who dare", "to go their", "own"]}
       />
 
       <ProjectExplorer cards={CARDS} years={YEAR_RANGE} />

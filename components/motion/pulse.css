@@ -8,18 +8,19 @@
 
 .pulse__row {
   position: relative;
-  height: clamp(72px, 12vw, 190px);
+  height: clamp(58px, 9.2vw, 150px);
   display: flex;
   align-items: center;
-  /* Staircase: each row starts one column further right. */
-  padding-left: calc((var(--step) + 0.5) * (100% / var(--cols)));
+  /* Staircase, but a shallow one: a full column per step pushed the longest
+     row off the right edge, and the whole sentence has to stay readable. */
+  padding-left: calc((var(--step) * 0.45 + 0.3) * (100% / var(--cols)));
   white-space: nowrap;
 }
 
 .pulse__track {
   display: inline-flex;
   align-items: center;
-  gap: calc(100% / var(--cols) * 0.35);
+  gap: calc(100% / var(--cols) * 0.22);
   will-change: transform;
 }
 
@@ -27,7 +28,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.22em;
-  font-size: clamp(2.4rem, 8.6vw, 9rem);
+  /* Sized so the longest row still clears the viewport with the drift on. */
+  font-size: clamp(1.35rem, 4.45vw, 4.8rem);
 }
 
 .pulse__dot {
@@ -61,4 +63,12 @@
   .pulse__track {
     transform: none !important;
   }
+}
+
+/* The mark closing the sentence, optically matched to the caps beside it. */
+.pulse__logo {
+  display: block;
+  height: 0.8em;
+  width: auto;
+  color: currentColor;
 }

@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties } from "react";
+import { Wordmark } from "@/components/brand/Wordmark";
 import "./pulse.css";
+
+/** Sentinel standing in for the mark inside the word list. */
+const LOGO = "__WAY_LOGO__";
 
 /**
  * The Kalkbrenner move, in the studio's voice: words dropped into an 8-column
@@ -17,10 +21,13 @@ export function PulseBand({
   tone = "light",
   perRow = 2,
   amplitude = 0.35,
+  logoTail = false,
   className,
 }: {
   words: string[];
   tone?: "light" | "dark";
+  /** Close the sentence with the WAY mark instead of a last word. */
+  logoTail?: boolean;
   /** Words per row before stepping to the next line of the staircase. */
   perRow?: number;
   /** Horizontal travel as a fraction of the band width, over the full scroll. */
@@ -29,8 +36,11 @@ export function PulseBand({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  // LOGO is a sentinel the renderer swaps for the mark; it travels with the
+  // words so it lands in the staircase like any other item.
+  const items = logoTail ? [...words, LOGO] : words;
   const rows: string[][] = [];
-  for (let i = 0; i < words.length; i += perRow) rows.push(words.slice(i, i + perRow));
+  for (let i = 0; i < items.length; i += perRow) rows.push(items.slice(i, i + perRow));
 
   useEffect(() => {
     const band = ref.current;
@@ -94,7 +104,7 @@ export function PulseBand({
       ref={ref}
       className={`pulse tone-${tone} ${className ?? ""}`}
       style={{ "--rows": rows.length } as CSSProperties}
-      aria-label={words.join(" ")}
+      aria-label={`${words.join(" ")}${logoTail ? " WAY" : ""}`}
     >
       <div className="gridlines gridlines--rows" style={{ "--row": "calc(100% / var(--rows))" } as CSSProperties} />
       {rows.map((row, r) => (
@@ -103,7 +113,11 @@ export function PulseBand({
             {row.map((word, i) => (
               <span className="pulse__el" key={`${word}-${i}`} aria-hidden="true">
                 <span className="pulse__dot" />
-                <span className="pulse__word display">{word}</span>
+                {word === LOGO ? (
+                  <Wordmark className="pulse__logo" />
+                ) : (
+                  <span className="pulse__word display">{word}</span>
+                )}
               </span>
             ))}
           </div>

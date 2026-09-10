@@ -1,0 +1,269 @@
+/* ==========================================================================
+   Grid hero — two large stills, the five set small, the claim drifting past
+   ========================================================================== */
+
+.ghero {
+  position: relative;
+  background: var(--bg);
+  color: var(--fg);
+  padding: calc(var(--nav-h) + 12px) var(--gutter) var(--gutter);
+  min-height: 100svh;
+  display: flex;
+}
+
+.ghero__grid {
+  flex: 1;
+  display: grid;
+  gap: clamp(10px, 1vw, 18px);
+  /* Mobile: one column — the two stills with the five between them. */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 42vh auto 32vh;
+  grid-template-areas:
+    "ma"
+    "ls"
+    "mb";
+}
+
+/* The two edge columns and one of the drifting texts are desktop-only —
+   on a phone they would be noise stacked on top of the real content. */
+.ghero__cell--text {
+  display: none;
+}
+
+.ghero__cell {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* --- Drifting claim columns --------------------------------------------- */
+.ghero__cell--text {
+  overflow: hidden;
+  /* Corner ticks, so an empty column still reads as a cell of the grid. */
+  background-image:
+    radial-gradient(circle, var(--line-strong) 1px, transparent 1px),
+    radial-gradient(circle, var(--line-strong) 1px, transparent 1px),
+    radial-gradient(circle, var(--line-strong) 1px, transparent 1px),
+    radial-gradient(circle, var(--line-strong) 1px, transparent 1px);
+  background-size: 3px 3px;
+  background-repeat: no-repeat;
+  background-position: top left, top right, bottom right, bottom left;
+}
+
+.ghero__track {
+  display: flex;
+  flex-direction: column;
+  animation: ghero-drift var(--dur, 30s) linear infinite;
+  will-change: transform;
+}
+
+.ghero__track[data-reverse="true"] {
+  animation-direction: reverse;
+}
+
+.ghero__run {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+
+.ghero__line {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--m-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 2.1;
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+@keyframes ghero-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -50%, 0); }
+}
+
+/* --- Large stills -------------------------------------------------------- */
+.ghero__cell--media {
+  overflow: hidden;
+  background: #111;
+  display: block;
+}
+
+.ghero__frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease-inout);
+}
+
+.ghero__frame[data-on="true"] {
+  opacity: 1;
+}
+
+/* A slow push, restarted whenever this frame becomes the live one. */
+.ghero__frame img {
+  transform: scale(1.06);
+  transition: transform 6s linear;
+}
+
+.ghero__frame[data-on="true"] img {
+  transform: scale(1);
+}
+
+.ghero__tag {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  transition: opacity 0.4s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
+.ghero__tag .dot {
+  background: var(--accent);
+}
+
+.ghero__cell--media:hover .ghero__tag,
+.ghero__cell--media:focus-visible .ghero__tag {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- The five ------------------------------------------------------------ */
+.ghero__cell--list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-bottom: 10px;
+}
+
+.ghero__list-head {
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+
+.ghero__list > li + li {
+  border-top: 1px solid var(--line);
+}
+
+.ghero__item {
+  display: grid;
+  grid-template-columns: 2.4em 1fr auto;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 0;
+  color: var(--fg);
+  opacity: 0.45;
+  transition: opacity 0.4s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.ghero__item[data-on="true"],
+.ghero__item:hover,
+.ghero__item:focus-visible {
+  opacity: 1;
+  transform: translate3d(5px, 0, 0);
+}
+
+.ghero__num {
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ghero__name {
+  font-size: clamp(0.82rem, 1.05vw, 1rem);
+  line-height: 1.15;
+}
+
+.ghero__year {
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ghero__progress {
+  height: 1px;
+  width: 100%;
+  background: var(--line-strong);
+  transform-origin: left;
+  animation: ghero-progress 4600ms linear both;
+}
+
+.ghero__progress[data-paused="true"] {
+  animation-play-state: paused;
+}
+
+@keyframes ghero-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.ghero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+/* --- Desktop grid -------------------------------------------------------- */
+@media (min-width: 900px) {
+  /* A firm height, not just a floor: with `min-height` alone the section sizes
+     to its content, the 1fr rows resolve against that, and the grid grows to
+     whatever the list needs instead of filling one screen. */
+  .ghero {
+    height: 100svh;
+  }
+
+  .ghero__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    /* Every named area has to stay a rectangle or the browser drops the whole
+       declaration: ta/tc stack down the left edge, tb holds the right edge,
+       td is the wide text block under it. */
+    grid-template-areas:
+      "ta ma ma ls ls tb"
+      "tc ma ma ls ls tb"
+      "te te mb mb td td"
+      "te te mb mb td td";
+  }
+
+  .ghero__cell--text {
+    display: block;
+  }
+
+  .ghero__cell--list {
+    justify-content: flex-start;
+    padding-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghero__track,
+  .ghero__progress {
+    animation: none;
+  }
+
+  .ghero__frame img {
+    transition: none;
+    transform: none;
+  }
+}
