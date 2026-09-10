@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import { flushSync } from "react-dom";
+import { useMemo, useState, type CSSProperties } from "react";
 import { FILTER_LISTS } from "@/lib/way-data";
 import "./home.css";
 
@@ -28,6 +28,13 @@ const GROUPS = [
 
 type GroupKey = (typeof GROUPS)[number]["key"];
 
+/**
+ * Filters + the chronological grid. Filtering runs inside a view transition:
+ * every card carries its own `view-transition-name`, so the browser moves the
+ * survivors to their new cells and fades the rest — the mixitup shuffle of
+ * the current site, with no library behind it. Browsers without the API just
+ * swap.
+ */
 export function ProjectExplorer({ cards, years }: { cards: Card[]; years: { from: number; to: number } }) {
   const [group, setGroup] = useState<GroupKey>("all");
   const [tag, setTag] = useState<string | null>(null);
@@ -37,13 +44,57 @@ export function ProjectExplorer({ cards, years }: { cards: Card[]; years: { from
 
   const visible = useMemo(() => (tag ? cards.filter((c) => c.tags.includes(tag)) : cards), [cards, tag]);
 
-  const pick = (key: GroupKey) => {
-    const g = GROUPS.find((x) => x.key === key)!;
-    setGroup(key);
-    setTag(g.tag);
+  /**
+   * Commit a state change inside a view transition when the browser has one.
+   * The snapshot the browser takes first normally costs a frame; if it takes
+   * longer than a tap should, the transition is skipped and the change lands
+   * anyway — the filter must never feel slower than the animation.
+   */
+  const transition = (apply: () => void) => {
+    const doc = document as Document & {
+      startViewTransition?: (cb: () => void) => {
+        skipTransition: () => void;
+        ready: Promise<void>;
+        finished: Promise<void>;
+      };
+    };
+    if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      apply();
+      return;
+    }
+    let applied = false;
+    const once = () => {
+      if (applied) return;
+      applied = true;
+      apply();
+    };
+    const vt = doc.startViewTransition(() => flushSync(once));
+    // A skipped transition rejects both promises; that is the expected path, not an error.
+    vt.ready.catch(() => {});
+    vt.finished.catch(() => {});
+    window.setTimeout(() => {
+      if (applied) return;
+      vt.skipTransition();
+      once();
+    }, 150);
   };
 
-  const activeLabel = tag ? (options.find((o) => o.filter === `.${tag}`)?.label ?? GROUPS.find((g) => g.tag === tag)?.label) : "All";
+  const pick = (key: GroupKey) => {
+    const g = GROUPS.find((x) => x.key === key)!;
+    transition(() => {
+      setGroup(key);
+      setTag(g.tag);
+    });
+  };
+
+  const toggle = (t: string) => {
+    const fallback = GROUPS.find((g) => g.key === group)!.tag;
+    transition(() => setTag(tag === t ? fallback : t));
+  };
+
+  const activeLabel = tag
+    ? (options.find((o) => o.filter === `.${tag}`)?.label ?? GROUPS.find((g) => g.tag === tag)?.label)
+    : "All";
 
   return (
     <section id="work" className="explorer tone-dark section section--tight">
@@ -59,17 +110,14 @@ export function ProjectExplorer({ cards, years }: { cards: Card[]; years: { from
       <div className="filters">
         <div className="filters__row" role="tablist" aria-label="Filter projects">
           {GROUPS.map((g) => (
-            <button
-              key={g.key}
-              type="button"
-              role="tab"
-              className="filters__btn"
-              aria-selected={group === g.key}
-              onClick={() => pick(g.key)}
-            >
+            <button key={g.key} type="button" role="tab" className="filters__btn" aria-selected={group === g.key} onClick={() => pick(g.key)}>
               <span className="dot" aria-hidden="true" />
               {g.label}
-              {g.list && <span className="filters__caret" aria-hidden="true">{group === g.key ? "−" : "+"}</span>}
+              {g.list && (
+                <span className="filters__caret" aria-hidden="true">
+                  {group === g.key ? "−" : "+"}
+                </span>
+              )}
             </button>
           ))}
           <span className="filters__count mono-xs">
@@ -77,77 +125,55 @@ export function ProjectExplorer({ cards, years }: { cards: Card[]; years: { from
           </span>
         </div>
 
-        <AnimatePresence initial={false}>
-          {options.length > 0 && (
-            <motion.div
-              key={list}
-              className="filters__panel"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.5, ease: [0.83, 0, 0.17, 1] }}
-            >
-              <ul className="filters__chips">
-                {options.map((o) => {
-                  const t = o.filter.slice(1);
-                  return (
-                    <li key={t}>
-                      <button
-                        type="button"
-                        className="chip"
-                        aria-pressed={tag === t}
-                        onClick={() => setTag(tag === t ? GROUPS.find((g) => g.key === group)!.tag : t)}
-                      >
-                        {o.label}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="filters__panel" data-open={options.length > 0}>
+          <div>
+            <ul className="filters__chips">
+              {options.map((o) => {
+                const t = o.filter.slice(1);
+                return (
+                  <li key={t}>
+                    <button type="button" className="chip" aria-pressed={tag === t} onClick={() => toggle(t)}>
+                      {o.label}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
       </div>
 
-      <LayoutGroup>
-        <motion.ol className="cards" layout>
-          <AnimatePresence mode="popLayout">
-            {visible.map((c, i) => (
-              <motion.li
-                key={c.slug}
-                layout
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: Math.min(i, 8) * 0.03 }}
-                className="card"
-                data-col={(i % 3) + 1}
-              >
-                <Link href={`/projects/${c.slug}`} className="card__link" data-cursor="View">
-                  <figure className="card__media">
-                    <Image
-                      src={c.cover}
-                      alt={`${c.title} — ${c.client}`}
-                      fill
-                      sizes="(min-width: 1024px) 31vw, (min-width: 768px) 46vw, 92vw"
-                      loading={i < 3 ? "eager" : "lazy"}
-                      style={{ objectFit: "cover" }}
-                    />
-                  </figure>
-                  <div className="card__body">
-                    <span className="card__index mono-xs">{String(c.index).padStart(3, "0")}</span>
-                    <h3 className="card__title display d4">{c.title}</h3>
-                    <span className="card__meta mono-xs muted">
-                      {c.client}
-                      {c.year ? ` — ${c.year}` : ""}
-                    </span>
-                  </div>
-                </Link>
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </motion.ol>
-      </LayoutGroup>
+      <ol className="cards">
+        {visible.map((c, i) => (
+          <li
+            key={c.slug}
+            className="card"
+            data-col={(i % 3) + 1}
+            style={{ viewTransitionName: `card-${c.slug}`, "--i": Math.min(i, 11) } as CSSProperties}
+          >
+            <Link href={`/projects/${c.slug}`} className="card__link" data-cursor="View">
+              <figure className="card__media">
+                <Image
+                  src={c.cover}
+                  alt={`${c.title} — ${c.client}`}
+                  fill
+                  sizes="(min-width: 1024px) 31vw, (min-width: 768px) 46vw, 92vw"
+                  loading={i < 3 ? "eager" : "lazy"}
+                  style={{ objectFit: "cover" }}
+                />
+              </figure>
+              <div className="card__body">
+                <span className="card__index mono-xs">{String(c.index).padStart(3, "0")}</span>
+                <h3 className="card__title display d4">{c.title}</h3>
+                <span className="card__meta mono-xs muted">
+                  {c.client}
+                  {c.year ? ` — ${c.year}` : ""}
+                </span>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ol>
 
       {visible.length === 0 && <p className="mono-l muted explorer__empty">Nothing here yet_</p>}
     </section>

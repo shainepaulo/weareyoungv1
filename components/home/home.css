@@ -43,7 +43,7 @@
   inset: 0;
   z-index: 2;
   background:
-    linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.1) 100%);
+    linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.6) 55%, rgba(0, 0, 0, 0.2) 100%);
 }
 
 .hero__head,
@@ -101,7 +101,7 @@
 
 .hero__title {
   grid-area: title;
-  font-size: clamp(1.5rem, 5.6vw, 5.2rem);
+  font-size: clamp(1.75rem, 7.4vw, 5.2rem);
 }
 
 .hero__meta {
@@ -385,4 +385,52 @@
   .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   /* The current site drops the middle column; keep the rhythm, lose the jitter. */
   .card[data-col="2"] { transform: translateY(48px); }
+}
+
+/* Filter panel: height via grid rows, so it animates without a library. */
+.filters__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease-inout);
+}
+
+.filters__panel > div {
+  overflow: hidden;
+}
+
+.filters__panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+/* Cards arriving after a filter change: a short stagger, keyed per position. */
+@keyframes card-in {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.card {
+  animation: card-in 0.6s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+
+@media (min-width: 1024px) {
+  .card[data-col="2"] {
+    animation-name: card-in-mid;
+  }
+}
+
+@keyframes card-in-mid {
+  from { opacity: 0; transform: translate3d(0, 66px, 0); }
+  to { opacity: 1; transform: translate3d(0, 48px, 0); }
+}
+
+/* View transitions: survivors glide, the rest fade. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
+}
+
+::view-transition-group(*) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }

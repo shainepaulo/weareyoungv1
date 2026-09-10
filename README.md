@@ -1,82 +1,91 @@
-# WAY — projects page, local clone + video intro
+# WAY — We Are Young, V1 reboot
 
-A local Next.js rebuild of [weareyoung-agency.com/projects/](https://www.weareyoung-agency.com/projects/),
-served as the index route, with one addition: a full-screen video preloader that
-plays the studio's clips inside the WAY logo.
+A ground-up art direction for [weareyoung-agency.com](https://www.weareyoung-agency.com),
+built to be shown to the CEO. Next.js 16 App Router, React 19, TypeScript, no
+backend, no CRUD: every page is prerendered from data scraped off the current
+site.
 
 ```bash
 npm run dev     # http://localhost:3000
-npm run build   # static prerender, webpack
+npm run build   # static export of all 66 routes
+npm run lint
 ```
 
-## What is a clone and what is not
+## Branches
 
-The page is a faithful rebuild, not an interpretation. Every box, font size and
-scroll height was measured against production at 1280×800 and matches exactly,
-including the 6448px document height.
-
-- `app/vendor/` — the production stylesheets, copied verbatim. Asset URLs are
-  rewritten to `/way/*`; the only other change is a stray comment terminator in
-  `way-theme.css` that browsers drop as an error token but Lightning CSS
-  rejects. Do not hand-edit these.
-- `components/way/` — the production DOM, rebuilt in React. The class names are
-  the contract the vendored CSS addresses, so they are reproduced literally
-  (`.scrollTool`, `.mixitup-control-active`, `.slick-track`, `nvisible1`…).
-  The jQuery plugins behind them — mixitup, slick, viewportChecker,
-  s4preload, the custom cursor — are reimplemented rather than loaded.
-- `lib/way-data.ts` — the 5 featured slides, the filter tree and all 61
-  projects, extracted from the production HTML.
-- `app/globals.css` — the only hand-written stylesheet. Holds the preloader and
-  a handful of rules the original got from a runtime side effect (the arrow SVG
-  is inlined here instead of being fetched and injected by `main.js`).
-
-Deliberate deviations, all invisible on screen:
-
-- **Images** are local WebP at 1800px instead of the originals' PNG/JPEG:
-  143 MB → 8.9 MB across 131 files.
-- **Covers load lazily.** Production writes all 61 into the initial markup; here
-  each waits until its tile is within 600px of the viewport (6 loaded at the top
-  of the page instead of 61). The theme's own scroll reveal keeps its own,
-  tighter threshold so the fade still fires exactly where the original's does.
-- **Filtering unmounts** hidden tiles; mixitup keeps them at `display:none`.
-- **Project links** still point at the live site — only `/projects/` was in
-  scope, so the 61 detail pages do not exist locally.
-
-## The preloader
-
-`components/way/Preloader.tsx` + the `.preloader` rules in `app/globals.css`.
-The only element on the page that is not in the original.
-
-`public/way-logo-mask.png` is an alpha mask generated from `WAY LOGO B&W.jpg`
-(trimmed, contrast-boosted, luminance moved into the alpha channel), used as a
-`mask-image` so only the letterforms are ever painted. Two clips from
-`public/videos/` play behind it.
-
-Timeline, all in `Preloader.tsx`:
-
-| t | |
+| branch | what it is |
 |---|---|
-| 0ms | hard cut in, TV glitch — chroma split, scanlines, one tracking bar |
-| 0–2900ms | continuous slow zoom, `scale(1.02 → 1.16)` |
-| 1350ms | hand off from the first clip to the second |
-| 2400ms | fade out begins (380ms) |
-| 2780ms | removed from the DOM |
+| `main` | The pixel-matched clone of the current `/projects/` page, with the video preloader. The safe baseline. |
+| `reboot/foundation` | Design system, fonts, brand components, nav + menu, cursor, intro v2, footer. |
+| `reboot/home` | Featured hero, pulse band, filters + chronological grid. |
+| `reboot/pages` | Roster, About, Contact, the 61 case pages, 404. |
+| `reboot/v1` | Integration of the three above — **the branch to present.** |
 
-The clock never waits on the videos: if the second clip has not buffered, the
-first one simply keeps playing. Scroll is locked while it is up, and it is
-unmounted rather than hidden, so nothing is left to intercept a click. Click or
-press any key to skip. Honours `prefers-reduced-motion` (zoom only, no glitch).
+Each `reboot/*` branch builds on the previous one, so any layer can be
+rolled back without losing the others.
+
+## The direction
+
+Two voices. **Druk Wide** (kept from the current site — it *is* the identity)
+for anything that shouts: titles, nav, buttons, the pulse band. **Monospace
+Typewriter** (the small-text face of skinandbonesfilm.com) for anything that
+whispers: meta, body copy, labels. Black or white, one accent (`#FF3D00`),
+and an 8-column grid whose lines are allowed to show — sections flip tone
+rather than change colour.
+
+The claim, *a creative agency for brands who dare to go their own WAY*, is
+the interaction model: the cursor is a dot that leaves a trail; the pulse
+band's words travel along grid lines as you scroll (the Kalkbrenner move, in
+the studio's voice); the studio's blinking `_` marks wherever you are.
+
+### Routes
+
+| route | |
+|---|---|
+| `/` | Intro → featured five (hover / focus swaps the image with a wipe; walks by itself when idle) → pulse band → filters (All / Client / Most recent / Type of work) → chronological grid of 61. |
+| `/roster` | Every brand, alphabetical, with its projects. |
+| `/about` | Manifesto, story, the six disciplines with live counts, numbers, address. |
+| `/contact` | The address card, phone, mail, maps, studio. |
+| `/projects/[slug]` | Hero, intro, Vimeo (poster first, player on click), blocks, gallery, prev / next. |
+
+### Navigation
+
+Desktop: the wordmark and three links — ROSTER · ABOUT · CONTACT. Mobile: the
+wordmark and a burger, top right, opening a full-screen menu with the same
+three. The nav is `mix-blend-mode: difference`, so one nav serves both tones;
+it slides away on scroll down and back on scroll up.
+
+## Where things live
+
+- `app/globals.css` — tokens, type scale, layout, motion primitives (`[data-reveal]`, `.words`, `.u`, `.dot`).
+- `components/brand/` — `Wordmark` (inline SVG, currentColor), `Mark` (the stacked logo painted through its alpha mask, so it recolours).
+- `components/chrome/` — `Nav`, `Footer`, `Cursor`, `Intro`.
+- `components/motion/` — `Reveal` (intersection → `.is-in`), `SplitWords`, `PulseBand`, `useIntroDone`.
+- `components/home/` — `FeaturedHero`, `ProjectExplorer` (filtering runs inside a View Transition when the browser has one).
+- `lib/way-data.ts` — featured five, filter tree, grid order, from the current `/projects/` page.
+- `lib/way-projects.json` — the 61 cases (title, client, typology, copy, Vimeo ids, blocks, gallery, prev/next), from their pages. `year` is inferred from the hero's upload date.
+- `lib/projects.ts` — the two merged into one typed list plus `ROSTER`, `STATS`, `SITE`.
+- `public/way/uploads/`, `public/way/projects/` — 713 images, WebP, ≤1800px.
+
+## Intro
+
+`components/chrome/Intro.tsx`. The studio's two clips play inside the mark
+(an alpha mask cut from `WAY LOGO B&W.jpg`), the grid draws in behind, the
+claim types itself, a counter runs, and the whole thing lifts like a curtain
+at 2.6s. Plays once per session; click or any key skips. Honours
+`prefers-reduced-motion`.
+
+## Copy and facts to validate
+
+- About-page story copy is V1 — written from what the site says about the
+  work. To be read by the agency.
+- "15+ years" is the brief's figure; no founding year is stated anywhere.
+- The filter list on the current site holds **32** client entries, not 33.
+- Project years are inferred from image upload dates; a few may be a year out.
 
 ## Regenerating from production
 
-If the source page changes, re-scrape it and rebuild `lib/way-data.ts`. The
-generator flattens `wp-content/uploads/<path>` to `/way/uploads/<path>.webp`;
-watch for basename collisions across extensions (`on.jpg` and `on.png` already
-collide and are disambiguated by hand).
-
-## Previous build
-
-The earlier immersive WAY.TV site is still on disk — `components/Hero.tsx`,
-`SlidwaayBlock`, `PulseGrid`, `InfiniteMarquee`, `ManifestoFooter`, `Loader`,
-`hooks/`, `lib/media.ts`, `lib/brands.ts`, `public/content/` — but nothing
-imports it any more. Delete it, or move it behind its own route.
+`lib/way-data.ts` and `lib/way-projects.json` come from scraping the live
+site; the scripts are described in the git history of `reboot/foundation`.
+Basename collisions across extensions (`on.jpg` / `on.png`) are handled by
+hand.

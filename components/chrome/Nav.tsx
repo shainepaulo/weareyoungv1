@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Wordmark } from "@/components/brand/Wordmark";
-import { SITE } from "@/lib/projects";
+import { SITE, STATS } from "@/lib/projects";
 
 const LINKS = [
-  { href: "/roster", label: "Roster", hint: "33 brands" },
-  { href: "/about", label: "About", hint: "15+ years" },
+  { href: "/roster", label: "Roster", hint: `${STATS.brands} brands` },
+  { href: "/about", label: "About", hint: `${STATS.years} years` },
   { href: "/contact", label: "Contact", hint: "Paris" },
 ] as const;
 

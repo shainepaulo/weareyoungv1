@@ -57,11 +57,13 @@ export function Intro() {
       };
     }
 
-    const frame = requestAnimationFrame(() => {
+    // A timeout rather than a frame: a background tab gets no frames, and the
+    // page behind must never stay locked because of that.
+    const timer = window.setTimeout(() => {
       finish();
       setState("gone");
-    });
-    return () => cancelAnimationFrame(frame);
+    }, 0);
+    return () => clearTimeout(timer);
   }, [finish]);
 
   const leave = useCallback(() => {
