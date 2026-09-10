@@ -2,23 +2,29 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
+import { WayTo } from "@/components/about/WayTo";
 import { useIntroDone } from "@/components/motion/useIntroDone";
 import type { Project } from "@/lib/projects";
 import "./hero.css";
 
 const DWELL = 4600;
-const LINES = 10;
 
-/** One drifting column of repeated words. Two copies, so the loop is seamless. */
+/**
+ * A column of drifting text. `pattern` is the rhythm: 1 prints the word, 0
+ * leaves the line empty. The gaps are what stop it reading as a paragraph and
+ * make it read as texture.
+ */
 function TextColumn({
   word,
   area,
+  pattern,
   reverse = false,
-  seconds = 26,
+  seconds = 30,
 }: {
   word: string;
   area: string;
+  pattern: number[];
   reverse?: boolean;
   seconds?: number;
 }) {
@@ -29,11 +35,12 @@ function TextColumn({
         data-reverse={reverse}
         style={{ "--dur": `${seconds}s` } as CSSProperties}
       >
+        {/* Two copies so the loop closes on itself. */}
         {[0, 1].map((copy) => (
           <div className="ghero__run" key={copy}>
-            {Array.from({ length: LINES }, (_, i) => (
+            {pattern.map((on, i) => (
               <span className="ghero__line" key={i}>
-                {word}
+                {on ? word : " "}
               </span>
             ))}
           </div>
@@ -43,19 +50,23 @@ function TextColumn({
   );
 }
 
+/** Eleven marks down the left edge, spaced — the count the sketch calls for. */
+const CREATIVE = [1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1];
+/** Far fewer on the right, in Skin and Bones' sparse rhythm. */
+const PARTNER = [0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0];
+
 /**
- * The home as a grid rather than a stage: two large stills, the five featured
- * projects set small and quiet, and columns of the claim drifting past at the
- * edges — the studio's own words used as texture.
+ * The home, as a grid that breathes.
  *
- * The two stills read as a pair. Hovering a title drives the first; the second
- * always shows the one after it, so the grid answers in two places at once and
- * there is never a dead tile. Left alone it walks the five by itself.
+ * Top band: a still on the left, the partner credits drifting on the right.
+ * Bottom band inverts it — the rotating claim on the left, a wider still
+ * pushed to the right edge. The two stills are the five featured projects,
+ * one leading and one a step behind, so the diagonal is never static and
+ * both tiles always lead somewhere.
  */
 export function GridHero({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState(0);
   const [held, setHeld] = useState(false);
-  const [cycle, setCycle] = useState(0);
   const ready = useIntroDone();
 
   useEffect(() => {
@@ -64,106 +75,57 @@ export function GridHero({ projects }: { projects: Project[] }) {
 
     const timer = window.setInterval(() => setActive((i) => (i + 1) % projects.length), DWELL);
     return () => window.clearInterval(timer);
-  }, [ready, held, projects.length, cycle]);
-
-  const select = useCallback((i: number) => {
-    setActive(i);
-    setCycle((c) => c + 1);
-  }, []);
+  }, [ready, held, projects.length]);
 
   const lead = projects[active];
   const echo = projects[(active + 1) % projects.length];
 
-  return (
-    <section
-      className="ghero tone-dark"
-      data-ready={ready}
+  const still = (project: Project, index: number, area: string, priority: boolean) => (
+    <Link
+      href={`/projects/${project.slug}`}
+      className="ghero__cell ghero__cell--media"
+      style={{ gridArea: area }}
+      data-cursor="Open"
       onMouseEnter={() => setHeld(true)}
       onMouseLeave={() => setHeld(false)}
     >
+      {projects.map((p, i) => (
+        <span className="ghero__frame" data-on={i === index} key={p.slug}>
+          <Image
+            src={p.hero}
+            alt=""
+            fill
+            priority={priority && i === 0}
+            sizes="(min-width: 900px) 42vw, 92vw"
+            style={{ objectFit: "cover" }}
+          />
+        </span>
+      ))}
+      <span className="ghero__tag mono-xs">
+        {project.name} <span className="muted">— {project.client}</span>
+      </span>
+    </Link>
+  );
+
+  return (
+    <section className="ghero tone-dark" data-ready={ready}>
       {/* The claim is set in full by the band below; the page still needs one
-          heading, and it should be the sentence rather than "Featured". */}
+          heading, and it should be the sentence rather than a section label. */}
       <h1 className="sr-only">Creative agency for brands who dare to go their own WAY</h1>
 
       <div className="ghero__grid">
-        <TextColumn word="Creative agency" area="ta" seconds={30} />
-        <TextColumn word="Creative agency" area="tc" reverse seconds={34} />
-        <TextColumn word="Creative agency" area="tb" seconds={38} />
-        <TextColumn word="Creative agency" area="td" reverse seconds={44} />
+        <TextColumn word="Creative agency" area="ca" pattern={CREATIVE} seconds={38} />
+        {still(lead, active, "ma", true)}
+        <TextColumn word="Production partner" area="pp" pattern={PARTNER} reverse seconds={46} />
 
-        {/* Large still — follows the list. */}
-        <Link
-          href={`/projects/${lead.slug}`}
-          className="ghero__cell ghero__cell--media"
-          style={{ gridArea: "ma" }}
-          data-cursor="Open"
-        >
-          {projects.map((p, i) => (
-            <span className="ghero__frame" data-on={i === active} key={p.slug}>
-              <Image
-                src={p.hero}
-                alt=""
-                fill
-                priority={i === 0}
-                sizes="(min-width: 900px) 34vw, 92vw"
-                style={{ objectFit: "cover" }}
-              />
-            </span>
-          ))}
-          <span className="ghero__tag mono-xs">
-            {lead.client} <span className="dot" />
-          </span>
-        </Link>
-
-        {/* Large still — always one ahead. */}
-        <Link
-          href={`/projects/${echo.slug}`}
-          className="ghero__cell ghero__cell--media"
-          style={{ gridArea: "mb" }}
-          data-cursor="Open"
-        >
-          {projects.map((p, i) => (
-            <span className="ghero__frame" data-on={i === (active + 1) % projects.length} key={p.slug}>
-              <Image src={p.hero} alt="" fill sizes="(min-width: 900px) 34vw, 92vw" style={{ objectFit: "cover" }} />
-            </span>
-          ))}
-          <span className="ghero__tag mono-xs">
-            {echo.client} <span className="dot" />
-          </span>
-        </Link>
-
-        {/* The five, small and quiet. */}
-        <div className="ghero__cell ghero__cell--list" style={{ gridArea: "ls" }}>
-          <div className="ghero__list-head mono-xs muted">
-            <span>Featured</span>
-            <span>
-              {String(active + 1).padStart(2, "0")}/{String(projects.length).padStart(2, "0")}
-            </span>
-          </div>
-          <ol className="ghero__list">
-            {projects.map((p, i) => (
-              <li key={p.slug}>
-                <Link
-                  href={`/projects/${p.slug}`}
-                  className="ghero__item"
-                  data-on={i === active}
-                  onMouseEnter={() => select(i)}
-                  onFocus={() => select(i)}
-                >
-                  <span className="ghero__num mono-xs">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="ghero__name display d5">{p.name}</span>
-                  <span className="ghero__year mono-xs muted">{p.year ?? "—"}</span>
-                </Link>
-              </li>
-            ))}
-          </ol>
-          <div className="ghero__progress" key={`${active}-${cycle}`} data-paused={held} />
+        <div className="ghero__cell ghero__cell--claim" style={{ gridArea: "wt" }}>
+          <WayTo variant="hero" />
           <a href="#work" className="ghero__scroll mono-xs">
             All work <span className="dot dot--live" />
           </a>
         </div>
 
-        <TextColumn word="Creative agency" area="te" seconds={26} />
+        {still(echo, (active + 1) % projects.length, "mb", false)}
       </div>
     </section>
   );

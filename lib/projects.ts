@@ -1,5 +1,6 @@
 import { FEATURED, FILTER_LISTS, PROJECTS } from "./way-data";
 import details from "./way-projects.json";
+import { PROJECT_TYPES, TYPES } from "./taxonomy";
 
 export interface Block {
   side: "left" | "right";
@@ -54,7 +55,6 @@ const tagLabel = (list: string) =>
   new Map(FILTER_LISTS[list].map((o) => [o.filter.slice(1), o.label]));
 
 const CLIENT_BY_TAG = tagLabel("12");
-const TYPE_BY_TAG = tagLabel("11");
 
 const DETAIL = new Map((details as Detail[]).map((d) => [d.slug, d]));
 const FEATURED_SLUGS = new Set(FEATURED.map((f) => slugOf(f.href)));
@@ -75,7 +75,8 @@ export const PROJECT_LIST: Project[] = PROJECTS.map((p, i) => {
     name: d?.title || p.title,
     client: titleCase(client),
     brand: brandTag ? CLIENT_BY_TAG.get(brandTag)! : titleCase(client),
-    types: p.tags.filter((t) => TYPE_BY_TAG.has(t)).map((t) => TYPE_BY_TAG.get(t)!),
+    // Disciplines come from the re-tagged taxonomy, not the old filter list.
+    types: PROJECT_TYPES[slug] ?? [],
     typology: d?.typology ?? "",
     year: d?.year ?? null,
     cover: p.image,
@@ -95,7 +96,7 @@ export const BY_SLUG = new Map(PROJECT_LIST.map((p) => [p.slug, p]));
 
 export const FEATURED_PROJECTS: Project[] = FEATURED.map((f) => BY_SLUG.get(slugOf(f.href))!).filter(Boolean);
 
-export const TYPES = FILTER_LISTS["11"].map((o) => o.label);
+export { TYPES } from "./taxonomy";
 export const BRANDS = FILTER_LISTS["12"].map((o) => o.label);
 
 /** Projects grouped by brand, alphabetical, for the roster. */
@@ -124,3 +125,25 @@ export const SITE = {
   studio: { label: "WAY.TV", href: "https://www.waytv.paris/" },
   maps: "https://maps.google.com/?q=17+Quai+des+Grands+Augustins+75006+Paris",
 };
+
+/**
+ * The project list in a fixed shuffle — the roster wall is meant to read as
+ * one body of work, not as a ranking or an alphabet. Seeded so the server and
+ * the browser agree and the page stays prerenderable.
+ */
+export const SHUFFLED: Project[] = (() => {
+  const out = [...PROJECT_LIST];
+  let seed = 0x5eed;
+  const next = () => {
+    // xorshift: small, deterministic, good enough to break up the order.
+    seed ^= seed << 13;
+    seed ^= seed >>> 17;
+    seed ^= seed << 5;
+    return Math.abs(seed) / 0x7fffffff;
+  };
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(next() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+})();

@@ -247,3 +247,57 @@
   animation-duration: 0.6s;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* --- Collapsed grid + the control that unrolls it ------------------------ */
+/* Capped by height rather than by a count, so "about two screens" means the
+   same thing on a phone and on a desktop, whatever the column count. */
+.cards[data-collapsed="true"] {
+  max-height: 165vh;
+  overflow: hidden;
+  /* The fade is the honest part: it says there is more below the cut. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+}
+
+.more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  margin-top: clamp(20px, 3vh, 36px);
+  padding: 22px 24px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s;
+}
+
+.more:hover,
+.more:focus-visible {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+
+.more__arrow {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.more__arrow[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .more,
+  .more__arrow {
+    transition: none;
+  }
+}

@@ -73,108 +73,6 @@
   gap: 12px;
 }
 
-/* --- Roster ------------------------------------------------------------- */
-.roster__index {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 14px;
-  letter-spacing: 0.12em;
-  border-top: 1px solid var(--line);
-  padding-top: 20px;
-}
-
-.roster__index a {
-  padding: 4px 0;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.3s;
-}
-
-.roster__index a:hover {
-  border-color: currentColor;
-}
-
-.roster {
-  background: var(--bg);
-  color: var(--fg);
-}
-
-.roster__group {
-  position: relative;
-  padding: clamp(32px, 5vh, 64px) var(--gutter);
-  border-top: 1px solid var(--line);
-  scroll-margin-top: var(--nav-h);
-}
-
-.roster__brand {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
-.roster__strip {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 78%;
-  gap: clamp(12px, 1.5vw, 24px);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  padding-bottom: 4px;
-  margin: 0 calc(var(--gutter) * -1);
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
-}
-
-.roster__strip::-webkit-scrollbar {
-  display: none;
-}
-
-.roster__strip > li {
-  scroll-snap-align: start;
-}
-
-.tile {
-  display: grid;
-  gap: 6px;
-  color: var(--fg);
-}
-
-.tile__media {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: #111;
-  margin: 0 0 6px;
-}
-
-.tile__media img {
-  transition: transform 1.1s var(--ease-out);
-}
-
-.tile:hover .tile__media img {
-  transform: scale(1.05);
-}
-
-@media (min-width: 640px) {
-  .roster__strip {
-    grid-auto-columns: 46%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .roster__strip {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-columns: auto;
-    overflow: visible;
-    margin: 0;
-    padding: 0;
-  }
-}
-
 /* --- About -------------------------------------------------------------- */
 .about__story {
   display: grid;
@@ -214,7 +112,9 @@
 .service__row {
   position: relative;
   display: grid;
-  grid-template-columns: 2.5em 1fr auto;
+  /* minmax(0,…) or the name column refuses to shrink below its min-content and
+     ENTERTAINMENT & CULTURE pushes the page sideways on a phone. */
+  grid-template-columns: 2.5em minmax(0, 1fr) auto;
   align-items: baseline;
   gap: 12px;
   padding: 22px 0;
@@ -222,6 +122,9 @@
 }
 
 .service__name {
+  /* Same curve as d2, lower floor: Druk Wide Extended needs the room. */
+  font-size: clamp(1.1rem, 6.4vw, 6rem);
+  overflow-wrap: anywhere;
   transition: transform 0.6s var(--ease-out);
 }
 

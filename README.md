@@ -38,8 +38,8 @@ sections flip tone rather than change colour.
 
 | route | |
 |---|---|
-| `/` | Intro → grid hero (two large stills, the five featured set small, "Creative agency" drifting past in mono columns) → the slogan in full, white, dot before each fragment, closed by the mark → filters (All / Client / Most recent / Type of work) → chronological grid of 61. |
-| `/roster` | The directors as a small four-column list — hover dims the rest — then all the work grouped by brand. |
+| `/` | Intro → grid hero: a still and the partner credits above, the rotating claim and a wider still below, "Creative agency" drifting down the left edge → the slogan in full, white, a dot before each fragment, closed by the mark → filters (All / Client / Most recent / Type of work) → the work, capped at two screens until you unroll it. |
+| `/roster` | The directors as a small four-column list, then every project as one flat wall of equal tiles in no order. Hovering a name greys the wall down to that director's work. |
 | `/roster/[director]` | Bio and role on a sticky rail, every project they signed in a two-column grid. |
 | `/about` | OUR WAY TO ___, the eight endings from the current site rewriting themselves every two seconds; then the manifesto verbatim, the six disciplines with live counts, numbers, address. |
 | `/contact` | The address card, phone, mail, maps, studio. |
@@ -58,9 +58,10 @@ it slides away on scroll down and back on scroll up.
 - `components/brand/` — `Wordmark` (inline SVG, currentColor — also what closes the slogan), `Mark` (the stacked logo painted through its alpha mask).
 - `components/chrome/` — `Nav`, `Footer`, `Cursor`, `Intro`.
 - `components/motion/` — `Reveal`, `SplitWords`, `PulseBand` (the slogan band; `logoTail` swaps the last word for the mark), `useIntroDone`.
-- `components/home/` — `GridHero`, `ProjectExplorer` (filtering runs inside a View Transition when the browser has one).
+- `components/home/` — `GridHero`, `ProjectExplorer` (filtering runs inside a View Transition when the browser has one; the grid is height-capped until unrolled).
 - `components/about/WayTo.tsx` — OUR WAY TO and its eight endings.
-- `components/roster/DirectorsIndex.tsx` — the names.
+- `components/roster/RosterBoard.tsx` — the names and the wall, sharing one hover.
+- `lib/taxonomy.ts` — the six disciplines and the per-project tagging. **See below.**
 - `lib/way-data.ts` — featured five, filter tree, grid order, from the current `/projects/` page.
 - `lib/way-projects.json` — the 61 cases, from their pages. `year` is inferred from the hero's upload date.
 - `lib/projects.ts` — the two merged into one typed list plus `ROSTER`, `STATS`, `SITE`.
@@ -86,6 +87,20 @@ those credits are true.
 Replace `SEED` with the real roster and each director's real `projects`, then
 set `SAMPLE = false` — the two "sample" notices (roster header, director page)
 disappear with it.
+
+## The taxonomy was rebuilt
+
+The old site filtered on 360, Brand Influence, Creative Content, Event Design,
+Roadshow and Shopper Experience. The six now are **360, Brand Content,
+Entertainment & Culture, Event Design, Sport, Retail Activation** — and they
+could not be reached by renaming: Sport and Entertainment & Culture did not
+exist in the old data at all. So every one of the 61 projects was re-read from
+its own case copy and re-tagged by what it actually is, in `lib/taxonomy.ts`.
+Shopper Experience folded into Event Design; retail work — stores, pop-ups,
+facades, in-store — became Retail Activation.
+
+That tagging is a reading, not a record. It is one file, one line per project,
+made to be argued with.
 
 ## Other copy and facts to validate
 

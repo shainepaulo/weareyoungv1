@@ -31,7 +31,7 @@ const EVERY = 2000;
  *
  * The timer only runs while the line is on screen.
  */
-export function WayTo() {
+export function WayTo({ variant = "about" }: { variant?: "about" | "hero" } = {}) {
   const [index, setIndex] = useState(0);
   const [live, setLive] = useState(true);
   const ref = useRef<HTMLParagraphElement>(null);
@@ -51,8 +51,8 @@ export function WayTo() {
   }, [live]);
 
   return (
-    <p ref={ref} className="wayto display" aria-label={`Our way to ${WAY_TO.join(", ")}`}>
-      <span className="wayto__lead d2" aria-hidden="true">
+    <p ref={ref} className={`wayto wayto--${variant}`} data-variant={variant} aria-label={`Our way to ${WAY_TO.join(", ")}`}>
+      <span className="wayto__lead" aria-hidden="true">
         Our way to
       </span>
 
@@ -60,7 +60,7 @@ export function WayTo() {
         {WAY_TO.map((word, i) => (
           <span
             key={word}
-            className="wayto__word d2"
+            className="wayto__word display"
             data-state={i === index ? "in" : i === (index - 1 + WAY_TO.length) % WAY_TO.length ? "out" : "wait"}
           >
             {word}

@@ -1,4 +1,7 @@
 /* --- OUR WAY TO ___ ----------------------------------------------------- */
+/* Two settings of the same line. On /about it is the page's headline, both
+   halves in Druk. In the hero it sits in a quiet grid of mono texture, so the
+   lead drops to a small label and only the ending is allowed to shout. */
 .wayto {
   display: grid;
   gap: 0.1em;
@@ -24,7 +27,6 @@
 .wayto__word {
   grid-area: 1 / 1;
   display: block;
-  color: var(--accent);
   transition:
     transform 0.7s var(--ease-out),
     opacity 0.5s var(--ease-out);
@@ -46,6 +48,42 @@
   transform: translate3d(0, -110%, 0);
   opacity: 0;
   pointer-events: none;
+}
+
+/* --- /about: the headline ----------------------------------------------- */
+.wayto--about .wayto__lead {
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  font-size: var(--d2);
+}
+
+.wayto--about .wayto__word {
+  font-size: var(--d2);
+  color: var(--accent);
+}
+
+/* --- hero: a label and an ending ---------------------------------------- */
+.wayto--hero {
+  gap: 0.5em;
+}
+
+.wayto--hero .wayto__lead {
+  font-family: var(--font-mono);
+  font-size: var(--m-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.wayto--hero .wayto__word {
+  font-size: clamp(1.3rem, 2.9vw, 3.1rem);
+  color: var(--fg);
+}
+
+.wayto--hero .wayto__word .blink {
+  color: var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {
