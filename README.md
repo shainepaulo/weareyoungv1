@@ -62,6 +62,8 @@ it slides away on scroll down and back on scroll up.
 - `components/about/WayTo.tsx` — OUR WAY TO and its eight endings.
 - `components/roster/RosterBoard.tsx` — the names and the wall, sharing one hover.
 - `lib/taxonomy.ts` — the six disciplines and the per-project tagging. **See below.**
+- `lib/type-metrics.ts` — measured per-character advance widths for the display face, so a case title can be sized to its own longest word. Druk Wide is wide enough that TOUTÂNKHAMON is one unbreakable 12.6em token; CSS cannot size type to its content, so the fit is computed here and handed to the stylesheet as a length.
+- `lib/brands.ts` + `public/brands/` — the four client marks in the roster's footer strip, drawn as CSS masks so one flat path takes `currentColor`.
 - `lib/way-data.ts` — featured five, filter tree, grid order, from the current `/projects/` page.
 - `lib/way-projects.json` — the 61 cases, from their pages. `year` is inferred from the hero's upload date.
 - `lib/projects.ts` — the two merged into one typed list plus `ROSTER`, `STATS`, `SITE`.
@@ -110,6 +112,10 @@ made to be argued with.
   not from the current site. Approved as final, and left verbatim — including
   "restore value the value of content", on the client's call.
 - The pulse mark in the nav is deliberately inert; it has no destination yet.
+- The four client marks in the roster's footer strip are registered trademarks
+  of their owners, shown the way an agency shows a client list. Point
+  `lib/brands.ts` at the brands' own supplied files if legal wants the
+  official assets.
 - The four client marks in the roster footer are registered trademarks of their
   owners, used as a client list. Swap  for the brands' own
   supplied files if legal asks for the official assets.
