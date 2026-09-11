@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SplitWords } from "@/components/motion/SplitWords";
 import { ProjectExplorer, type Card } from "@/components/home/ProjectExplorer";
 import { RosterBoard, type DirectorLink, type Tile } from "@/components/roster/RosterBoard";
 import { DIRECTORS, SAMPLE } from "@/lib/directors";
@@ -38,17 +37,11 @@ const cards: Card[] = PROJECT_LIST.map((p) => ({
 export default function RosterPage() {
   return (
     <>
-      <section className="section tone-dark page-hero">
-        <div className="gridlines" />
-        <span className="eyebrow">Roster</span>
-        <h1 className="display d1">
-          <SplitWords text={`${STATS.projects} projects.`} hero />
-        </h1>
-        <p className="mono-l measure muted">
-          Everything we have signed, in no particular order. Point at a director to see their work
-          come forward, or filter the whole catalogue below.
-        </p>
-      </section>
+      {/* No hero: the page opens straight on the names and the wall. The page
+          still needs one heading, so it is carried for assistive tech only. */}
+      <h1 className="sr-only">
+        Roster — {DIRECTORS.length} directors, {STATS.projects} projects
+      </h1>
 
       <RosterBoard directors={directors} tiles={tiles} sample={SAMPLE} />
 

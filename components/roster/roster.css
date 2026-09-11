@@ -3,7 +3,9 @@
   position: relative;
   background: var(--bg);
   color: var(--fg);
-  padding: clamp(28px, 4vh, 56px) var(--gutter) clamp(48px, 8vh, 96px);
+  /* The page opens straight onto the board now that the hero is gone, so this
+     carries the clearance under the fixed nav that the hero used to provide. */
+  padding: calc(var(--nav-h) + 40px) var(--gutter) clamp(48px, 8vh, 96px);
   border-top: 1px solid var(--line);
 }
 

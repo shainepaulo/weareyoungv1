@@ -199,15 +199,19 @@
        collapses the whole top band to nothing. */
     grid-template-rows: repeat(8, minmax(0, 1fr));
     /* Every named area has to stay a rectangle or the browser drops the lot. */
+    /* The claim takes the whole left half from row 6 down. Two columns were
+       not enough: "GENERATIONS" is 539px at this size against a 386px box, so
+       the longest endings could not wrap and were clipped. Three columns clear
+       it everywhere, and it puts the line flush to the gutter, as in the comp. */
     grid-template-areas:
       "ca ma ma pp hw hw"
       "ca ma ma pp hw hw"
       "ca ma ma pp hw hw"
       "ca wd wd mb mb wq"
       "ca wd wd mb mb wq"
-      "ca wt wt mb mb wq"
-      "ca wt wt mb mb wq"
-      "ca wt wt mb mb wq";
+      "wt wt wt mb mb wq"
+      "wt wt wt mb mb wq"
+      "wt wt wt mb mb wq";
   }
 
   .ghero__cell--text {

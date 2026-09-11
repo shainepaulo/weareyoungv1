@@ -39,7 +39,7 @@ sections flip tone rather than change colour.
 | route | |
 |---|---|
 | `/` | Intro → grid hero to the design comp: a still, the partner credits tight against it and HOW ARE WE at the right edge; below, WHAT WE DO and the rotating claim, a square still, and WHAT WE DO drifting past it → the slogan in full, white, closed by the mark. The landing ends there. |
-| `/roster` | The directors as a small four-column list, then every project as one flat wall of equal tiles in no order — hovering a name greys the wall down to that director's work — then ALL WORK: the filters and the height-capped catalogue, moved here off the landing. |
+| `/roster` | The directors as a small four-column list, then every project as one flat wall of equal tiles in no order — hovering a name greys the wall down to that director's work — then ALL WORK: the filters and the height-capped catalogue. |
 | `/roster/[director]` | Bio and role on a sticky rail, every project they signed in a two-column grid. |
 | `/about` | OUR WAY TO ___, the eight endings from the current site rewriting themselves every two seconds; then the manifesto verbatim, the six disciplines with live counts, numbers, address. |
 | `/contact` | The address card, phone, mail, maps, studio. |
@@ -110,6 +110,9 @@ made to be argued with.
   not from the current site. Approved as final, and left verbatim — including
   "restore value the value of content", on the client's call.
 - The pulse mark in the nav is deliberately inert; it has no destination yet.
+- The four client marks in the roster footer are registered trademarks of their
+  owners, used as a client list. Swap  for the brands' own
+  supplied files if legal asks for the official assets.
 - "15+ years" is the brief's figure; no founding year is stated anywhere.
 - The filter list on the current site holds **32** client entries, not 33.
 - Project years are inferred from image upload dates; a few may be a year out.

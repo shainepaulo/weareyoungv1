@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { Fragment, type CSSProperties } from "react";
 
 /**
  * Wraps every word so it can rise out of its own line box. Server-safe: no
@@ -29,10 +29,15 @@ export function SplitWords({
       aria-label={text}
     >
       {words.map((word, i) => (
-        <span className="w" key={`${word}-${i}`} aria-hidden="true">
-          <span style={{ "--i": start + i } as CSSProperties}>{word}</span>
+        <Fragment key={`${word}-${i}`}>
+          <span className="w" aria-hidden="true">
+            <span style={{ "--i": start + i } as CSSProperties}>{word}</span>
+          </span>
+          {/* The separator lives outside `.w`. Inside it, a trailing space sits
+              in an inline-block with overflow:hidden and collapses away, which
+              is what turned "BEACH PARTY" into "BEACHPARTY". */}
           {i < words.length - 1 ? " " : ""}
-        </span>
+        </Fragment>
       ))}
     </span>
   );

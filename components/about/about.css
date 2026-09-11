@@ -17,6 +17,11 @@
 .wayto__slot {
   position: relative;
   display: grid;
+  /* Pin the single column to the available width. Left to `auto` it resolves
+     to max-content — the widest ending, unwrapped — so nothing ever wrapped
+     and everything past the slot's edge was simply clipped by the rule below
+     ("STAND OU", "TOGETHE"). */
+  grid-template-columns: minmax(0, 1fr);
   /* Clips the endings on their way in and out; the padding keeps descenders
      and the underscore inside the visible box. */
   overflow: hidden;

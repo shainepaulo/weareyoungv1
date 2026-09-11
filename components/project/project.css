@@ -24,7 +24,12 @@
 }
 
 .case__title {
-  max-width: 14ch;
+  /* --fit is handed down per project: the largest size at which this title's
+     longest unbreakable word still clears the gutters. Without it,
+     TOUTÂNKHAMON and BEACHPARTY simply ran off the page. */
+  font-size: min(var(--d1), var(--fit, var(--d1)));
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .case__meta {

@@ -62,7 +62,7 @@ const rhythm = (...runs: number[]) =>
 
 const CREATIVE = rhythm(3, 4, 1, 6, 2, 8, 1, 13);
 const PARTNER = rhythm(3, 4, 1, 6, 2, 3);
-const WHAT = rhythm(1, 3, 2, 4, 1, 8);
+const YOUNG = rhythm(1, 3, 2, 4, 1, 8);
 
 /**
  * The landing, laid out to the design comp.
@@ -133,7 +133,7 @@ export function GridHero({ projects }: { projects: Project[] }) {
         <TextColumn word="Production partner" area="pp" pattern={PARTNER} reverse seconds={46} />
 
         <div className="ghero__cell ghero__note" style={{ gridArea: "hw" }}>
-          <h2 className="mono-xs">How are we</h2>
+          <h2 className="mono-xs">How we are</h2>
           <p className="mono-s muted">{SITE.how}</p>
         </div>
 
@@ -144,14 +144,11 @@ export function GridHero({ projects }: { projects: Project[] }) {
 
         <div className="ghero__cell ghero__cell--claim" style={{ gridArea: "wt" }}>
           <WayTo variant="hero" />
-          <Link href="/roster#work" className="ghero__scroll mono-xs">
-            All work <span className="dot dot--live" />
-          </Link>
         </div>
 
         {still(echo, (active + 1) % projects.length, "mb", "square", false)}
 
-        <TextColumn word="What we do" area="wq" pattern={WHAT} seconds={34} />
+        <TextColumn word="We are young" area="wq" pattern={YOUNG} seconds={34} />
       </div>
     </section>
   );

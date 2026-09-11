@@ -552,3 +552,50 @@ html.has-cursor * {
 @media (min-width: 768px) {
   .nav__pulse { display: inline-flex; }
 }
+
+/* The client marks running across the foot of the roster. Same strip and same
+   animation as the claim; only the cargo differs. Until the real logo files
+   land, each brand is set as a wordmark. */
+.footer__marquee-track[data-band="brands"] {
+  font-size: clamp(1.6rem, 5vw, 5rem);
+}
+
+.footer__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
+.footer__brand-mark {
+  display: block;
+  width: 0.92em;
+  height: 0.92em;
+  background: currentColor;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* Instagram and the rest of the follow column. */
+.footer__social {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  transition: color 0.3s;
+}
+
+.footer__social svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.footer__social:hover,
+.footer__social:focus-visible {
+  color: var(--accent);
+}
+

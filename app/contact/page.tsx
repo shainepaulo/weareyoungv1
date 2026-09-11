@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PulseBand } from "@/components/motion/PulseBand";
 import { Reveal } from "@/components/motion/Reveal";
 import { SplitWords } from "@/components/motion/SplitWords";
 import { SITE } from "@/lib/projects";
@@ -53,8 +52,6 @@ export default function ContactPage() {
           </a>
         </Reveal>
       </section>
-
-      <PulseBand tone="light" perRow={2} words={["Go", "your", "own", "WAY", "we'll", "be there"]} />
     </>
   );
 }

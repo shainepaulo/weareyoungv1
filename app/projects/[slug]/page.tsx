@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,6 +7,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { SplitWords } from "@/components/motion/SplitWords";
 import { Vimeo } from "@/components/project/Vimeo";
 import { BY_SLUG, PROJECT_LIST } from "@/lib/projects";
+import { fitFontSize } from "@/lib/type-metrics";
 import "@/components/project/project.css";
 
 export function generateStaticParams() {
@@ -44,7 +46,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <Reveal as="span" kind="fade" className="eyebrow">
             Case {pad(p.index)} / {pad(PROJECT_LIST.length)}
           </Reveal>
-          <Reveal as="h1" kind="none" className="display d1 case__title">
+          {/* Sized to its own longest word: Druk Wide is wide enough that
+              TOUTÂNKHAMON or BEACHPARTY run off the page at the display size. */}
+          <Reveal
+            as="h1"
+            kind="none"
+            className="display case__title"
+            style={{ "--fit": fitFontSize(p.name) } as CSSProperties}
+          >
             <SplitWords text={p.name} />
             <span className="blink" aria-hidden="true">_</span>
           </Reveal>

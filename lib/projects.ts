@@ -123,6 +123,7 @@ export const SITE = {
   phoneHref: "tel:+33182156199",
   mail: "contact@weareyoung-agency.com",
   studio: { label: "WAY.TV", href: "https://www.waytv.paris/" },
+  instagram: "https://www.instagram.com/wayagency.paris/",
   maps: "https://maps.google.com/?q=17+Quai+des+Grands+Augustins+75006+Paris",
 
   /**
