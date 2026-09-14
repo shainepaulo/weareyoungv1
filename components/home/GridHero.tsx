@@ -133,7 +133,7 @@ export function GridHero({ projects }: { projects: Project[] }) {
         <TextColumn word="Production partner" area="pp" pattern={PARTNER} reverse seconds={46} />
 
         <div className="ghero__cell ghero__note" style={{ gridArea: "hw" }}>
-          <h2 className="mono-xs">How we are</h2>
+          <h2 className="mono-xs">Who are we</h2>
           <p className="mono-s muted">{SITE.how}</p>
         </div>
 
