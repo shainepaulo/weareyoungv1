@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ProjectExplorer, type Card } from "@/components/home/ProjectExplorer";
 import { RosterBoard, type DirectorLink, type Tile } from "@/components/roster/RosterBoard";
-import { DIRECTORS, SAMPLE } from "@/lib/directors";
+import { DIRECTORS } from "@/lib/directors";
 import { PROJECT_LIST, SHUFFLED, STATS, YEAR_RANGE } from "@/lib/projects";
 import "../pages.css";
 
@@ -43,7 +43,7 @@ export default function RosterPage() {
         Roster — {DIRECTORS.length} directors, {STATS.projects} projects
       </h1>
 
-      <RosterBoard directors={directors} tiles={tiles} sample={SAMPLE} />
+      <RosterBoard directors={directors} tiles={tiles} />
 
       {/* The catalogue, moved off the landing page: same filters, same
           height-capped grid, same control to unroll it. */}

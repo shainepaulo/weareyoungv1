@@ -31,11 +31,9 @@ export interface Tile {
 export function RosterBoard({
   directors,
   tiles,
-  sample,
 }: {
   directors: DirectorLink[];
   tiles: Tile[];
-  sample: boolean;
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
 
@@ -47,7 +45,6 @@ export function RosterBoard({
         <h2 id="directors-title" className="eyebrow">
           Directors
         </h2>
-        {sample && <span className="mono-xs muted">Sample names — to be replaced</span>}
       </header>
 
       <div className="board__names mono" onMouseLeave={() => setHovered(null)}>
