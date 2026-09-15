@@ -60,9 +60,17 @@ function TextColumn({
 const rhythm = (...runs: number[]) =>
   runs.flatMap((n, i) => Array.from({ length: n }, () => (i % 2 === 0 ? 1 : 0)));
 
-const CREATIVE = rhythm(3, 4, 1, 6, 2, 8, 1, 13);
-const PARTNER = rhythm(3, 4, 1, 6, 2, 3);
-const YOUNG = rhythm(1, 3, 2, 4, 1, 8);
+/* Counted off the comp's own line positions (pdftotext -bbox on page 1 of
+   WAY AGENCY - Arborescence.pdf): the left column marks land on lines 0,1,2 —
+   6 — 17,18 — 30, the partner column on 0,1,2 — 6 — 17,18 — 45, and the right
+   column on 0 — 6 — 21,22 before it hands over to the agency line. */
+const CREATIVE = rhythm(3, 3, 1, 10, 2, 11, 1, 13);
+const PARTNER = rhythm(3, 3, 1, 10, 2, 26, 1, 6);
+const YOUNG = rhythm(1, 5, 1, 14, 2, 9);
+/* The comp closes the right column with the agency line, twice, a line apart,
+   and drops a single partner line under the echo still. */
+const CREATIVE_TAIL = rhythm(1, 1, 1, 12);
+const PARTNER_TAIL = rhythm(1, 4);
 
 /**
  * The landing, laid out to the design comp.
@@ -132,12 +140,16 @@ export function GridHero({ projects }: { projects: Project[] }) {
 
         <TextColumn word="Production partner" area="pp" pattern={PARTNER} reverse seconds={46} />
 
+        {/* The comp sets one more partner line under the echo still, hard
+            against the bottom of the screen. */}
+        <TextColumn word="Production partner" area="pb" pattern={PARTNER_TAIL} reverse seconds={44} />
+
         <div className="ghero__cell ghero__note" style={{ gridArea: "hw" }}>
-          <h2 className="mono-xs">Who are we</h2>
+          <h2 className="mono-xs">Who we are</h2>
           <p className="mono-s muted">{SITE.how}</p>
         </div>
 
-        <div className="ghero__cell ghero__note" style={{ gridArea: "wd" }}>
+        <div className="ghero__cell ghero__note ghero__note--what" style={{ gridArea: "wd" }}>
           <h2 className="mono-xs">What we do</h2>
           <p className="mono-s muted">{SITE.what}</p>
         </div>
@@ -146,9 +158,13 @@ export function GridHero({ projects }: { projects: Project[] }) {
           <WayTo variant="hero" />
         </div>
 
-        {still(echo, (active + 1) % projects.length, "mb", "square", false)}
+        {still(echo, (active + 1) % projects.length, "mb", "echo", false)}
 
         <TextColumn word="We are young" area="wq" pattern={YOUNG} seconds={34} />
+
+        {/* The comp runs the right edge in two halves: the studio's name down
+            the top of it, the agency line closing the bottom. */}
+        <TextColumn word="Creative agency" area="cb" pattern={CREATIVE_TAIL} reverse seconds={38} />
       </div>
     </section>
   );

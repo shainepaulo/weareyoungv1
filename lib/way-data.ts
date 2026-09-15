@@ -33,33 +33,35 @@ export interface Project {
 }
 
 export const FEATURED: FeaturedSlide[] = [
-  {
-    "id": "2796",
-    "href": "https://www.weareyoung-agency.com/projects/adidas-arena/",
-    "number": "01.",
-    "title": "ADIDAS ARENA",
-    "image": "/way/uploads/2024/05/arena-adidas.webp"
-  },
+  /* Order is the landing rotation, and the comp fixes the opening pair: the
+     lead still is the rugby mouthguard, the echo beside it Quai 54. */
   {
     "id": "2765",
     "href": "https://www.weareyoung-agency.com/projects/adidas-this-is-new-rugby/",
-    "number": "02.",
+    "number": "01.",
     "title": "THIS IS NEW RUGBY",
-    "image": "/way/uploads/2024/05/this-is-new-rugby-ii.webp"
-  },
-  {
-    "id": "2814",
-    "href": "https://www.weareyoung-agency.com/projects/women-in-tech-beyond-ceiling/",
-    "number": "03.",
-    "title": "BEYOND CEILING",
-    "image": "/way/uploads/2024/05/lia-mention-scaled.webp"
+    "image": "/way/uploads/2024/05/this-is-new-rugby-mouthguard.png"
   },
   {
     "id": "2675",
     "href": "https://www.weareyoung-agency.com/projects/quai-54/",
-    "number": "04.",
+    "number": "02.",
     "title": "QUAI 54",
     "image": "/way/uploads/2023/08/quai54-2023-way-jlnjlvt.webp"
+  },
+  {
+    "id": "2796",
+    "href": "https://www.weareyoung-agency.com/projects/adidas-arena/",
+    "number": "03.",
+    "title": "ADIDAS ARENA",
+    "image": "/way/uploads/2024/05/arena-adidas.webp"
+  },
+  {
+    "id": "2814",
+    "href": "https://www.weareyoung-agency.com/projects/women-in-tech-beyond-ceiling/",
+    "number": "04.",
+    "title": "BEYOND CEILING",
+    "image": "/way/uploads/2024/05/lia-mention-scaled.webp"
   },
   {
     "id": "2651",

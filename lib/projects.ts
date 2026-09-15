@@ -124,14 +124,16 @@ export const SITE = {
   mail: "contact@weareyoung-agency.com",
   studio: { label: "WAY.TV", href: "https://www.waytv.paris/" },
   instagram: "https://www.instagram.com/wayagency.paris/",
+  vimeo: "https://vimeo.com/waytv",
   maps: "https://maps.google.com/?q=17+Quai+des+Grands+Augustins+75006+Paris",
 
   /**
    * Landing copy. Unlike the /about manifesto this is NOT from the current
-   * site — it comes from the design comp and is approved as final. Left
-   * verbatim, including "restore value the value", on the client's call.
+   * site — it's transcribed verbatim from the client's approved final PDF
+   * comp (WAY AGENCY - Arborescence.pdf), including "restore value the
+   * value", on the client's call.
    */
-  how: "A collective of rebellious minds moving as one, driven to push past the limits and bring ideas to life.",
+  how: "A collective of rebellious minds moving as one, driven to push boundaries and make provocative ideas happen.",
   what: "Aiming to restore value the value of content in sport, brands and culture.",
 };
 

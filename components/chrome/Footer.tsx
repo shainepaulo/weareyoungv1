@@ -27,7 +27,9 @@ function bandFor(pathname: string): Band {
 }
 
 export function Footer() {
-  const band = bandFor(usePathname());
+  const pathname = usePathname();
+  const band = bandFor(pathname);
+  const isLanding = pathname === "/";
 
   return (
     <footer className="footer tone-dark">
@@ -56,7 +58,7 @@ export function Footer() {
                           role="img"
                           aria-label={brand.name}
                         />
-                        {i === BRAND_MARKS.length - 1 && <span className="dot" />}
+                        {i === 0 && <span className="dot" />}
                       </span>
                     )),
                   )}
@@ -87,7 +89,7 @@ export function Footer() {
         <div className="footer__col mono-s">
           <h4>Navigate</h4>
           <Link className="u" href="/">
-            Home
+            {isLanding ? "Projects" : "Home"}
           </Link>
           <Link className="u" href="/roster">
             Roster
@@ -100,22 +102,34 @@ export function Footer() {
           </Link>
         </div>
 
-        <div className="footer__col mono-s">
-          <h4>Follow</h4>
-          <a
-            className="footer__social"
-            href={SITE.instagram}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="WAY on Instagram"
-          >
-            <Instagram />
-            <span>Instagram</span>
-          </a>
-          <a className="u" href={SITE.studio.href} target="_blank" rel="noreferrer">
-            {SITE.studio.label} — film studio ↗
-          </a>
-        </div>
+        {isLanding ? (
+          <div className="footer__col mono-s">
+            <h4>Elsewhere</h4>
+            <a className="u" href={SITE.studio.href} target="_blank" rel="noreferrer">
+              {SITE.studio.label} — film studio ↗
+            </a>
+            <a className="u" href={SITE.vimeo} target="_blank" rel="noreferrer">
+              Vimeo ↗
+            </a>
+          </div>
+        ) : (
+          <div className="footer__col mono-s">
+            <h4>Follow</h4>
+            <a
+              className="footer__social"
+              href={SITE.instagram}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="WAY on Instagram"
+            >
+              <Instagram />
+              <span>Instagram</span>
+            </a>
+            <a className="u" href={SITE.studio.href} target="_blank" rel="noreferrer">
+              {SITE.studio.label} — film studio ↗
+            </a>
+          </div>
+        )}
 
         <Mark className="footer__mark" />
       </div>

@@ -17,8 +17,8 @@ export interface BrandMark {
 }
 
 export const BRAND_MARKS: BrandMark[] = [
+  { name: "Netflix", src: "/brands/netflix.svg" },
   { name: "adidas", src: "/brands/adidas.svg" },
   { name: "Jordan", src: "/brands/jordan.svg" },
   { name: "Reebok", src: "/brands/reebok.svg" },
-  { name: "Netflix", src: "/brands/netflix.svg" },
 ];

@@ -87,10 +87,10 @@
   aspect-ratio: 16 / 10;
 }
 
-/* Square, and held to the left of its area so the space it frees is on the
-   right — where the drifting words go. */
-.ghero__cell--square {
-  aspect-ratio: 1;
+/* The echo still. Its shape is the comp's second frame, 245.9 x 170.2pt, and
+   on desktop that ratio is what turns the row band into its width. */
+.ghero__cell--echo {
+  aspect-ratio: 245.9 / 170.2;
   justify-self: start;
   width: 100%;
 }
@@ -151,7 +151,10 @@
 }
 
 .ghero__note p {
-  max-width: 34ch;
+  /* Wide enough that the column, not the cap, decides where the line breaks —
+     which is what puts "…value of content" on the comp's first line and keeps
+     the note two lines deep, with air under it before the claim. */
+  max-width: 46ch;
   line-height: 1.6;
 }
 
@@ -185,47 +188,74 @@
      to its content and the fr rows resolve against that instead of the screen. */
   .ghero {
     height: 100svh;
+    /* The comp runs the drifting columns almost to the glass — 6.3pt in from
+       the edge, not the page gutter the nav keeps — and leaves only a sliver
+       under the last line. */
+    padding: calc(var(--nav-h) + 12px) 0.657vw 12px;
   }
 
   .ghero__grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    /* Eight equal rows rather than four, so the claim gets three of them.
-       Its box is sized by the longest ending — "BRING PEOPLE TOGETHER" runs to
-       three lines in a column this narrow — and two rows left it a few pixels
-       short, which it spilled upward over the note above.
+    /* Traced off the comp rather than split evenly. Every number below is read
+       from page 1 of WAY AGENCY - Arborescence.pdf, whose page is the viewport
+       and is 958.5pt wide: the columns start at 6.3, 144.2, 343.5, 549.9,
+       711.4 and 859.5pt, which with an 18.1pt gutter between them gives the
+       track widths in the ratio below. The floors only bite near 900px, where
+       an even split would cut a drifting column narrower than its own word.
 
-       The rows have to stay `fr`, not `auto`: the square still spans this band
-       and its 1:1 would ask for a height equal to the column width, which
-       collapses the whole top band to nothing. */
-    grid-template-rows: repeat(8, minmax(0, 1fr));
+       The rows carry no gap at all — the comp's vertical rhythm comes from the
+       spans, not from air between tracks — and have to stay `fr`, not `auto`:
+       the stills are sized off their band's height and `auto` would ask for a
+       height off the column width instead, collapsing the top band. */
+    column-gap: 1.888vw;
+    row-gap: 0;
+    grid-template-columns:
+      minmax(122px, 119.8fr) 181.2fr 188.3fr minmax(140px, 143.4fr) 130fr
+      minmax(122px, 92.7fr);
+    grid-template-rows: repeat(21, minmax(0, 1fr));
     /* Every named area has to stay a rectangle or the browser drops the lot. */
-    /* The claim takes the whole left half from row 6 down. Two columns were
-       not enough: "GENERATIONS" is 539px at this size against a 386px box, so
-       the longest endings could not wrap and were clipped. Three columns clear
-       it everywhere, and it puts the line flush to the gutter, as in the comp. */
     grid-template-areas:
-      "ca ma ma pp hw hw"
-      "ca ma ma pp hw hw"
-      "ca ma ma pp hw hw"
-      "ca wd wd mb mb wq"
-      "ca wd wd mb mb wq"
-      "wt wt wt mb mb wq"
-      "wt wt wt mb mb wq"
-      "wt wt wt mb mb wq";
+      "ca ma ma pp hw wq"
+      "ca ma ma pp hw wq"
+      "ca ma ma pp hw wq"
+      "ca ma ma pp hw wq"
+      "ca ma ma pp hw wq"
+      "ca ma ma pp hw wq"
+      "ca ma ma pp hw wq"
+      "ca ma ma pp hw wq"
+      "ca ma ma pp hw wq"
+      "ca ma ma pp hw wq"
+      "ca .  wd pp .  wq"
+      "ca .  wd pp .  wq"
+      "ca .  wd mb mb wq"
+      "ca wt wt mb mb wq"
+      "ca wt wt mb mb cb"
+      "ca wt wt mb mb cb"
+      "ca wt wt mb mb cb"
+      "ca wt wt mb mb cb"
+      "ca wt wt mb mb cb"
+      "ca wt wt mb mb cb"
+      "ca wt wt pb .  cb";
   }
 
   .ghero__cell--text {
     display: block;
   }
 
-  /* Both stills fill their area on desktop; the square is squared by height. */
+  /* Both stills are sized off their band's height and hung on its right edge,
+     which is where the comp puts them: 376.3 x 207.9pt and 245.9 x 170.2pt.
+     The echo is wider than its own column and spills left over the partner
+     credits, exactly as it does in the comp. */
   .ghero__cell--wide {
-    aspect-ratio: auto;
-  }
-
-  .ghero__cell--square {
+    aspect-ratio: 376.3 / 207.9;
     height: 100%;
     width: auto;
+    justify-self: end;
+  }
+
+  .ghero__cell--echo {
+    height: 100%;
+    width: auto;
+    justify-self: end;
   }
 
   .ghero__cell--claim {
@@ -238,6 +268,24 @@
 
   .ghero__note {
     align-content: center;
+  }
+
+  /* The note above the claim is set from the top of its band instead of
+     centred, so the slack in the band all falls between its last line and
+     "OUR WAY TO" rather than being split either side of it. */
+  .ghero__note--what {
+    align-content: start;
+    padding-top: 0.6vh;
+  }
+}
+
+/* On a short desktop window the band the claim sits in shrinks with the
+   screen while its type, sized off the width alone, does not — and the longest
+   ending then runs past the section. Only the short case is pulled back; at
+   the comp's own height the line keeps its size. */
+@media (min-width: 900px) and (max-height: 720px) {
+  .wayto--hero .wayto__word {
+    font-size: clamp(1.4rem, 2.8vw, 3rem);
   }
 }
 
