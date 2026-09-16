@@ -73,6 +73,185 @@
   gap: 12px;
 }
 
+/* --- Contact grid (address card + brief card) ---------------------------- */
+.contact__grid {
+  display: grid;
+  gap: clamp(24px, 3vw, 40px);
+  align-items: start;
+}
+
+/* The split waits for 1024px: at tablet width two columns leave the form
+   about 280px of usable room, which is not enough for these labels. */
+@media (min-width: 1024px) {
+  .contact__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* The buttons ride with the address card instead of spanning both columns:
+   the brief card is far taller, so a full-width row stranded them at the
+   very bottom of the section on a 16:9 screen. */
+.contact__col {
+  display: grid;
+  gap: clamp(24px, 3vw, 40px);
+  align-content: start;
+  min-width: 0;
+}
+
+/* Inside the grid the column already sets the measure — the standalone
+   max-width (kept for /about) would otherwise leave a ragged gap. */
+.contact__grid .address,
+.contact__grid .brief {
+  max-width: none;
+  min-width: 0;
+}
+
+.brief {
+  display: grid;
+  gap: 24px;
+  max-width: 52ch;
+}
+
+.brief--card {
+  padding: clamp(24px, 4vw, 40px);
+  border: 1px solid var(--line-strong);
+}
+
+.brief-form {
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  /* Without this the textarea's intrinsic column width pushes the card wider
+     than its grid track and the page scrolls sideways on a phone. */
+  min-width: 0;
+}
+
+.field__control {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  /* Never below 16px: iOS Safari zooms the viewport on focus under that. */
+  font-size: max(16px, var(--m-l));
+  transition: border-color 0.3s;
+}
+
+.field__control:focus {
+  border-color: var(--fg);
+}
+
+.field__control--area {
+  resize: vertical;
+  min-height: 96px;
+  line-height: 1.5;
+}
+
+.field__counter {
+  justify-self: end;
+}
+
+/* --- Deadline picker ----------------------------------------------------- */
+.datepicker {
+  position: relative;
+}
+
+.datepicker__toggle {
+  text-align: left;
+  cursor: pointer;
+}
+
+.datepicker__panel {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  max-width: 340px;
+  padding: 16px;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+}
+
+.datepicker__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  letter-spacing: 0.12em;
+}
+
+.datepicker__nav {
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  transition: opacity 0.3s;
+}
+
+.datepicker__nav:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.datepicker__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.datepicker__dow {
+  display: grid;
+  place-items: center;
+  height: 28px;
+}
+
+.datepicker__day {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  font-family: var(--font-mono);
+  font-size: var(--m-s);
+  transition: background 0.2s, color 0.2s;
+}
+
+.datepicker__day:hover:not(:disabled) {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.datepicker__day:disabled {
+  color: var(--muted);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.datepicker__day--on {
+  background: var(--accent);
+  color: var(--white);
+}
+
+.datepicker__day--on:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--white);
+}
+
+.field__error {
+  color: var(--accent);
+}
+
+.field__status {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 /* --- About -------------------------------------------------------------- */
 .about__story {
   display: grid;
