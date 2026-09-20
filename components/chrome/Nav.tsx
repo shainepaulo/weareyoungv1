@@ -13,6 +13,9 @@ const LINKS = [
   { href: "/contact", label: "Contact", hint: "Paris" },
 ] as const;
 
+/** The observatory. It travels as a mark on desktop and as a word in the menu. */
+const PULSE = { href: "/pulse", label: "Pulse", hint: "Insights & Conseil" } as const;
+
 export function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -53,6 +56,10 @@ export function Nav() {
 
   const isCurrent = (href: string) => (pathname === href ? "page" : undefined);
 
+  // The heartbeat answers "am I in the section", not "am I on this exact page",
+  // so it survives a move into a Pulse entry. aria-current stays exact.
+  const inPulse = pathname === PULSE.href || pathname.startsWith(`${PULSE.href}/`);
+
   return (
     <>
       <header className={`nav ${hidden && !open ? "nav--hidden" : ""} ${open ? "nav--menu" : ""}`}>
@@ -68,10 +75,20 @@ export function Nav() {
             </Link>
           ))}
 
-          {/* Parked: the mark is in place, the destination is not decided yet. */}
-          <button type="button" className="nav__pulse" aria-label="Pulse — coming soon" disabled>
+          {/* The label carries the accessible name; the mark is decorative. It
+              is revealed on hover and on keyboard focus, out of the flow so it
+              cannot push the links beside it. */}
+          <Link
+            href={PULSE.href}
+            className="nav__pulse"
+            aria-current={isCurrent(PULSE.href)}
+            data-live={inPulse ? "" : undefined}
+          >
             <Pulse />
-          </button>
+            <span className="nav__pulse-label">
+              {PULSE.label} — {PULSE.hint}
+            </span>
+          </Link>
         </nav>
 
         <button
@@ -89,21 +106,32 @@ export function Nav() {
 
       <div id="menu" className={`menu ${open ? "menu--open" : ""}`} aria-hidden={!open}>
         <ul className="menu__list">
-          {LINKS.map((link, i) => (
-            <li className="menu__item" key={link.href}>
-              <Link
-                href={link.href}
-                className="menu__link display"
-                style={{ "--i": i } as React.CSSProperties}
-                aria-current={isCurrent(link.href)}
-                tabIndex={open ? 0 : -1}
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-                <small>{link.hint}</small>
-              </Link>
-            </li>
-          ))}
+          {[...LINKS, PULSE].map((link, i) => {
+            const isPulse = link.href === PULSE.href;
+            return (
+              <li className="menu__item" key={link.href}>
+                <Link
+                  href={link.href}
+                  className={`menu__link display ${isPulse ? "menu__link--pulse" : ""}`}
+                  style={{ "--i": i } as React.CSSProperties}
+                  aria-current={isCurrent(link.href)}
+                  data-live={isPulse && inPulse ? "" : undefined}
+                  tabIndex={open ? 0 : -1}
+                  onClick={() => setOpen(false)}
+                >
+                  {isPulse ? (
+                    <span className="menu__label">
+                      {link.label}
+                      <Pulse className="menu__pulse-mark" />
+                    </span>
+                  ) : (
+                    link.label
+                  )}
+                  <small>{link.hint}</small>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="menu__foot mono-s">

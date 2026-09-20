@@ -19,10 +19,8 @@ export interface Director {
  * here exists, and the projects are dealt out to them, not credited.
  *
  * To make it real: replace `SEED` with the actual roster and each director's
- * `projects`, then set SAMPLE to false — the notice in the roster header goes
- * away with it.
+ * `projects`.
  */
-export const SAMPLE = true;
 
 const SEED: Omit<Director, "slug" | "projects">[] = [
   {

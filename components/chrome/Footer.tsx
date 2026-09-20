@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { CSSProperties } from "react";
 import { Instagram } from "@/components/brand/Instagram";
 import { Mark } from "@/components/brand/Mark";
 import { BRAND_MARKS } from "@/lib/brands";
@@ -48,19 +49,44 @@ export function Footer() {
                     )),
                   )
                 : [0, 1, 2].map((rep) =>
-                    BRAND_MARKS.map((brand, i) => (
-                      <span className="footer__brand" key={`${rep}-${i}`}>
-                        {/* Masked, not <img>: the flat path takes currentColor
-                            and comes out white on the dark footer. */}
-                        <span
-                          className="footer__brand-mark"
-                          style={{ maskImage: `url(${brand.src})`, WebkitMaskImage: `url(${brand.src})` }}
-                          role="img"
+                    BRAND_MARKS.map((brand, i) => {
+                      // Fitted into the square box a wide wordmark reads far too
+                      // small; at the icons' full height, far too big. Sit it
+                      // halfway between the two.
+                      const scale = brand.ratio ? (1 + 1 / brand.ratio) / 2 : 1;
+
+                      return (
+                        <a
+                          className="footer__brand"
+                          key={`${rep}-${i}`}
+                          href={brand.href}
+                          target="_blank"
+                          rel="noreferrer"
                           aria-label={brand.name}
-                        />
-                        {i === 0 && <span className="dot" />}
-                      </span>
-                    )),
+                          // The strip is decorative and triples every mark for the
+                          // seamless loop — aria-hidden up on .footer__marquee
+                          // already keeps it out of the accessibility tree, but
+                          // that alone doesn't stop keyboard focus. This does.
+                          tabIndex={-1}
+                        >
+                          {/* Masked, not <img>: the flat shape takes currentColor
+                              and comes out white on the dark footer. */}
+                          <span
+                            className="footer__brand-mark"
+                            style={
+                              {
+                                maskImage: `url(${brand.src})`,
+                                WebkitMaskImage: `url(${brand.src})`,
+                                "--mark-ratio": brand.ratio,
+                                "--mark-scale": scale,
+                              } as CSSProperties
+                            }
+                            role="img"
+                            aria-label={brand.name}
+                          />
+                        </a>
+                      );
+                    }),
                   )}
             </div>
           ))}

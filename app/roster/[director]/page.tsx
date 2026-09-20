@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Reveal } from "@/components/motion/Reveal";
-import { DIRECTORS, DIRECTOR_BY_SLUG, SAMPLE, disciplinesOf, projectsOf } from "@/lib/directors";
+import { DIRECTORS, DIRECTOR_BY_SLUG, disciplinesOf, projectsOf } from "@/lib/directors";
 import "../../pages.css";
 import "@/components/roster/roster.css";
 
@@ -68,11 +68,6 @@ export default async function DirectorPage({
           </p>
         </div>
 
-        {SAMPLE && (
-          <p className="mono-xs dir__sample">
-            Sample entry — name, bio and credits are placeholders.
-          </p>
-        )}
       </aside>
 
       <div className="dir__work">

@@ -151,10 +151,6 @@
   letter-spacing: 0.12em;
 }
 
-.dir__sample {
-  color: var(--accent);
-  letter-spacing: 0.08em;
-}
 
 .dir__work {
   display: grid;

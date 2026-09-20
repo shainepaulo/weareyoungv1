@@ -351,3 +351,206 @@
 @media (min-width: 768px) {
   .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+
+/* ==========================================================================
+   Pulse — the observatory
+   Its own grammar: no gridlines, no boxes, nothing to decode. The page is a
+   feed, so it reads top to bottom and never asks to be studied.
+   ========================================================================== */
+.pulse-hero {
+  padding-top: calc(var(--nav-h) + clamp(56px, 12vh, 132px));
+  padding-bottom: clamp(48px, 8vh, 96px);
+  display: grid;
+  gap: clamp(20px, 3vh, 32px);
+  align-content: start;
+}
+
+/* The word fills the measure rather than obeying the shared d1 ceiling — it is
+   the only thing on the screen, it may as well be the screen. */
+.pulse-hero__title {
+  font-size: clamp(3.4rem, 19vw, 16rem);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.pulse-hero__lede {
+  max-width: 34ch;
+  color: var(--muted);
+}
+
+/* --- Issue plate --------------------------------------------------------- */
+.pulse-issue {
+  position: relative;
+  margin: 0 var(--gutter);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+/* The light leak down both edges. It is the one flourish on the page, and it
+   is what stops a full-bleed photograph from reading as a stock header. */
+.pulse-issue::before,
+.pulse-issue::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(24px, 7%, 96px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.pulse-issue::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.92), transparent);
+}
+
+.pulse-issue::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.92), transparent);
+}
+
+.pulse-issue img {
+  object-fit: cover;
+  /* Black and white is the house treatment for anything that is not work. */
+  filter: grayscale(1) contrast(1.08);
+}
+
+.pulse-issue__caption {
+  position: absolute;
+  /* Clears the light leak rather than sitting in it. */
+  left: clamp(40px, 10%, 128px);
+  bottom: clamp(16px, 3vw, 32px);
+  z-index: 2;
+  color: #fff;
+  letter-spacing: 0.18em;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.7);
+}
+
+@media (min-width: 768px) {
+  .pulse-issue { aspect-ratio: 16 / 9; }
+}
+
+/* --- Tag band ------------------------------------------------------------ */
+/* Full bleed, loud, and the only red surface on the site. It names the beats
+   Pulse covers without a sentence of explanation. */
+.pulse-tags {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--accent);
+  color: #fff;
+  padding: clamp(12px, 2vh, 20px) 0;
+}
+
+.pulse-tags__track {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: clamp(28px, 5vw, 64px);
+  padding-right: clamp(28px, 5vw, 64px);
+  font-family: var(--font-mono);
+  font-size: var(--m-s);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  animation: pulse-tags 28s linear infinite;
+}
+
+.pulse-tags__track span {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(28px, 5vw, 64px);
+}
+
+.pulse-tags__track span::after {
+  content: "/";
+  opacity: 0.55;
+}
+
+.pulse-tags:hover .pulse-tags__track {
+  animation-play-state: paused;
+}
+
+@keyframes pulse-tags {
+  to { transform: translate3d(-100%, 0, 0); }
+}
+
+/* --- Signals ------------------------------------------------------------- */
+.pulse-feed__head {
+  padding-bottom: clamp(20px, 3vh, 32px);
+}
+
+.pulse-feed {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.pulse-signal {
+  display: grid;
+  gap: 12px;
+  padding: clamp(28px, 5vh, 52px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.pulse-signal__tag {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.pulse-signal__title {
+  font-size: clamp(1.5rem, 4.4vw, 3.1rem);
+  max-width: 24ch;
+  /* The feed arrives dimmed and lights up as it lands — the page reads as
+     something still coming in rather than something already filed. */
+  color: var(--muted);
+  transition: color 0.7s var(--ease-out);
+}
+
+.pulse-signal.is-in .pulse-signal__title {
+  color: var(--fg);
+}
+
+.pulse-signal__meta {
+  letter-spacing: 0.16em;
+}
+
+/* --- Advisory ------------------------------------------------------------ */
+.pulse-advisory {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.pulse-advisory__item {
+  display: grid;
+  gap: 10px;
+  padding: clamp(24px, 4vh, 40px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.pulse-advisory__line {
+  max-width: 42ch;
+}
+
+
+@media (min-width: 768px) {
+  .pulse-signal {
+    grid-template-columns: minmax(0, 22ch) minmax(0, 1fr);
+    gap: 32px;
+    align-items: baseline;
+  }
+
+  .pulse-signal__meta {
+    grid-column: 2;
+  }
+
+  .pulse-advisory__item {
+    grid-template-columns: minmax(0, 22ch) minmax(0, 1fr);
+    gap: 32px;
+    align-items: baseline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-tags__track { animation: none; }
+  .pulse-signal__title { color: var(--fg); transition: none; }
+}
