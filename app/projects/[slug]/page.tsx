@@ -6,7 +6,6 @@ import { notFound } from "next/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 import { SplitWords } from "@/components/motion/SplitWords";
 import { Vimeo } from "@/components/project/Vimeo";
-import { CollabStats } from "@/components/project/CollabStats";
 import { BY_SLUG, PROJECT_LIST } from "@/lib/projects";
 import { fitFontSize } from "@/lib/type-metrics";
 import "@/components/project/project.css";
@@ -148,14 +147,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Link>
         )}
       </nav>
-
-      {/*
-       * Scoped to this one case on purpose, per the brief on `presaddidas`:
-       * a "technical" data section, tried here first where it's easy to
-       * cut if it doesn't earn its place. p.brand ("adidas" here) drives
-       * the numbers — see getBrandStats in lib/projects.ts.
-       */}
-      {p.slug === "adidas-pulse" && <CollabStats client={p.brand} />}
     </article>
   );
 }

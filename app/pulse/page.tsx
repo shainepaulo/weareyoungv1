@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
+import { CollabStats } from "@/components/project/CollabStats";
 import { PROJECT_LIST } from "@/lib/projects";
 import "../pages.css";
 
@@ -148,6 +149,14 @@ export default function PulsePage() {
           ))}
         </div>
       </section>
+
+      {/*
+       * The "technical" data section from the brief on `presaddidas`, moved
+       * here from the adidas-pulse case on request — bottom of the page,
+       * right before the global footer. Adidas is the example; getBrandStats
+       * in lib/projects.ts works for any client with enough of a history.
+       */}
+      <CollabStats client="adidas" />
     </>
   );
 }
