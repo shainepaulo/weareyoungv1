@@ -25,16 +25,29 @@
   align-items: center;
   justify-content: space-between;
   color: #fff;
-  /* White ink that turns black over the white sections. One nav, both tones. */
-  mix-blend-mode: difference;
   transition: transform 0.6s var(--ease-inout);
+}
+
+/* White ink that turns black over the white sections. One nav, both tones.
+   The blend sits on each part rather than on the header, so a part that owns
+   a real colour — the active Pulse — can opt out without losing the trick for
+   the rest. Nothing overlaps in here, so per-part and per-group composite the
+   same way. */
+.nav__brand,
+.nav__link,
+.nav__pulse,
+.nav__burger {
+  mix-blend-mode: difference;
 }
 
 .nav--hidden {
   transform: translate3d(0, -100%, 0);
 }
 
-.nav--menu {
+.nav--menu .nav__brand,
+.nav--menu .nav__link,
+.nav--menu .nav__pulse,
+.nav--menu .nav__burger {
   mix-blend-mode: normal;
 }
 
@@ -157,6 +170,30 @@
   font-size: var(--m-xs);
   letter-spacing: 0.12em;
   color: var(--muted);
+}
+
+/* Pulse in the menu: the word carries the mark, so the icon is on mobile too
+   rather than stopping at the 768px breakpoint. Same "you are here" rule as
+   the nav — and no blend to fight here, the menu is solid black. */
+.menu__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34em;
+}
+
+.menu__pulse-mark {
+  width: 0.62em;
+  height: auto;
+  transform-origin: 50% 50%;
+}
+
+.menu__link--pulse[data-live] {
+  color: var(--accent);
+}
+
+.menu__link--pulse[data-live] .menu__pulse-mark {
+  filter: drop-shadow(0 0 5px rgba(255, 61, 0, 0.45));
+  animation: pulse-beat 2.6s var(--ease-out) infinite;
 }
 
 .menu__foot {
@@ -532,30 +569,105 @@ html.has-cursor * {
   .intro__bar {
     opacity: 0;
   }
+
+  /* The Pulse keeps its lit orange state — it still says "you are here", it
+     just stops beating. */
+  .nav__pulse[data-live] svg,
+  .menu__link--pulse[data-live] .menu__pulse-mark {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .nav__pulse-label {
+    transition: none;
+  }
 }
 
-/* The pulse mark, parked beside Contact until it has somewhere to go. */
+/* --- Pulse: the mark, and the one place it comes alive ------------------ */
+/* At rest it is nav ink like everything else. It only takes the accent, the
+   glow and the heartbeat while you are inside the section — the beat is a
+   "you are here", the counterpart of the blinking caret on the word links. */
 .nav__pulse {
   display: none;
+  position: relative;
   align-items: center;
   color: inherit;
-  /* Disabled, but it must not read as unavailable — it is simply not wired yet. */
-  opacity: 1;
-  cursor: default;
 }
 
 .nav__pulse svg {
   width: 30px;
   height: auto;
+  /* Scale lives on the mark, never on the box, so the beat cannot nudge the
+     links beside it. */
+  transform-origin: 50% 50%;
+}
+
+/* The label is taken out of the flow for the same reason. */
+.nav__pulse-label {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--m-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+}
+
+.nav__pulse:hover .nav__pulse-label,
+.nav__pulse:focus-visible .nav__pulse-label {
+  opacity: 1;
+  transform: none;
+}
+
+/* Inside the section: a real orange, so it steps out of the difference blend
+   that would otherwise turn it cyan over the white sections. */
+.nav__pulse[data-live] {
+  mix-blend-mode: normal;
+  color: var(--accent);
+}
+
+.nav__pulse[data-live] svg {
+  filter: drop-shadow(0 0 5px rgba(255, 61, 0, 0.45));
+  animation: pulse-beat 2.6s var(--ease-out) infinite;
 }
 
 @media (min-width: 768px) {
   .nav__pulse { display: inline-flex; }
 }
 
+/* Systole, diastole, then a long rest. The scale stays under a tenth and the
+   brightness under a quarter — read as a heartbeat, not as a neon sign. */
+@keyframes pulse-beat {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(255, 61, 0, 0.45)) brightness(1);
+  }
+  6% {
+    transform: scale(1.09);
+    filter: drop-shadow(0 0 9px rgba(255, 61, 0, 0.6)) brightness(1.22);
+  }
+  13% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(255, 61, 0, 0.45)) brightness(1);
+  }
+  19% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 7px rgba(255, 61, 0, 0.52)) brightness(1.12);
+  }
+  26% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(255, 61, 0, 0.45)) brightness(1);
+  }
+}
+
 /* The client marks running across the foot of the roster. Same strip and same
-   animation as the claim; only the cargo differs. Until the real logo files
-   land, each brand is set as a wordmark. */
+   animation as the claim; only the cargo differs. */
 .footer__marquee-track[data-band="brands"] {
   font-size: clamp(1.6rem, 5vw, 5rem);
 }
@@ -568,8 +680,11 @@ html.has-cursor * {
 
 .footer__brand-mark {
   display: block;
-  width: 0.92em;
-  height: 0.92em;
+  /* Square icons keep the full 0.92em; wide wordmarks are scaled down by
+     --mark-scale so they sit between filling the box and matching that height.
+     Multiplication only — calc() dividing by a var is shakier in old Safari. */
+  width: calc(0.92em * var(--mark-scale, 1) * var(--mark-ratio, 1));
+  height: calc(0.92em * var(--mark-scale, 1));
   background: currentColor;
   mask-size: contain;
   -webkit-mask-size: contain;

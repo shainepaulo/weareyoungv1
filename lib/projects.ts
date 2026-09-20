@@ -129,12 +129,12 @@ export const SITE = {
 
   /**
    * Landing copy. Unlike the /about manifesto this is NOT from the current
-   * site — it's transcribed verbatim from the client's approved final PDF
-   * comp (WAY AGENCY - Arborescence.pdf), including "restore value the
-   * value", on the client's call.
+   * site — it's from the client's approved final PDF comp (WAY AGENCY -
+   * Arborescence.pdf). The comp's duplicated "restore value the value" was a
+   * typo in the source and is corrected here, on the client's call.
    */
   how: "A collective of rebellious minds moving as one, driven to push boundaries and make provocative ideas happen.",
-  what: "Aiming to restore value the value of content in sport, brands and culture.",
+  what: "Aiming to restore the value of content in sport, brands and culture.",
 };
 
 /**

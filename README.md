@@ -86,9 +86,9 @@ credits anywhere we could scrape, so this is placeholder content in the way
 lorem ipsum is placeholder content: nobody in that file exists, and none of
 those credits are true.
 
-Replace `SEED` with the real roster and each director's real `projects`, then
-set `SAMPLE = false` — the two "sample" notices (roster header, director page)
-disappear with it.
+Replace `SEED` with the real roster and each director's real `projects`. The
+pages carry no "sample" notice: nothing on screen tells a visitor these people
+are invented, so treat the roster as demo-only until that swap happens.
 
 ## The taxonomy was rebuilt
 
@@ -109,16 +109,15 @@ made to be argued with.
 - The manifesto on `/about` and the eight OUR WAY TO endings are verbatim from
   the current `/agency/` page. Nothing there was written for the reboot.
 - The landing's HOW ARE WE and WHAT WE DO paragraphs come from the design comp,
-  not from the current site. Approved as final, and left verbatim — including
-  "restore value the value of content", on the client's call.
+  not from the current site. Approved as final. The comp's duplicated "restore
+  value the value of content" was a typo in the source and is corrected to
+  "restore the value of content", on the client's call.
 - The pulse mark in the nav is deliberately inert; it has no destination yet.
-- The four client marks in the roster's footer strip are registered trademarks
+- The seven client marks in the roster's footer strip are registered trademarks
   of their owners, shown the way an agency shows a client list. Point
   `lib/brands.ts` at the brands' own supplied files if legal wants the
-  official assets.
-- The four client marks in the roster footer are registered trademarks of their
-  owners, used as a client list. Swap  for the brands' own
-  supplied files if legal asks for the official assets.
+  official assets. Sony Music France, Levi's and Vans are cut-out PNGs rather
+  than vector paths; supply SVGs if the strip ever needs to scale further.
 - "15+ years" is the brief's figure; no founding year is stated anywhere.
 - The filter list on the current site holds **32** client entries, not 33.
 - Project years are inferred from image upload dates; a few may be a year out.
