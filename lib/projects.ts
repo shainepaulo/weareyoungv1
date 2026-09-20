@@ -107,6 +107,45 @@ export const ROSTER: { brand: string; projects: Project[] }[] = [...new Set(PROJ
 export const YEARS = PROJECT_LIST.map((p) => p.year).filter((y): y is number => Boolean(y));
 export const YEAR_RANGE = { from: Math.min(...YEARS), to: Math.max(...YEARS) };
 
+export interface BrandStats {
+  client: string;
+  projects: number;
+  yearFrom: number;
+  yearTo: number;
+  videos: number;
+  photos: number;
+  disciplines: { label: string; count: number }[];
+}
+
+/**
+ * The relationship with one client, in numbers — for the "technical" section
+ * requested on the adidas-pulse case (see presaddidas). Matches on the
+ * display client name rather than the roster's `brand` grouping, so "adidas"
+ * and "adidas Originals" count as one relationship, the way a client reads
+ * their own history with the agency.
+ */
+export function getBrandStats(clientName: string): BrandStats | null {
+  const needle = clientName.toLowerCase();
+  const projects = PROJECT_LIST.filter((p) => p.client.toLowerCase().includes(needle));
+  if (projects.length === 0) return null;
+
+  const years = projects.map((p) => p.year).filter((y): y is number => Boolean(y));
+  const disciplineCounts = new Map<string, number>();
+  projects.forEach((p) => p.types.forEach((t) => disciplineCounts.set(t, (disciplineCounts.get(t) ?? 0) + 1)));
+
+  return {
+    client: clientName,
+    projects: projects.length,
+    yearFrom: Math.min(...years),
+    yearTo: Math.max(...years),
+    videos: projects.reduce((n, p) => n + p.videos.length, 0),
+    photos: projects.reduce((n, p) => n + p.gallery.length, 0),
+    disciplines: [...disciplineCounts.entries()]
+      .map(([label, count]) => ({ label, count }))
+      .sort((a, b) => b.count - a.count),
+  };
+}
+
 export const STATS = {
   projects: PROJECT_LIST.length,
   brands: ROSTER.length,

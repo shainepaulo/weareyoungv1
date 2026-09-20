@@ -1,0 +1,93 @@
+/* --- Collaboration stats -------------------------------------------------
+   The "technical" section: real counts from the project data, laid out like
+   a spec sheet rather than a case-study paragraph. Dark tone, same gridlines
+   and type scale as the rest of the case page — it should read as one more
+   section of the case, not a bolted-on widget.
+   -------------------------------------------------------------------------- */
+.collab {
+  display: grid;
+  gap: clamp(32px, 5vh, 64px);
+}
+
+.collab__head {
+  display: grid;
+  gap: 10px;
+}
+
+/* --- The four counts ------------------------------------------------------ */
+.collab__figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 4vw, 48px);
+  padding-top: clamp(16px, 2vh, 32px);
+  border-top: 1px solid var(--line);
+}
+
+.collab__figures > div {
+  display: grid;
+  gap: 6px;
+}
+
+.collab__number {
+  font-size: var(--d2);
+  line-height: 1;
+}
+
+@media (min-width: 640px) {
+  .collab__figures {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* --- Discipline bars -------------------------------------------------------
+   A CSS-only bar chart: no charting library for four to six rows. Width is
+   set inline per bar, relative to whichever discipline the client's projects
+   lean on hardest. */
+.collab__bars {
+  display: grid;
+  gap: 14px;
+}
+
+.collab__bar {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.9fr) 1fr auto;
+  align-items: center;
+  gap: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.collab__bar-track {
+  position: relative;
+  height: 6px;
+  background: var(--line);
+}
+
+.collab__bar-fill {
+  position: absolute;
+  inset: 0;
+  /* Final length is set inline, per bar, relative to the client's busiest
+     discipline; this only animates the reveal from 0 to that length. */
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1s var(--ease-out) 0.1s;
+}
+
+/* .collab__bars is the Reveal-wrapped <ul>; .is-in lands there once visible. */
+.collab__bars.is-in .collab__bar-fill {
+  transform: scaleX(1);
+}
+
+.collab__bar-count {
+  min-width: 1.6em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collab__bar-fill {
+    transition: none;
+    transform: scaleX(1);
+  }
+}
