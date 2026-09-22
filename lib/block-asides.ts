@@ -220,6 +220,128 @@ export const BLOCK_ASIDES: Record<string, Aside[]> = {
     // TALENT MANAGEMENT — the actors in character, playing the gag straight.
     "/way/projects/netflix-en-passant-pecho-hackday/gallery-4-netflix-en-passant-pexxcho-x-we-are-young-agency-hackday-8-1900x987.webp",
   ],
+  "adidas-originals-zx-x-13-block": [
+    // CREATIVE CONTENT — the crew in the yard: the frame the whole film is cut around.
+    "/way/projects/adidas-originals-zx-x-13-block/gallery-5-adidas-zx-x-13block-we-are-young-agency-5-1900x987.webp",
+    // 8D — the set built in layers — foil, plastic, light bouncing between planes.
+    "/way/projects/adidas-originals-zx-x-13-block/gallery-4-adidas-zx-x-13block-we-are-young-agency-4-1900x987.webp",
+    // RETAIL — the shopfront panels, lit from behind, box on the floor.
+    "/way/projects/adidas-originals-zx-x-13-block/gallery-2-adidas-zx-x-13block-we-are-young-agency-2-1900x987.webp",
+    // LIMITED EDITION — the pair on its own, parked on the seat of the bike.
+    "/way/projects/adidas-originals-zx-x-13-block/gallery-1-adidas-zx-x-13block-we-are-young-agency-1-1900x987.webp",
+  ],
+  "courir-40ans": [
+    // CREATIVE DIRECTION — the arcade built from nothing: cabinets, test card, neon.
+    "/way/projects/courir-40ans/gallery-1-courir-40-years-of-sneaker-spirit--we-are-young-agency-3-1900x987.webp",
+    // SHOOTING — the dance stage lit and held, one take away.
+    "/way/projects/courir-40ans/gallery-5-courir-40-years-of-sneaker-spirit--we-are-young-agency-7-1900x987.webp",
+    // VIDEO — two frames of the same move — how the sequence reads.
+    "/way/projects/courir-40ans/gallery-4-courir-40-years-of-sneaker-spirit--we-are-young-agency-6-1900x987.webp",
+    // POST PRODUCTION — the product still, graded down to arcade reds and blues.
+    "/way/projects/courir-40ans/gallery-2-courir-40-years-of-sneaker-spirit--we-are-young-agency-4-1900x987.webp",
+  ],
+  "adidas-originals-zx-x-vald": [
+    // PRODUCTION — the capture itself: the artist shot clean on white, mid-fall.
+    "/way/projects/adidas-originals-zx-x-vald/gallery-4-adidas-zx-x-vald-we-are-young-agency-4-1900x987.webp",
+    // 3D DESIGN — the clouds that carry everything — modelled, not photographed.
+    "/way/projects/adidas-originals-zx-x-vald/gallery-3-adidas-zx-x-vald-we-are-young-agency-3-1900x987.webp",
+    // ARTISTIC DIRECTION — the finished key visual, every part of the system in place.
+    "/way/projects/adidas-originals-zx-x-vald/gallery-1-adidas-zx-x-vald-we-are-young-agency-1-1900x987.webp",
+    // MEDIA TOOLKIT — the same idea cut to square, talent and product, ready to run.
+    "/way/projects/adidas-originals-zx-x-vald/gallery-2-adidas-zx-x-vald-we-are-young-agency-2-1900x987.webp",
+  ],
+  "reebok-lahaine": [
+    // CREATIVE DIRECTION — the tableau: a rug and a sofa on the roof, the film's own black and white.
+    "/way/projects/reebok-lahaine/gallery-1-reebok-x-la-haine-takeover-we-are-young-agency-1-1900x987.webp",
+    // SHOOTING — the trio taken from below, the frame that had to be got in one go.
+    "/way/projects/reebok-lahaine/gallery-3-reebok-x-la-haine-takeover-we-are-young-agency-3-1900x987.webp",
+    // VIDEO — wide lens through the car: a moving shot, not a still.
+    "/way/projects/reebok-lahaine/gallery-4-reebok-x-la-haine-takeover-we-are-young-agency-4-1900x987.webp",
+    // POST-PRODUCTION — the grade the whole set is held in: blocks and faces, same greys.
+    "/way/projects/reebok-lahaine/gallery-2-reebok-x-la-haine-takeover-we-are-young-agency-2-1900x987.webp",
+  ],
+  "radar-drive-in": [
+    // SCENOGRAPHY — the car park turned venue: stage, stacks, screens, the sign over it all.
+    "/way/projects/radar-drive-in/gallery-1-radar-drive-in-x-we-are-young-agency-14-1900x987.webp",
+    // TALENTS — on the mic, against the sign and the sky.
+    "/way/projects/radar-drive-in/gallery-2-radar-drive-in-x-we-are-young-agency-15-1900x987.webp",
+    // EXPERIENCE — from the driver's seat, mask on — the show as it was watched.
+    "/way/projects/radar-drive-in/gallery-5-radar-drive-in-x-we-are-young-agency-1-1900x987.webp",
+    // INFLUENCE — what it drew: every bay taken, from the lip of the stage.
+    "/way/projects/radar-drive-in/gallery-4-radar-drive-in-x-we-are-young-agency-2-1900x987.webp",
+  ],
+  "bape_fr": [
+    // LOCATION SCOUTING — the room that made the shoot: pink plaster, gilt frames, a named door.
+    "/way/projects/bape_fr/gallery-1-bapexx-jlnjlvt-1-1900x987.webp",
+    // SHOOTING — under the painted sky of the ceiling, the frame being taken.
+    "/way/projects/bape_fr/gallery-3-bapexx-jlnjlvt-3-1900x987.webp",
+    // POST PRODUCTION — the frames cut and laid over each other into one page.
+    "/way/projects/bape_fr/gallery-2-bapexx-jlnjlvt-2-1900x987.webp",
+  ],
+  "citadium-good-games": [
+    // SCENOGRAPHY — the arena built inside the shop floor: neon loops, stations, the C.
+    "/way/projects/citadium-good-games/gallery-5-citadium-x-good-games-jlnjlvt-5-1900x987.webp",
+    // FORTNITE TOURNAMENT — competitors at the stations, escalators still running behind.
+    "/way/projects/citadium-good-games/gallery-3-citadium-x-good-games-jlnjlvt-3-1900x987.webp",
+    // MAP — the store itself rebuilt in game, on the player's screen.
+    "/way/projects/citadium-good-games/gallery-4-citadium-x-good-games-jlnjlvt-4-1900x987.webp",
+    // LIVE TWITCH — the broadcast wall: the feed, the bracket, every player's face.
+    "/way/projects/citadium-good-games/gallery-2-citadium-x-good-games-jlnjlvt-2-1900x987.webp",
+  ],
+  "pmu-le-grand-prix-des-heros": [
+    // STORY LIVING — history walking through the public: Marianne with the flag, two poilus off the steps.
+    "/way/projects/pmu-le-grand-prix-des-heros/gallery-5-pmu-le-grand-prix-des-heros-x-we-are-young-agency-5-1900x987.webp",
+    // CASTING — the extras themselves — a soldier's face, a musket raised on the stairs.
+    "/way/projects/pmu-le-grand-prix-des-heros/gallery-4-pmu-le-grand-prix-des-heros-x-we-are-young-agency-4-1900x987.webp",
+    // STYLISM — the costume up close: collar, headdress, veil.
+    "/way/projects/pmu-le-grand-prix-des-heros/gallery-1-pmu-le-grand-prix-des-heros-x-we-are-young-agency-3-1900x987.webp",
+    // SCENOGRAPHY — the red stair and the smoke they were made to come down.
+    "/way/projects/pmu-le-grand-prix-des-heros/gallery-3-pmu-le-grand-prix-des-heros-x-we-are-young-agency-1-1900x987.webp",
+  ],
+  "premiere-vision": [
+    // SCENOGRAPHY — the stand as built: big top in a hall, rings hung off the truss.
+    "/way/projects/premiere-vision/gallery-1-we-are-young-x-premiere-vision-winter-1-1-1900x987.webp",
+    // EXPERIENCES — the juggler working the ring, the hall stopped to watch.
+    "/way/projects/premiere-vision/gallery-3-we-are-young-x-premiere-vision-winter-3-1900x987.webp",
+  ],
+  "adidas-take-on-summer-paris-2019": [
+    // NBA players — Donovan Mitchell, off duty, between the sessions.
+    "/way/projects/adidas-take-on-summer-paris-2019/gallery-3-adidas-take-one-summer-paris-harden-x-mitchell-x-we-are-young-agencyxx-3-1900x987.webp",
+    // SCENOGRAPHY — the set as built: branded wall, plinths, sofas, one light.
+    "/way/projects/adidas-take-on-summer-paris-2019/gallery-4-adidas-take-one-summer-paris-harden-x-mitchell-x-we-are-young-agencyxx-4-1900x987.webp",
+    // ENTERTAINMENT — the room where it happened — posters up, everyone sitting in.
+    "/way/projects/adidas-take-on-summer-paris-2019/gallery-2-adidas-take-one-summer-paris-harden-x-mitchell-x-we-are-young-agencyxx-2-1900x987.webp",
+    // TOURNAMENT — on the sticks, eyes on the screen: Harden and Mitchell playing it out.
+    "/way/projects/adidas-take-on-summer-paris-2019/gallery-5-adidas-take-one-summer-paris-harden-x-mitchell-x-we-are-young-agencyxx-5-1900x987.webp",
+  ],
+  "levis-x-ag2r-la-mondiale-off-road": [
+    // SHOOTING — between takes on the ridge: the crew, the light, the waiting.
+    "/way/projects/levis-x-ag2r-la-mondiale-off-road/gallery-3-we-are-young-x-levis-ag2r-off-road-2-1900x987.webp",
+    // BRAND CONTENT — the hero frame — the whole team on the climb, in colour.
+    "/way/projects/levis-x-ag2r-la-mondiale-off-road/gallery-2-we-are-young-x-levis-ag2r-off-road-1-1900x987.webp",
+    // WINDOW DISPLAY — the riders cut out on white with their bikes, made for glass.
+    "/way/projects/levis-x-ag2r-la-mondiale-off-road/gallery-1-levis-x-ag2r-off-road-trio1-1.webp",
+    // EXHIBITION — the machines themselves: chainset, bars, the team bus behind.
+    "/way/projects/levis-x-ag2r-la-mondiale-off-road/gallery-5-we-are-young-x-levis-ag2r-off-road-4-1900x987.webp",
+  ],
+  "undiz-unexpected-beach-party": [
+    // SCENOGRAPHY — a beach built indoors: sand, deckchairs, striped hut, floats in the net.
+    "/way/projects/undiz-unexpected-beach-party/gallery-3-we-are-young-x-undiz-unexpected-beach-party-3-1900x1267.webp",
+    // EXPERIENCES — guests in the rings on the sand — the party doing its own work.
+    "/way/projects/undiz-unexpected-beach-party/gallery-4-we-are-young-x-undiz-unexpected-beach-party-4-1900x1267.webp",
+    // SHOWCASES — the floor in front of the fringe wall, stack up, room full.
+    "/way/projects/undiz-unexpected-beach-party/gallery-2-we-are-young-x-undiz-unexpected-beach-party-2-1900x1267.webp",
+    // INFLUENCE — the shark's mouth everyone stopped to be photographed in.
+    "/way/projects/undiz-unexpected-beach-party/gallery-5-we-are-young-x-undiz-unexpected-beach-party-5-1900x1267.webp",
+  ],
+  "reebok-doner-kebab": [
+    // #SCENOGRAPHY — a real kebab shop rebranded down to the awning, street closed in front.
+    "/way/projects/reebok-doner-kebab/gallery-5-we-are-young-x-reebok-doxxner-kebab-5-1900x987.webp",
+    // #SHOWCASES — from behind the artist: the mic, the barrier, the whole road singing.
+    "/way/projects/reebok-doner-kebab/gallery-2-we-are-young-x-reebok-doxxner-kebab-2-1900x987.webp",
+    // #AMPLIFICATION — everything that came out of it, laid end to end in the campaign's own frame.
+    "/way/projects/reebok-doner-kebab/gallery-1-we-are-young-x-reebok-doxxner-kebab-1-1900x987.webp",
+  ],
 };
 
 /** The frames beside one word — none, one, or two. */
