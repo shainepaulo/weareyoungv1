@@ -488,6 +488,94 @@ export const BLOCK_ASIDES: Record<string, Aside[]> = {
     // PERFORMANCE WORKSHOP — the session itself — a circle of players being coached on the clay.
     "/way/projects/adidas-challenge-my-game/gallery-3-adidas-challenge-mygame-x-we-are-young-agencyxx2-1900x1267.webp",
   ],
+  "adidas-project-harden": [
+    // SCENOGRAPHY — a full court laid inside a glass hall, hoop, lines and all.
+    "/way/projects/adidas-project-harden/gallery-2-adidas-project-harden-x-we-are-young-agency2-1900x1267.webp",
+    // CO-CREATION — the beat being made on the spot, everyone crowded round the desk.
+    "/way/projects/adidas-project-harden/gallery-4-adidas-project-harden-x-we-are-young-agency4-1900x1267.webp",
+    // WORKSHOPS — the artwork on the screen as it is being built.
+    "/way/projects/adidas-project-harden/gallery-5-adidas-project-harden-x-we-are-young-agency5-1900x1267.webp",
+    // PR SESSIONS — walking onto the court with the phones already up.
+    "/way/projects/adidas-project-harden/gallery-3-adidas-project-harden-x-we-are-young-agency3-1900x1267.webp",
+  ],
+  "get-fresh-touch": [
+    // A BI-COLOR STRUCTURE — the whole build from the field: blue on one side, green on the other.
+    "/way/projects/get-fresh-touch/gallery-5-get-27-31-x-we-are-young-agencyxx14-1900x1267.webp",
+    // FREE FALL SIMULATOR — the flight as the field watched it, held up on a phone screen.
+    "/way/projects/get-fresh-touch/gallery-4-get-27-31-x-we-are-young-agencyxx8-1900x1267.webp",
+    // PHOTOCALL — the portrait everyone left with: goggles on, suit open, straps up.
+    "/way/projects/get-fresh-touch/gallery-3-get-27-31-x-we-are-young-agencyxx10-1900x1267.webp",
+    // GET BAR — the hatch itself, bottles lined up on the shelf behind it.
+    "/way/projects/get-fresh-touch/gallery-1-get-27-31-x-we-are-young-agencyxx1-1900x1266.webp",
+  ],
+  "galeries-lafayette-summer-break": [
+    // A 4 FLOORS SET-UP — the build in the well of the store, escalators running past it to the floors above.
+    "/way/projects/galeries-lafayette-summer-break/gallery-2-galeries-lafayette-break-x-we-are-young-agencyxx-2-min-1900x1264.webp",
+    // FUN & DIY WORKSHOPS — the roller floor and the team running it, skates on.
+    "/way/projects/galeries-lafayette-summer-break/gallery-1-galeries-lafayette-break-x-we-are-young-agencyxx-1-min-1900x1264.webp",
+    // INTERACTIVE GAMING — feet on the board, the game answering on the screen.
+    "/way/projects/galeries-lafayette-summer-break/gallery-5-galeries-lafayette-break-x-we-are-young-agencyxx-5-min-1900x1264.webp",
+    // LIVE MUSIC — played, not piped: a mic, a pan and a stand on the shop floor.
+    "/way/projects/galeries-lafayette-summer-break/gallery-4-galeries-lafayette-break-x-we-are-young-agencyxx-4-min-1900x1264.webp",
+  ],
+  "adidas-creators-arena": [
+    // DIGITAL PLAYGROUND — the floor itself is the screen — lines and markings drawn in light.
+    "/way/projects/adidas-creators-arena/gallery-4-adidas-creators-arena-x-we-are-young-agencyxx-6-1900x1267.webp",
+    // CREATORS — the players it was built for, up in the air over the LED.
+    "/way/projects/adidas-creators-arena/gallery-5-adidas-creators-arena-x-we-are-young-agencyxx-8-1900x1267.webp",
+    // MASTER CREATORS — the level above: a finish at the rim with the dome lit behind.
+    "/way/projects/adidas-creators-arena/gallery-2-adidas-creators-arena-x-we-are-young-agencyxx-2-1900x1267.webp",
+    // ENTERTAINMENT — one shot, and a full house watching it from the edge of the floor.
+    "/way/projects/adidas-creators-arena/gallery-3-adidas-creators-arena-x-we-are-young-agencyxx-4-1900x1267.webp",
+  ],
+  "villa-schweppes-bpm-contest": [
+    // IDENTITY DESIGN — the mark itself, built as a lit hexagon and stood in the room.
+    "/way/projects/villa-schweppes-bpm-contest/gallery-1-villa-schweppes-bpm-contest-x-we-are-young-agencyxx1-1900x1267.webp",
+    // MODULAR SET-UP — the same hexagon, multiplied into a booth that packs down and moves.
+    "/way/projects/villa-schweppes-bpm-contest/gallery-4-villa-schweppes-bpm-contest-x-we-are-young-agencyxx4-1900x1267.webp",
+    // BILLBOARD DJ SELECTION — the act that got the slot, on the mic over the mixer.
+    "/way/projects/villa-schweppes-bpm-contest/gallery-5-villa-schweppes-bpm-contest-x-we-are-young-agencyxx5-1900x1267.webp",
+    // NIGHTCLUB TOUR — one stop on the run: the club's own name in bulbs.
+    "/way/projects/villa-schweppes-bpm-contest/gallery-2-villa-schweppes-bpm-contest-x-we-are-young-agencyxx2-1900x1267.webp",
+  ],
+  "mort-subite-baraque-a-lambics": [
+    // A CRAFT & COLORED CANTEEN — the whole shack from the field: raw timber, pink and blue, sign over the door.
+    "/way/projects/mort-subite-baraque-a-lambics/gallery-1-mort-subite-baraque-axx-lambics-x-we-are-young-agencyxx-08-1900x1334.webp",
+    // SURPRISING TASTING AREA — the tap that surprised people: a pink Manneken Pis pouring the lambic.
+    "/way/projects/mort-subite-baraque-a-lambics/gallery-4-mort-subite-baraque-axx-lambics-x-we-are-young-agencyxx-015-1-1900x1334.webp",
+    // REAL BELGIAN FRIES — nothing in this gallery shows the fries, so the slot stays empty.
+    null,
+    // BRAND EXPERIENCE — two bottles on the painted bench, the bar still working behind them.
+    "/way/projects/mort-subite-baraque-a-lambics/gallery-5-mort-subite-baraque-axx-lambics-x-we-are-young-agencyxx-03-1-1900x1334.webp",
+  ],
+  "adidas-tango-league-saison-2": [
+    // CREATIVE SET-UP — the hall as built: cage, LED wall, rig, boards, all of it under the old glass roof.
+    "/way/projects/adidas-tango-league-saison-2/gallery-1-adidas-tango-league-x-we-are-young-agencyxx-4-dosseh-sadek-1-1900x1069.webp",
+    // TOURNAMENT — the ball in play, three shirts chasing it across the concrete.
+    "/way/projects/adidas-tango-league-saison-2/gallery-5-adidas-tango-league-x-we-are-young-agencyxx-4-dosseh-sadek-6-1900x1069.webp",
+    // ENTERTAINMENT — the mic working the floor, guests sat courtside with the boot plinths.
+    "/way/projects/adidas-tango-league-saison-2/gallery-3-adidas-tango-league-x-we-are-young-agencyxx-4-dosseh-sadek-3-1900x1266.webp",
+    // ASSET — the boards and the kit laid against them — the pieces that dress the whole thing.
+    "/way/projects/adidas-tango-league-saison-2/gallery-4-adidas-tango-league-x-we-are-young-agencyxx-4-dosseh-sadek-5-1900x1267.webp",
+  ],
+  "vans-weatherized": [
+    // ART LIVE — the mural going up on the shop wall while the shop is open.
+    "/way/projects/vans-weatherized/gallery-4-vans-weatherized-we-are-young-agencyxx-4-1900x1268.webp",
+    // EXHIBITION — the hang itself: framed prints down the wall, caption panel below.
+    "/way/projects/vans-weatherized/gallery-3-vans-weatherized-we-are-young-agencyxx-3-1900x1268.webp",
+    // STELE EXPERIENTIAL — the plinth built as ground — gravel, grass, a leaf, the pair standing in it.
+    "/way/projects/vans-weatherized/gallery-5-vans-weatherized-we-are-young-agencyxx-5-1900x1268.webp",
+  ],
+  "desperados-blacklisted": [
+    // IMMERSIVE SET UP — the installation before anyone arrives: light rods standing in a gilded salon.
+    "/way/projects/desperados-blacklisted/gallery-1-desperados-blacklisted-x-we-are-young-agencyxx14-1900x1267.webp",
+    // LAUNCH PARTY — the floor once it filled, bottles up, everyone moving.
+    "/way/projects/desperados-blacklisted/gallery-4-desperados-blacklisted-x-we-are-young-agencyxx7-1900x1267.webp",
+    // DISRUPTIVE EXPERIENCES — the room smeared into streaks around the booth — the whole point of the night.
+    "/way/projects/desperados-blacklisted/gallery-2-desperados-blacklisted-x-we-are-young-agencyxx5-1-1900x1267.webp",
+    // SHOWCASES — the set being played: two red plates, hands on the mixer.
+    "/way/projects/desperados-blacklisted/gallery-5-desperados-blacklisted-x-we-are-young-agencyxx8-1900x1267.webp",
+  ],
 };
 
 /** The frames beside one word — none, one, or two. */
