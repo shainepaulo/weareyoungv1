@@ -392,6 +392,102 @@ export const BLOCK_ASIDES: Record<string, Aside[]> = {
     // E-SPORTS — the crossover shirt the tie-up was built on, phones up around it.
     "/way/projects/adidas-tango-league/gallery-2-adidas-tango-league-x-we-are-young-agencyxx-1-ninho-2-1900x1267.webp",
   ],
+  "adidas-playground-zz10": [
+    // FIELD DESIGN AND CONSTRUCTION — the finished pitch from straight above: the whole artwork, edge to edge.
+    "/way/projects/adidas-playground-zz10/gallery-2-adidas-playground-zz10-x-we-are-young-agencyxx2-1900x1069.webp",
+    // INAUGURAL CEREMONY — the opening: one man standing on the number the court was painted for.
+    "/way/projects/adidas-playground-zz10/gallery-3-adidas-playground-zz10-x-we-are-young-agencyxx3-1900x1069.webp",
+    // ASSETS — the shirt hung on the cage rail, number out.
+    "/way/projects/adidas-playground-zz10/gallery-4-adidas-playground-zz10-x-we-are-young-agencyxx4-1900x1266.webp",
+    // PR SESSIONS — mic, camera, umbrellas — the press being worked through the rain.
+    "/way/projects/adidas-playground-zz10/gallery-5-adidas-playground-zz10-x-we-are-young-agencyxx5-1900x1266.webp",
+  ],
+  "desperados-festivals": [
+    // SCENOGRAPHY — the bar built as a signpost: neon over the festival fence.
+    "/way/projects/desperados-festivals/gallery-1-desperados-solidays-x-we-are-young-agency-01-1900x1267.webp",
+    // ENTERTAINMENT — the print booth going, shirts pulled hot off the press.
+    "/way/projects/desperados-festivals/gallery-3-desperados-solidays-x-we-are-young-agency-03-1900x1267.webp",
+    // CO-CREATION — what the collaboration made: three tees, both names on them.
+    "/way/projects/desperados-festivals/gallery-4-desperados-solidays-x-we-are-young-agency-04-1-1900x1267.webp",
+    // SHOWCASES — the booth behind a wall of salvaged speakers, set under way.
+    "/way/projects/desperados-festivals/gallery-2-desperados-solidays-x-we-are-young-agency-02-1900x1267.webp",
+  ],
+  "heineken-beer-factory": [
+    // CRAFT & MODERN BREWERY — the build itself: bulb letters, copper pipe, raw board.
+    "/way/projects/heineken-beer-factory/gallery-1-heineken-beer-factory-x-we-are-young-agencyxx-1-1900x1267.webp",
+    // BEER EXPERTISE — the tasting line-up laid out bottle by bottle on the zinc.
+    "/way/projects/heineken-beer-factory/gallery-3-heineken-beer-factory-x-we-are-young-agencyxx-3-1900x1269.webp",
+    // BRAND EXPERIENCES — the room as people used it: sat on the stage of a dressed bar.
+    "/way/projects/heineken-beer-factory/gallery-5-heineken-beer-factory-x-we-are-young-agencyxx-5-1900x1269.webp",
+    // BRAND IDENTITY — the name stencilled straight onto the crates it is served from.
+    "/way/projects/heineken-beer-factory/gallery-4-heineken-beer-factory-x-we-are-young-agencyxx-4-1900x1269.webp",
+  ],
+  "desperados-patch-edition": [
+    // COLLABORATION — one table per name — Tealer, wasted, TRVSN — along the same wall.
+    "/way/projects/desperados-patch-edition/gallery-3-desperados-patch-edition-x-we-are-young-agencyxx3-1900x1267.webp",
+    // POP-UP STORE — the floor it took over, seen down the escalators.
+    "/way/projects/desperados-patch-edition/gallery-2-desperados-patch-edition-x-we-are-young-agencyxx2-1900x1267.webp",
+    // INFLUENCE — the turnout on the night, packed under the store's lights.
+    "/way/projects/desperados-patch-edition/gallery-1-desperados-patch-edition-x-we-are-young-agencyxx-1900x1267.webp",
+    // SHOWCASE — one bottle on a spike in a lit orange box, and nothing else.
+    "/way/projects/desperados-patch-edition/gallery-5-desperados-patch-edition-x-we-are-young-agencyxx5-1900x1267.webp",
+  ],
+  "reebok-24-hours-boxing": [
+    // SARAH OURAHMOUNE — no frame in this set can be attributed to a named person with certainty.
+    null,
+    // NASSIM LYES — same: the gallery is not captioned, so the name stays unpaired.
+    null,
+    // DAMIAN & TAYLOR LAPILUS — same: the gallery is not captioned, so the name stays unpaired.
+    null,
+    // EXHIBITION — the demonstration itself: pads up in the ring, the room watching.
+    "/way/projects/reebok-24-hours-boxing/gallery-4-reebok-24-hours-boxing-x-we-are-young-agencyxx4-1900x1266.webp",
+  ],
+  "reebok-24-hours-training": [
+    // LAURY THILLEMAN — the gallery is not captioned, so the name stays unpaired rather than guessed.
+    null,
+    // LAURENT MAISTRET — same: no frame here can be attributed to a named person with certainty.
+    null,
+    // MORGAN MOREAU — same: no frame here can be attributed to a named person with certainty.
+    null,
+    // MULTI COACHING SESSIONS — one of the sessions under way, the room sat in front of it.
+    "/way/projects/reebok-24-hours-training/gallery-4-reebok-24-hours-training-x-we-are-young-agencyxx5.webp",
+  ],
+  "adidas-glitch": [
+    // CONSUMER ENGAGEMENT — the pair handed over on the playground, the others waiting on the rail.
+    "/way/projects/adidas-glitch/gallery-2-adidas-glitch-x-we-are-young-agencyxx-community-management-1-min-1900x1267.webp",
+    // CONTENT CREATION — studio, one light, paint on the skin: a frame made, not found.
+    "/way/projects/adidas-glitch/gallery-5-adidas-glitch-x-we-are-young-agencyxx-4-1900x1267.webp",
+    // EVENT — the whole roster together in the hall, lit for the night.
+    "/way/projects/adidas-glitch/gallery-4-adidas-glitch-x-we-are-young-agencyxx-community-management-4-min-1900x1267.webp",
+    // COMMUNITY MANAGEMENT — the cage the community actually plays on, sat on its own wall.
+    "/way/projects/adidas-glitch/gallery-3-adidas-glitch-x-we-are-young-agencyxx-1-1900x1267.webp",
+  ],
+  "jordan-quai-54": [
+    // REAL BASKET-BALL STADIUM — stands full on both sides of a proper court, under the tournament's own board.
+    "/way/projects/jordan-quai-54/gallery-4-quai54-x-we-are-young-agencyxx-4-1900x1069.webp",
+    // SHOWCASES — the mic working the crowd between games.
+    "/way/projects/jordan-quai-54/gallery-3-quai54-x-we-are-young-agencyxx-3-1900x1069.webp",
+    // EXCLUSIVE JORDAN PRODUCTS — the kit itself, in the huddle: names and numbers made for this weekend.
+    "/way/projects/jordan-quai-54/gallery-1-quai54-x-we-are-young-agencyxx-1-1900x1069.webp",
+    // DUNK CONTEST — still hanging off the rim, legs out, sky behind.
+    "/way/projects/jordan-quai-54/gallery-5-quai54-x-we-are-young-agencyxx-5-1900x1069.webp",
+  ],
+  "adidas-pulse": [
+    // UNSTRUCTURED LED INSTALLATION — the rig itself: tubes thrown across the ceiling at every angle.
+    "/way/projects/adidas-pulse/gallery-2-adidas-pulse-x-we-are-young-agencyxx2-1900x1267.webp",
+    // ASSETS — the backdrop and the camera: frames being made on the spot.
+    "/way/projects/adidas-pulse/gallery-5-adidas-pulse-x-we-are-young-agencyxx5-1900x1267.webp",
+    // INTERACTIVE AND SYNCHRONIZED SET-UP — a hand on the bars, the lights answering it.
+    "/way/projects/adidas-pulse/gallery-4-adidas-pulse-x-we-are-young-agencyxx4-1900x1267.webp",
+  ],
+  "adidas-challenge-my-game": [
+    // A DIGITAL NET — the screen running the length of the clay, playing along with the court.
+    "/way/projects/adidas-challenge-my-game/gallery-2-adidas-challenge-mygame-x-we-are-young-agencyxx1-1900x1267.webp",
+    // ASSETS — the product shot close: pleat, three stripes, grip in hand.
+    "/way/projects/adidas-challenge-my-game/gallery-1-adidas-challenge-mygame-x-we-are-young-agencyxx0-1900x1267.webp",
+    // PERFORMANCE WORKSHOP — the session itself — a circle of players being coached on the clay.
+    "/way/projects/adidas-challenge-my-game/gallery-3-adidas-challenge-mygame-x-we-are-young-agencyxx2-1900x1267.webp",
+  ],
 };
 
 /** The frames beside one word — none, one, or two. */
