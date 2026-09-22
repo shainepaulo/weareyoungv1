@@ -36,6 +36,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const prev = p.prev ? BY_SLUG.get(p.prev) : null;
   const next = p.next ? BY_SLUG.get(p.next) : null;
 
+  // Nothing the project has should fall off the page: whatever is not shown
+  // beside a word is collected underneath instead of being repeated there.
+  const beside = new Set(p.blocks.flatMap((_, i) => asidesFor(p.slug, i)));
+  const rest = p.gallery.filter((src) => !beside.has(src));
+
   return (
     <article className="case">
       <header className="case__hero tone-dark">
@@ -150,9 +155,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-      {/* The gallery that used to sit here repeated the same frames a second
-          time, without their words — so it was cut. Those frames now earn
-          their place beside the word they illustrate, above. */}
+      {/* Everything the project has that is not already standing beside a
+          word. The old gallery printed the lot a second time, which meant
+          scrolling past the same frames without their captions; this shows
+          only what would otherwise be missing from the page. */}
+      {rest.length > 0 && (
+        <section className="section section--tight tone-dark">
+          <ul className="gallery">
+            {rest.map((src, i) => (
+              <Reveal as="li" kind="up" delay={(i % 2) * 120} key={src} className="gallery__item">
+                <Image src={src} alt="" fill sizes="(min-width: 768px) 48vw, 100vw" style={{ objectFit: "cover" }} />
+              </Reveal>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <nav className="case__nav tone-light" aria-label="More projects">
         <div className="gridlines" />

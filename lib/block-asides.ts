@@ -42,6 +42,22 @@ export const BLOCK_ASIDES: Record<string, Aside[]> = {
     // ARENA — the 20th-anniversary screen dressing the stands.
     "/way/projects/quai-54/gallery-1-julien-jolivet-quai54-jordan-1.webp",
   ],
+  "women-in-tech-beyond-ceiling": [
+    // FILM — the mirror, the line the whole film turns on.
+    "/way/projects/women-in-tech-beyond-ceiling/gallery-4-x-jlnjlvtc4.webp",
+    // PRINT — the drawing itself, the one thing on paper.
+    "/way/projects/women-in-tech-beyond-ceiling/gallery-1-x-jlnjlvtc.webp",
+  ],
+  "saison-xi": [
+    // ARENA — the gradient pitch built under the Eiffel Tower.
+    "/way/projects/saison-xi/gallery-1-julien-jolivet-impulstar-1-min.webp",
+    // SCENOGRAPHY — the set pieces: the branded van and the inflatable.
+    "/way/projects/saison-xi/gallery-2-julien-jolivet-impulstar-2-min.webp",
+    // ENTERTAINERS — a lone player working the floor between games.
+    "/way/projects/saison-xi/gallery-3-julien-jolivet-impulstar-3-min.webp",
+    // SHOWCASES — a showcase match on the gradient court.
+    "/way/projects/saison-xi/gallery-4-julien-jolivet-impulstar-4-min.webp",
+  ],
   "sns-paris-football-week": [
     // SCENOGRAPHY — the collection's type projected across the pitch floor.
     "/way/projects/sns-paris-football-week/gallery-1-sns-x-adidas-originals-paris-football-week-1-scaled.webp",
