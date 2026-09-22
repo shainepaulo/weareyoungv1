@@ -42,6 +42,14 @@ export const BLOCK_ASIDES: Record<string, Aside[]> = {
     // ARENA — the 20th-anniversary screen dressing the stands.
     "/way/projects/quai-54/gallery-1-julien-jolivet-quai54-jordan-1.webp",
   ],
+  "sns-paris-football-week": [
+    // SCENOGRAPHY — the collection's type projected across the pitch floor.
+    "/way/projects/sns-paris-football-week/gallery-1-sns-x-adidas-originals-paris-football-week-1-scaled.webp",
+    // TOURNAMENT — the bench, then the tackle under the SNS signage.
+    "/way/projects/sns-paris-football-week/gallery-3-sns-x-adidas-originals-paris-football-week-3-scaled.webp",
+    // ENTERTAINMENT — the decks running the room between matches.
+    "/way/projects/sns-paris-football-week/gallery-2-sns-x-adidas-originals-paris-football-week-2-scaled.webp",
+  ],
   radar: [
     // SCENOGRAPHY — the rig itself: RADAR sign, LED wall, stacked speakers.
     "/way/projects/radar/gallery-3-we-are-young-x-desperados-radar3-1900x987.webp",
