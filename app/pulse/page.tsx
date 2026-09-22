@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { PROJECT_LIST } from "@/lib/projects";
 import "../pages.css";
@@ -10,16 +11,20 @@ export const metadata: Metadata = {
     "The live cultural signal of We Are Young. A running feed of what moves brands, sport, and culture — read fast, read first, move your own way.",
 };
 
-/** The beats Pulse covers. Named, not explained. */
+/**
+ * The beats Pulse covers, each one pointing at the case that proves we work
+ * on it. Naming a beat and going nowhere is a claim; naming it and landing on
+ * the work is evidence.
+ */
 const TAGS = [
-  "Fashion",
-  "Subculture",
-  "Basketball",
-  "Music",
-  "Sneakers",
-  "Football",
-  "Nightlife",
-  "Skate",
+  { name: "Fashion", slug: "premiere-vision" },
+  { name: "Subculture", slug: "reebok-lahaine" },
+  { name: "Basketball", slug: "quai-54" },
+  { name: "Music", slug: "radar" },
+  { name: "Sneakers", slug: "courir-40ans" },
+  { name: "Football", slug: "adidas-tango-league" },
+  { name: "Nightlife", slug: "radar-red-house" },
+  { name: "Skate", slug: "vans-weatherized" },
 ] as const;
 
 const ISSUE = { number: "001", title: "Generation Now" } as const;
@@ -71,8 +76,12 @@ const ADVISORY = [
 ] as const;
 
 export default function PulsePage() {
-  // The plate leads on the work, not on stock imagery.
-  const issueImage = PROJECT_LIST.find((p) => p.slug === "quai-54") ?? PROJECT_LIST[0];
+  // The plate leads on the work, not on stock imagery. The judges' table at
+  // Quai 54 rather than the hero: it is the one frame of that project the case
+  // page does not already use, and it reads as graphic once it goes grey.
+  const quai = PROJECT_LIST.find((p) => p.slug === "quai-54");
+  const issueImage =
+    quai?.gallery.find((g) => g.includes("quai54-jordan-2")) ?? quai?.hero ?? PROJECT_LIST[0].hero;
 
   return (
     <>
@@ -92,7 +101,7 @@ export default function PulsePage() {
 
       <Reveal kind="fade" className="pulse-issue">
         <Image
-          src={issueImage.hero}
+          src={issueImage}
           alt=""
           fill
           sizes="100vw"
@@ -104,17 +113,30 @@ export default function PulsePage() {
         </span>
       </Reveal>
 
-      <div className="pulse-tags">
-        <p className="sr-only">Pulse covers {TAGS.join(", ")}.</p>
-        {/* Two copies so the loop closes on itself. */}
+      <nav className="pulse-tags" aria-label="Pulse beats">
+        {/* Two copies so the loop closes on itself. The second is a duplicate
+            of the first, so it is hidden from assistive tech and taken out of
+            the tab order rather than announced and focused twice. */}
         {[0, 1].map((copy) => (
-          <div className="pulse-tags__track" key={copy} aria-hidden="true">
+          <div
+            className="pulse-tags__track"
+            key={copy}
+            aria-hidden={copy === 1 ? "true" : undefined}
+          >
             {TAGS.map((tag) => (
-              <span key={tag}>{tag}</span>
+              <Link
+                href={`/projects/${tag.slug}`}
+                key={tag.name}
+                className="pulse-tags__tag"
+                tabIndex={copy === 1 ? -1 : undefined}
+                data-cursor="See"
+              >
+                {tag.name}
+              </Link>
             ))}
           </div>
         ))}
-      </div>
+      </nav>
 
       <section className="section tone-dark">
         <header className="row-between pulse-feed__head">

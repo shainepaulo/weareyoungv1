@@ -116,26 +116,26 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             return (
               <div className={`block block--${b.side}`} key={`${b.image}-${i}`}>
                 <Reveal kind="wipe" className="block__media">
-                  <Image src={b.image!} alt={b.caption} fill sizes="(min-width: 768px) 55vw, 100vw" style={{ objectFit: "cover" }} />
+                  <Image src={b.image!} alt={b.caption} fill sizes="(min-width: 768px) 62vw, 100vw" style={{ objectFit: "cover" }} />
                 </Reveal>
 
-                <div className="block__side" data-has-aside={asides.length > 0}>
-                  {asides.length > 0 && (
-                    <Reveal kind="fade" className="block__asides" data-count={asides.length}>
-                      {asides.map((src) => (
-                        <span className="block__aside" key={src}>
-                          <Image
-                            src={src}
-                            alt=""
-                            fill
-                            sizes="(min-width: 768px) 22vw, 100vw"
-                            style={{ objectFit: "cover" }}
-                          />
-                        </span>
-                      ))}
-                    </Reveal>
-                  )}
+                {asides.length > 0 && (
+                  <Reveal kind="fade" className="block__asides" data-count={asides.length}>
+                    {asides.map((src) => (
+                      <span className="block__aside" key={src}>
+                        <Image
+                          src={src}
+                          alt=""
+                          fill
+                          sizes="(min-width: 768px) 62vw, 100vw"
+                          style={{ objectFit: "cover" }}
+                        />
+                      </span>
+                    ))}
+                  </Reveal>
+                )}
 
+                <div className="block__side">
                   <Reveal kind="up" delay={200} className="block__caption">
                     <span className="mono-xs accent">{String(i + 1).padStart(2, "0")}</span>
                     {/* Druk Wide is wide enough that SCENOGRAPHY overruns the

@@ -139,29 +139,28 @@
   align-items: center;
 }
 
-/* 16:9 rather than 3:2 — at 1900px wide the taller crop made each block
-   740px, so one unrevealed still filled the screen with black. */
+/* Both frames are capped in viewport height as well as width: at 1900px a
+   16:9 box is 1070px tall, which would put one image on a screen and nothing
+   else. The cap crops the band rather than shrinking the picture. */
 .block__media {
   position: relative;
+  /* Explicit, so the cap below trims the band instead of narrowing the box:
+     a stretched item with only an aspect ratio loses width when its height
+     is clamped. */
+  width: 100%;
   aspect-ratio: 16 / 9;
+  max-height: 42vh;
   overflow: hidden;
   background: #111;
 }
 
-/* The word and the frames that explain it, as one cluster centred on the
-   still beside it. The word keeps its place; the frames sit next to it, on
-   the side where the column is otherwise empty. */
+/* The word, centred against the frames beside it. */
 .block__side {
   display: grid;
-  gap: 18px;
   align-content: center;
-  /* Stacked on a phone, so the word has the whole column. Overridden below
-     once the frames sit beside it. */
+  /* Stacked on a phone, so the word has the whole column. */
   --word-col: calc(100vw - 2 * var(--gutter));
 }
-
-/* Side by side only once there is room for it — on a phone the frames stack
-   above the word instead, or the two crush each other into a 375px column. */
 
 /* Never wider than the design size, and never wider than the slot the frames
    leave it. --word-em is the longest unbreakable word, measured per caption. */
@@ -177,44 +176,57 @@
 /* Decorative: the wide still already carries the alt for this block. */
 .block__asides {
   display: grid;
-  gap: 10px;
+  gap: var(--bgap, 16px);
 }
 
 .block__aside {
   position: relative;
   display: block;
-  aspect-ratio: 5 / 4;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 42vh;
   overflow: hidden;
   background: #111;
 }
 
-/* Two frames in one slot get a taller crop each so the pair still reads
-   against the word rather than towering over it. */
-.block__asides[data-count="2"] .block__aside {
-  aspect-ratio: 3 / 2;
+/* On a phone the frames have the full width already, so they can afford a
+   squarer crop and keep more of the picture. */
+@media (max-width: 767px) {
+  .block__aside { aspect-ratio: 4 / 3; }
+  .block__asides[data-count="2"] .block__aside { aspect-ratio: 16 / 9; }
 }
 
 @media (min-width: 768px) {
   .block {
-    --bgap: clamp(12px, 1.5vw, 24px);
+    --bgap: clamp(16px, 2vw, 32px);
     --bcol: calc((100vw - 2 * var(--gutter) - 7 * var(--bgap)) / 8);
     grid-template-columns: repeat(8, minmax(0, 1fr));
     column-gap: var(--bgap);
+    row-gap: clamp(14px, 2vh, 26px);
   }
-  /* Three columns for the still, five for the word and its frames. The frames
-     are the point of this band, so they get the room: at four-and-four they
-     still read as a thumbnail next to the still. */
-  .block--left .block__media { grid-column: 1 / 4; }
-  .block--left .block__side { grid-column: 4 / 9; }
-  .block--right .block__media { grid-column: 6 / 9; grid-row: 1; }
-  .block--right .block__side { grid-column: 1 / 6; grid-row: 1; }
 
-  .block__side[data-has-aside="true"] {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    align-items: center;
-    /* The side spans five of the eight columns; the word takes the 1fr of a
-       1.15fr/1fr split, less the 18px between them. */
-    --word-col: calc((5 * var(--bcol) + 4 * var(--bgap) - 18px) / 2.15);
+  /* Five of the eight columns for the pictures, stacked, and the word beside
+     them in the other three, centred on the pair. Three things abreast — a
+     still, a frame and a word — left each of them around 330px on a laptop;
+     stacking the two pictures gives them the width of the whole band instead,
+     and gives the word a wider column than it had. */
+  .block--left .block__media { grid-column: 1 / 6; grid-row: 1; }
+  .block--left .block__asides { grid-column: 1 / 6; grid-row: 2; }
+  .block--left .block__side { grid-column: 6 / 9; grid-row: 1 / 3; }
+
+  .block--right .block__media { grid-column: 4 / 9; grid-row: 1; }
+  .block--right .block__asides { grid-column: 4 / 9; grid-row: 2; }
+  .block--right .block__side { grid-column: 1 / 4; grid-row: 1 / 3; }
+
+  /* Three columns, and the two gaps they span. */
+  .block__side {
+    --word-col: calc(3 * var(--bcol) + 2 * var(--bgap));
+  }
+
+  /* A pair in one slot sits side by side rather than stacking, so the block
+     keeps the same height whether a word has one frame or two. */
+  .block__asides[data-count="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
