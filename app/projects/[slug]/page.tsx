@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 import { SplitWords } from "@/components/motion/SplitWords";
 import { Vimeo } from "@/components/project/Vimeo";
+import { asideFor } from "@/lib/block-asides";
 import { BY_SLUG, PROJECT_LIST } from "@/lib/projects";
 import { fitFontSize } from "@/lib/type-metrics";
 import "@/components/project/project.css";
@@ -103,17 +104,33 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {p.blocks.length > 0 && (
         <section className="section tone-dark case__blocks">
           <div className="gridlines" />
-          {p.blocks.map((b, i) => (
-            <div className={`block block--${b.side}`} key={`${b.image}-${i}`}>
-              <Reveal kind="wipe" className="block__media">
-                <Image src={b.image!} alt={b.caption} fill sizes="(min-width: 768px) 60vw, 100vw" style={{ objectFit: "cover" }} />
-              </Reveal>
-              <Reveal kind="up" delay={200} className="block__caption">
-                <span className="mono-xs accent">{String(i + 1).padStart(2, "0")}</span>
-                <h2 className="display d3">{b.caption}</h2>
-              </Reveal>
-            </div>
-          ))}
+          {p.blocks.map((b, i) => {
+            // A frame that shows what the word names — see lib/block-asides.ts.
+            const aside = asideFor(p.slug, i);
+
+            return (
+              <div className={`block block--${b.side}`} key={`${b.image}-${i}`}>
+                <Reveal kind="wipe" className="block__media">
+                  <Image src={b.image!} alt={b.caption} fill sizes="(min-width: 768px) 60vw, 100vw" style={{ objectFit: "cover" }} />
+                </Reveal>
+                <Reveal kind="up" delay={200} className="block__caption">
+                  {aside && (
+                    <span className="block__aside">
+                      <Image
+                        src={aside}
+                        alt=""
+                        fill
+                        sizes="(min-width: 768px) 30vw, 100vw"
+                        style={{ objectFit: "cover" }}
+                      />
+                    </span>
+                  )}
+                  <span className="mono-xs accent">{String(i + 1).padStart(2, "0")}</span>
+                  <h2 className="display d3">{b.caption}</h2>
+                </Reveal>
+              </div>
+            );
+          })}
         </section>
       )}
 
