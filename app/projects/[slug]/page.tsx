@@ -6,9 +6,9 @@ import { notFound } from "next/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 import { SplitWords } from "@/components/motion/SplitWords";
 import { Vimeo } from "@/components/project/Vimeo";
-import { asideFor } from "@/lib/block-asides";
+import { asidesFor } from "@/lib/block-asides";
 import { BY_SLUG, PROJECT_LIST } from "@/lib/projects";
-import { fitFontSize } from "@/lib/type-metrics";
+import { fitFontSize, longestTokenWidth } from "@/lib/type-metrics";
 import "@/components/project/project.css";
 
 export function generateStaticParams() {
@@ -105,46 +105,54 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <section className="section tone-dark case__blocks">
           <div className="gridlines" />
           {p.blocks.map((b, i) => {
-            // A frame that shows what the word names — see lib/block-asides.ts.
-            const aside = asideFor(p.slug, i);
+            // Frames showing what the word names — see lib/block-asides.ts.
+            const asides = asidesFor(p.slug, i);
 
             return (
               <div className={`block block--${b.side}`} key={`${b.image}-${i}`}>
                 <Reveal kind="wipe" className="block__media">
-                  <Image src={b.image!} alt={b.caption} fill sizes="(min-width: 768px) 60vw, 100vw" style={{ objectFit: "cover" }} />
+                  <Image src={b.image!} alt={b.caption} fill sizes="(min-width: 768px) 55vw, 100vw" style={{ objectFit: "cover" }} />
                 </Reveal>
-                <Reveal kind="up" delay={200} className="block__caption">
-                  {aside && (
-                    <span className="block__aside">
-                      <Image
-                        src={aside}
-                        alt=""
-                        fill
-                        sizes="(min-width: 768px) 30vw, 100vw"
-                        style={{ objectFit: "cover" }}
-                      />
-                    </span>
+
+                <div className="block__side" data-has-aside={asides.length > 0}>
+                  {asides.length > 0 && (
+                    <Reveal kind="fade" className="block__asides" data-count={asides.length}>
+                      {asides.map((src) => (
+                        <span className="block__aside" key={src}>
+                          <Image
+                            src={src}
+                            alt=""
+                            fill
+                            sizes="(min-width: 768px) 22vw, 100vw"
+                            style={{ objectFit: "cover" }}
+                          />
+                        </span>
+                      ))}
+                    </Reveal>
                   )}
-                  <span className="mono-xs accent">{String(i + 1).padStart(2, "0")}</span>
-                  <h2 className="display d3">{b.caption}</h2>
-                </Reveal>
+
+                  <Reveal kind="up" delay={200} className="block__caption">
+                    <span className="mono-xs accent">{String(i + 1).padStart(2, "0")}</span>
+                    {/* Druk Wide is wide enough that SCENOGRAPHY overruns the
+                        slot left beside the frames; the stylesheet divides the
+                        slot by this to find a size that fits. */}
+                    <h2
+                      className="display d3 block__word"
+                      style={{ "--word-em": longestTokenWidth(b.caption) } as CSSProperties}
+                    >
+                      {b.caption}
+                    </h2>
+                  </Reveal>
+                </div>
               </div>
             );
           })}
         </section>
       )}
 
-      {p.gallery.length > 0 && (
-        <section className="section section--tight tone-dark">
-          <ul className="gallery">
-            {p.gallery.map((src, i) => (
-              <Reveal as="li" kind="up" delay={(i % 2) * 120} key={src} className="gallery__item">
-                <Image src={src} alt="" fill sizes="(min-width: 768px) 48vw, 100vw" style={{ objectFit: "cover" }} />
-              </Reveal>
-            ))}
-          </ul>
-        </section>
-      )}
+      {/* The gallery that used to sit here repeated the same frames a second
+          time, without their words — so it was cut. Those frames now earn
+          their place beside the word they illustrate, above. */}
 
       <nav className="case__nav tone-light" aria-label="More projects">
         <div className="gridlines" />

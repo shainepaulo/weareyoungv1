@@ -7,7 +7,7 @@ import "../pages.css";
 export const metadata: Metadata = {
   title: "Pulse",
   description:
-    "The live cultural signal of We Are Young. A running feed of what moves brands, sport, and culture — read fast, read first, move as one.",
+    "The live cultural signal of We Are Young. A running feed of what moves brands, sport, and culture — read fast, read first, move your own way.",
 };
 
 /** The beats Pulse covers. Named, not explained. */
@@ -78,10 +78,15 @@ export default function PulsePage() {
     <>
       <section className="section tone-dark pulse-hero">
         <span className="mono-xs accent">Our way to read</span>
-        <h1 className="display pulse-hero__title">Pulse</h1>
+        <h1 className="display pulse-hero__title">
+          Pulse
+          <span className="blink" aria-hidden="true">
+            _
+          </span>
+        </h1>
         <p className="mono-xl pulse-hero__lede">
           The live cultural signal of We Are Young. A running feed of what moves brands, sport, and culture — read
-          fast, read first, move as one.
+          fast, read first, move your own way.
         </p>
       </section>
 

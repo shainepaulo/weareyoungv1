@@ -12,7 +12,10 @@
  * nothing in that gallery earns the slot — better an honest gap than a stock
  * pairing.
  */
-export const BLOCK_ASIDES: Record<string, (string | null)[]> = {
+/** One image beside the word, or two stacked in the same slot. */
+export type Aside = string | string[] | null;
+
+export const BLOCK_ASIDES: Record<string, Aside[]> = {
   "adidas-arena": [
     // BRAND CONTENT — the campaign portraits, shot for the campaign itself.
     "/way/projects/adidas-arena/gallery-1-adidas-arena-x-we-are-young-agency-1.webp",
@@ -49,7 +52,9 @@ export const BLOCK_ASIDES: Record<string, (string | null)[]> = {
   ],
 };
 
-/** The aside for one block, or null when that slot is deliberately empty. */
-export function asideFor(slug: string, index: number): string | null {
-  return BLOCK_ASIDES[slug]?.[index] ?? null;
+/** The frames beside one word — none, one, or two. */
+export function asidesFor(slug: string, index: number): string[] {
+  const entry = BLOCK_ASIDES[slug]?.[index];
+  if (!entry) return [];
+  return Array.isArray(entry) ? entry : [entry];
 }

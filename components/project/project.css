@@ -126,22 +126,47 @@
 }
 
 /* --- Blocks ------------------------------------------------------------- */
+/* Tight enough that the next word is always on its way in. The old spacing
+   left a screen of black between blocks on a 16:9 display. */
 .case__blocks {
   display: grid;
-  gap: clamp(48px, 8vh, 120px);
+  gap: clamp(28px, 4vh, 56px);
 }
 
 .block {
   display: grid;
   gap: 20px;
-  align-items: end;
+  align-items: center;
 }
 
+/* 16:9 rather than 3:2 — at 1900px wide the taller crop made each block
+   740px, so one unrevealed still filled the screen with black. */
 .block__media {
   position: relative;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #111;
+}
+
+/* The word and the frames that explain it, as one cluster centred on the
+   still beside it. The word keeps its place; the frames sit next to it, on
+   the side where the column is otherwise empty. */
+.block__side {
+  display: grid;
+  gap: 18px;
+  align-content: center;
+  /* Stacked on a phone, so the word has the whole column. Overridden below
+     once the frames sit beside it. */
+  --word-col: calc(100vw - 2 * var(--gutter));
+}
+
+/* Side by side only once there is room for it — on a phone the frames stack
+   above the word instead, or the two crush each other into a 375px column. */
+
+/* Never wider than the design size, and never wider than the slot the frames
+   leave it. --word-em is the longest unbreakable word, measured per caption. */
+.block__word {
+  font-size: min(var(--d3), calc(var(--word-col) / var(--word-em, 8)));
 }
 
 .block__caption {
@@ -149,28 +174,48 @@
   gap: 8px;
 }
 
-/* The word is only a couple of lines tall in a band the height of the still
-   beside it, so the rest of its column reads as a hole. This fills it with a
-   frame of the thing the word names. It sits above the word, flush to the
-   same edge, and is decorative — the wide still already carries the alt. */
+/* Decorative: the wide still already carries the alt for this block. */
+.block__asides {
+  display: grid;
+  gap: 10px;
+}
+
 .block__aside {
   position: relative;
   display: block;
   aspect-ratio: 4 / 3;
-  margin-bottom: 12px;
   overflow: hidden;
   background: #111;
 }
 
+/* Two frames in one slot get a taller crop each so the pair still reads
+   against the word rather than towering over it. */
+.block__asides[data-count="2"] .block__aside {
+  aspect-ratio: 3 / 2;
+}
+
 @media (min-width: 768px) {
   .block {
+    --bgap: clamp(12px, 1.5vw, 24px);
+    --bcol: calc((100vw - 2 * var(--gutter) - 7 * var(--bgap)) / 8);
     grid-template-columns: repeat(8, minmax(0, 1fr));
-    column-gap: clamp(12px, 1.5vw, 24px);
+    column-gap: var(--bgap);
   }
-  .block--left .block__media { grid-column: 1 / 6; }
-  .block--left .block__caption { grid-column: 6 / 9; }
-  .block--right .block__media { grid-column: 4 / 9; grid-row: 1; }
-  .block--right .block__caption { grid-column: 1 / 4; grid-row: 1; }
+  /* An even four-and-four split. The old five-and-three left the frames at a
+     quarter of the still's width, which read as a thumbnail rather than as a
+     second image. */
+  .block--left .block__media { grid-column: 1 / 5; }
+  .block--left .block__side { grid-column: 5 / 9; }
+  .block--right .block__media { grid-column: 5 / 9; grid-row: 1; }
+  .block--right .block__side { grid-column: 1 / 5; grid-row: 1; }
+
+  .block__side[data-has-aside="true"] {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: center;
+    /* The side spans four of the eight columns; the word takes the 1fr of a
+       1.15fr/1fr split, less the 18px between them. */
+    --word-col: calc((4 * var(--bcol) + 3 * var(--bgap) - 18px) / 2.15);
+  }
 }
 
 /* --- Gallery ------------------------------------------------------------ */

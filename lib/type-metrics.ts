@@ -50,3 +50,13 @@ export function fitFontSize(text: string, safety = 0.98): string {
   const em = longestTokenEm(text) / safety;
   return `calc((100vw - 2 * var(--gutter)) / ${em.toFixed(3)})`;
 }
+
+/**
+ * The same measurement as a bare number, for words that have to fit a column
+ * the stylesheet knows about but this file does not — the caption beside a
+ * block's frames, whose slot depends on the grid. CSS divides its own width
+ * by this.
+ */
+export function longestTokenWidth(text: string, safety = 0.98): string {
+  return (longestTokenEm(text) / safety).toFixed(3);
+}

@@ -371,6 +371,26 @@
   font-size: clamp(3.4rem, 19vw, 16rem);
   letter-spacing: -0.02em;
   margin: 0;
+  /* The word carries the page's own pulse: a faint orange glow that beats
+     twice and rests, the way a heartbeat does, rather than fading evenly in
+     and out. The type itself stays white — only the halo moves. */
+  animation: pulse-beat 1.8s var(--ease-out) infinite;
+}
+
+@keyframes pulse-beat {
+  0% { text-shadow: 0 0 0 rgba(255, 61, 0, 0); }
+  8% { text-shadow: 0 0 28px rgba(255, 61, 0, 0.55); }
+  18% { text-shadow: 0 0 10px rgba(255, 61, 0, 0.16); }
+  28% { text-shadow: 0 0 34px rgba(255, 61, 0, 0.45); }
+  45% { text-shadow: 0 0 12px rgba(255, 61, 0, 0.1); }
+  100% { text-shadow: 0 0 0 rgba(255, 61, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-hero__title {
+    animation: none;
+    text-shadow: 0 0 22px rgba(255, 61, 0, 0.35);
+  }
 }
 
 .pulse-hero__lede {

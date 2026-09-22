@@ -527,12 +527,15 @@ html.has-cursor * {
   width: fit-content;
 }
 
+/* Sized to the column beside it rather than to the page: at 22vw the mark ran
+   to 320px against a four-line Navigate list, which read as a logo dropped on
+   top of the footer instead of part of it. */
 .footer__mark {
-  font-size: clamp(120px, 22vw, 320px);
+  font-size: clamp(64px, 7vw, 104px);
   line-height: 0;
   opacity: 0.95;
   justify-self: end;
-  align-self: end;
+  align-self: start;
 }
 
 .footer__base {
