@@ -342,6 +342,56 @@ export const BLOCK_ASIDES: Record<string, Aside[]> = {
     // #AMPLIFICATION — everything that came out of it, laid end to end in the campaign's own frame.
     "/way/projects/reebok-doner-kebab/gallery-1-we-are-young-x-reebok-doxxner-kebab-1-1900x987.webp",
   ],
+  "clairefontaine-toutankhamon": [
+    // BRAND CONTENT — the object it all led to: the notebook, the brand on the cover.
+    "/way/projects/clairefontaine-toutankhamon/gallery-4-we-are-young-agency-x-clairefontaine-toutaxxnkhamon-22le-trexxsor-du-pharaon223.webp",
+    // ARTISTIC DIRECTION — the look of the whole film in one frame: one figure, one light, black.
+    "/way/projects/clairefontaine-toutankhamon/gallery-1-we-are-young-agency-x-clairefontaine-toutaxxnkhamon-22le-trexxsor-du-pharaon220.webp",
+    // SHOOTING — the brush held up in the beam — the frame being taken.
+    "/way/projects/clairefontaine-toutankhamon/gallery-2-we-are-young-agency-x-clairefontaine-toutaxxnkhamon-22le-trexxsor-du-pharaon221-1900x1267.webp",
+    // DIGITAL PLATFORM — the first blue mark on paper: what the platform was built to collect.
+    "/way/projects/clairefontaine-toutankhamon/gallery-5-we-are-young-agency-x-clairefontaine-toutaxxnkhamon-22le-trexxsor-du-pharaon224.webp",
+  ],
+  "adidas-tango-arena": [
+    // DIGITAL PLAYGROUND — the floor itself — a screen the game is played on, lines drawing themselves.
+    "/way/projects/adidas-tango-arena/gallery-4-adidas-tango-arena-x-we-are-young-agencyxx-93-empire-x-garde-rexxpublicaine-4.webp",
+    // TOURNAMENT — the ball live, bibs on, everyone chasing it.
+    "/way/projects/adidas-tango-arena/gallery-5-adidas-tango-arena-x-we-are-young-agencyxx-93-empire-x-garde-rexxpublicaine-5.webp",
+    // ENTERTAINMENT — the walk-on: beams down, one player and a ball in the middle of it.
+    "/way/projects/adidas-tango-arena/gallery-3-adidas-tango-arena-x-we-are-young-agencyxx-93-empire-x-garde-rexxpublicaine-3.webp",
+    // WORLD REKNOWN PLAYERS — the line-up coming out under the rig, names on their backs.
+    "/way/projects/adidas-tango-arena/gallery-1-adidas-tango-arena-x-we-are-young-agencyxx-93-empire-x-garde-rexxpublicaine-1-1900x1069.webp",
+  ],
+  "undiz-xmas-market": [
+    // SCENOGRAPHY — the shopfront built as a market stall: awning, sign, queue on the pavement.
+    "/way/projects/undiz-xmas-market/gallery-1-undiz-xmas-market-x-we-are-young-agencyxx-1-1900x1266.webp",
+    // INFLUENCER MARKETING — candy floss in hand, fridge door open — the frame made to be posted.
+    "/way/projects/undiz-xmas-market/gallery-5-undiz-xmas-market-x-we-are-young-agencyxx-5-1900x1266.webp",
+    // BRAND EXPERIENCE — shopping the aisles: cereal boxes, cold cabinets, a glass in hand.
+    "/way/projects/undiz-xmas-market/gallery-2-undiz-xmas-market-x-we-are-young-agencyxx-2-1900x1266.webp",
+    // PRODUCT CUSTOMIZATION — the product itself, boxed as pizza and cereal, stacked on the shelf.
+    "/way/projects/undiz-xmas-market/gallery-4-undiz-xmas-market-x-we-are-young-agencyxx-4-1900x1266.webp",
+  ],
+  "the-timberland-studio": [
+    // SCENOGRAPHY — a shop built as a flat: bed, rugs, flowers strung in the window.
+    "/way/projects/the-timberland-studio/gallery-3-timberland-the-studio-x-we-are-young-agencyxx-3-1900x1267.webp",
+    // VISUAL MERCHANDISING — the ladder beside the rail, three pairs on three steps.
+    "/way/projects/the-timberland-studio/gallery-5-timberland-the-studio-x-we-are-young-agencyxx-5-1900x1267.webp",
+    // FASHION EXPERTISE — a piece taken off the rail and looked at properly, one to one.
+    "/way/projects/the-timberland-studio/gallery-4-timberland-the-studio-x-we-are-young-agencyxx-4-1900x1267.webp",
+    // CREATIVE WORKSHOPS — the house rule that set the tone of the room: shoes off, please.
+    "/way/projects/the-timberland-studio/gallery-2-timberland-the-studio-x-we-are-young-agencyxx-2-1900x1267.webp",
+  ],
+  "adidas-tango-league": [
+    // CREATIVE SET-UP — the build on the esplanade: colour blocks, letters, lights on the deck.
+    "/way/projects/adidas-tango-league/gallery-1-adidas-tango-league-x-we-are-young-agencyxx-1-ninho-1-1900x1267.webp",
+    // TOURNAMENT — one on one on the brick, the league's name on the boards behind.
+    "/way/projects/adidas-tango-league/gallery-4-adidas-tango-league-x-we-are-young-agencyxx-1-ninho-4-1900x1267.webp",
+    // ENTERTAINMENT — the whole square turned out, La Défense standing over the pitch.
+    "/way/projects/adidas-tango-league/gallery-5-adidas-tango-league-x-we-are-young-agencyxx-1-ninho-5-1900x1267.webp",
+    // E-SPORTS — the crossover shirt the tie-up was built on, phones up around it.
+    "/way/projects/adidas-tango-league/gallery-2-adidas-tango-league-x-we-are-young-agencyxx-1-ninho-2-1900x1267.webp",
+  ],
 };
 
 /** The frames beside one word — none, one, or two. */
