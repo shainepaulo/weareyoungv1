@@ -76,12 +76,13 @@ const ADVISORY = [
 ] as const;
 
 export default function PulsePage() {
-  // The plate leads on the work, not on stock imagery. The judges' table at
-  // Quai 54 rather than the hero: it is the one frame of that project the case
-  // page does not already use, and it reads as graphic once it goes grey.
+  // The plate leads on the work, not on stock imagery. The dunk shot from
+  // directly overhead: the whole court reads as one graphic shape even at
+  // this size, where the courtside signage table (the previous pick) went
+  // mostly black once it was covered and cropped.
   const quai = PROJECT_LIST.find((p) => p.slug === "quai-54");
   const issueImage =
-    quai?.gallery.find((g) => g.includes("quai54-jordan-2")) ?? quai?.hero ?? PROJECT_LIST[0].hero;
+    quai?.gallery.find((g) => g.includes("quai54-jordan-5")) ?? quai?.hero ?? PROJECT_LIST[0].hero;
 
   return (
     <>

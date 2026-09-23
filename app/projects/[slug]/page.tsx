@@ -160,7 +160,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           scrolling past the same frames without their captions; this shows
           only what would otherwise be missing from the page. */}
       {rest.length > 0 && (
-        <section className="section section--tight tone-dark">
+        <section className="section section--tight tone-dark case__gallery">
           <ul className="gallery">
             {rest.map((src, i) => (
               <Reveal as="li" kind="up" delay={(i % 2) * 120} key={src} className="gallery__item">

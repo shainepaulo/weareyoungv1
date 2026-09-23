@@ -131,6 +131,14 @@
 .case__blocks {
   display: grid;
   gap: clamp(28px, 4vh, 56px);
+  /* .section's own padding (up to 140px) is sized for a section that opens or
+     closes on nothing but a heading. This one closes on the last block's own
+     picture, so the same padding read as a slab of black before the gallery
+     or the next-project nav that follows it. Sized like section--tight
+     instead, and tighter still on the bottom, since the block above it
+     already ends on a full-width image, not on bare type. */
+  padding-top: clamp(32px, 5vh, 72px);
+  padding-bottom: clamp(24px, 3vh, 48px);
 }
 
 .block {
@@ -231,6 +239,13 @@
 }
 
 /* --- Gallery ------------------------------------------------------------ */
+/* Follows case__blocks directly, whose own bottom padding is already
+   tightened; this one only needs to clear the last block, not open a new
+   section. */
+.case__gallery {
+  padding-top: clamp(8px, 1.5vh, 24px);
+}
+
 .gallery {
   display: grid;
   grid-template-columns: 1fr;

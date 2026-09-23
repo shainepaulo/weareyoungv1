@@ -71,7 +71,7 @@ export function RosterBoard({
                 src={t.cover}
                 alt={t.label}
                 fill
-                sizes="(min-width: 1280px) 17vw, (min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"
+                sizes="(min-width: 1280px) 25vw, (min-width: 600px) 33vw, 50vw"
                 style={{ objectFit: "cover" }}
               />
             </Link>

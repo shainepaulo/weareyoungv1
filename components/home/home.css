@@ -194,7 +194,11 @@
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (min-width: 1024px) {
+/* Three columns only once the viewport can give each one real size — at
+   1024px, three columns put a card at roughly the width the case pages'
+   thumbnails read as small at. Two columns hold the floor until there is
+   room to add a third without shrinking the first two. */
+@media (min-width: 1440px) {
   .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   /* The current site drops the middle column; keep the rhythm, lose the jitter. */
   .card[data-col="2"] { transform: translateY(48px); }
