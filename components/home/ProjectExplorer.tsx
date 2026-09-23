@@ -220,7 +220,7 @@ export function ProjectExplorer({ cards, years }: { cards: Card[]; years: { from
                   src={c.cover}
                   alt={`${c.title} — ${c.client}`}
                   fill
-                  sizes="(min-width: 1440px) 31vw, (min-width: 640px) 46vw, 92vw"
+                  sizes="(min-width: 1024px) 31vw, (min-width: 768px) 46vw, 92vw"
                   loading={i < 3 ? "eager" : "lazy"}
                   style={{ objectFit: "cover" }}
                 />

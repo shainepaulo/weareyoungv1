@@ -460,10 +460,6 @@
 
 .pulse-issue img {
   object-fit: cover;
-  /* The two players the plate is actually about sit right of centre in the
-     source frame; a dead-centre crop left a wall of empty seating and
-     scoreboard on the left with nothing to balance it on the right. */
-  object-position: 58% 50%;
   /* Black and white is the house treatment for anything that is not work. */
   filter: grayscale(1) contrast(1.08);
 }
@@ -480,13 +476,7 @@
 }
 
 @media (min-width: 768px) {
-  /* Narrower than 16:9 on purpose: the box's own width is fixed by the page,
-     so a narrower ratio only raises its height, and cover is already
-     height-bound at every width here (the source frame is wider than either
-     ratio) — nothing vertical is at risk. It crops in from both sides
-     instead, from showing ~92% of the frame's width down to ~69%, closing
-     the run of empty seating either side of the two players. */
-  .pulse-issue { aspect-ratio: 4 / 3; }
+  .pulse-issue { aspect-ratio: 16 / 9; }
 }
 
 /* --- Tag band ------------------------------------------------------------ */

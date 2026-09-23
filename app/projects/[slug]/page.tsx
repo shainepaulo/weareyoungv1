@@ -100,7 +100,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       {p.videos.map((id, i) => (
         <section className="section section--flush tone-dark case__video" key={id}>
-          <Reveal kind="clip">
+          <Reveal kind="none">
             <Vimeo id={id} poster={i === 0 ? p.hero : (p.blocks[i]?.image ?? p.hero)} title={`${p.name} — film ${i + 1}`} />
           </Reveal>
         </section>
@@ -115,12 +115,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
             return (
               <div className={`block block--${b.side}`} key={`${b.image}-${i}`}>
-                <Reveal kind="wipe" className="block__media">
+                <Reveal kind="none" className="block__media">
                   <Image src={b.image!} alt={b.caption} fill sizes="(min-width: 768px) 62vw, 100vw" style={{ objectFit: "cover" }} />
                 </Reveal>
 
                 {asides.length > 0 && (
-                  <Reveal kind="fade" className="block__asides" data-count={asides.length}>
+                  <Reveal kind="none" className="block__asides" data-count={asides.length}>
                     {asides.map((src) => (
                       <span className="block__aside" key={src}>
                         <Image

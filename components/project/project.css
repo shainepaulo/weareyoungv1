@@ -147,17 +147,17 @@
   align-items: center;
 }
 
-/* Both frames are capped in viewport height as well as width: at 1900px a
-   16:9 box is 1070px tall, which would put one image on a screen and nothing
-   else. The cap crops the band rather than shrinking the picture. */
-.block__media {
+/* Both pictures keep a true 16:9 and are sized against the screen: the height
+   is capped at 44% of the viewport and the width follows from it, so the two
+   stacked pictures and the word always fit on one screen. Capping the height
+   alone and letting the box stay full width (the previous approach) squashed
+   them into thin strips. */
+.block__media,
+.block__aside {
   position: relative;
-  /* Explicit, so the cap below trims the band instead of narrowing the box:
-     a stretched item with only an aspect ratio loses width when its height
-     is clamped. */
-  width: 100%;
+  display: block;
+  width: min(100%, calc(44vh * 16 / 9));
   aspect-ratio: 16 / 9;
-  max-height: 42vh;
   overflow: hidden;
   background: #111;
 }
@@ -185,16 +185,6 @@
 .block__asides {
   display: grid;
   gap: var(--bgap, 16px);
-}
-
-.block__aside {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: 42vh;
-  overflow: hidden;
-  background: #111;
 }
 
 /* On a phone the frames have the full width already, so they can afford a
@@ -225,6 +215,15 @@
   .block--right .block__media { grid-column: 4 / 9; grid-row: 1; }
   .block--right .block__asides { grid-column: 4 / 9; grid-row: 2; }
   .block--right .block__side { grid-column: 1 / 4; grid-row: 1 / 3; }
+
+  /* When the screen is short enough that the pictures narrow, they close up
+     against the word instead of leaving a hole between the two. */
+  .block--left .block__media,
+  .block--left .block__asides { justify-self: end; }
+  .block--right .block__media,
+  .block--right .block__asides { justify-self: start; }
+  .block__asides { width: min(100%, calc(44vh * 16 / 9)); }
+  .block__asides .block__aside { width: 100%; }
 
   /* Three columns, and the two gaps they span. */
   .block__side {

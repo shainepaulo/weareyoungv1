@@ -92,16 +92,16 @@
   transform: scale(1.05);
 }
 
-/* Capped at 4 rather than climbing to 6: past that a tile in the wall — the
-   same square index that hovering a director's name lights up — read smaller
-   than the thumbnails everywhere else on the site, including the roster
-   grid right below it. */
 @media (min-width: 600px) {
   .wall { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 900px) {
   .wall { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1280px) {
+  .wall { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
 
 /* --- Director page ------------------------------------------------------ */
