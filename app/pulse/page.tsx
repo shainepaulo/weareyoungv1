@@ -76,13 +76,14 @@ const ADVISORY = [
 ] as const;
 
 export default function PulsePage() {
-  // The plate leads on the work, not on stock imagery. The dunk shot from
-  // directly overhead: the whole court reads as one graphic shape even at
-  // this size, where the courtside signage table (the previous pick) went
-  // mostly black once it was covered and cropped.
+  // The plate leads on the work, not on stock imagery. The overhead dunk shot
+  // (the previous pick) put the court's own branding — painted to be read
+  // from the opposite baseline — upside down and front and centre once it
+  // filled the frame. This one is a contested jump shot: two players, a
+  // scoreboard, no text fighting the crop at any angle.
   const quai = PROJECT_LIST.find((p) => p.slug === "quai-54");
   const issueImage =
-    quai?.gallery.find((g) => g.includes("quai54-jordan-5")) ?? quai?.hero ?? PROJECT_LIST[0].hero;
+    quai?.gallery.find((g) => g.includes("quai54-jordan-3")) ?? quai?.hero ?? PROJECT_LIST[0].hero;
 
   return (
     <>
