@@ -58,6 +58,11 @@
   gap: 32px;
 }
 
+/* Keeps a line break written into a case's intro (Quai 54 has one). */
+.case__intro > p {
+  white-space: pre-line;
+}
+
 .case__types {
   display: grid;
   gap: 8px;

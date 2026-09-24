@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { WayTo } from "@/components/about/WayTo";
-import { PulseBand } from "@/components/motion/PulseBand";
 import { Reveal } from "@/components/motion/Reveal";
 import { PROJECT_LIST, SITE, STATS, TYPES } from "@/lib/projects";
 import "../pages.css";
@@ -34,7 +33,21 @@ export default function AboutPage() {
         <WayTo />
       </section>
 
-      <PulseBand tone="light" perRow={2} words={["Dare", "to go", "your", "own", "WAY", "since", "day", "one"]} />
+      {/* The showreel, where the claim used to be spelled out. Muted, looping and
+          inline so it can play on its own, on a phone too; no controls, it is
+          a moving plate rather than a film to sit through. */}
+      <section className="section section--flush tone-dark about__reel">
+        <video
+          className="about__reel-video"
+          src="/way/showreel.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label="WAY showreel"
+        />
+      </section>
 
       <section className="section tone-dark about__story">
         <div className="gridlines" />
@@ -79,12 +92,10 @@ export default function AboutPage() {
 
       <section className="section tone-dark">
         <div className="gridlines" />
-        <ul className="stats">
+        <ul className="stats stats--pair">
           {[
             [STATS.years, "years"],
             [String(STATS.brands), "brands"],
-            [String(STATS.projects).padStart(3, "0"), "projects"],
-            [String(STATS.services), "disciplines"],
           ].map(([n, label], i) => (
             <Reveal as="li" kind="up" delay={i * 90} key={label}>
               <span className="display d1">{n}</span>
@@ -94,36 +105,6 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className="section tone-light about__where">
-        <div className="gridlines" />
-        <Reveal kind="up" className="address">
-          <h2 className="display d3">{SITE.name}</h2>
-          <p className="mono-l">
-            {SITE.address[0]}
-            <br />
-            {SITE.address[1]}
-          </p>
-          <p className="mono-l">
-            <span className="mono-xs muted">Phone / </span>
-            <a className="u" href={SITE.phoneHref}>
-              {SITE.phone}
-            </a>
-            <br />
-            <span className="mono-xs muted">Mail / </span>
-            <a className="u" href={`mailto:${SITE.mail}`}>
-              {SITE.mail}
-            </a>
-          </p>
-          <div className="address__links mono-xs">
-            <a className="u" href={SITE.maps} target="_blank" rel="noreferrer">
-              Open in Maps ↗
-            </a>
-            <a className="u" href={SITE.studio.href} target="_blank" rel="noreferrer">
-              Studio — {SITE.studio.label} ↗
-            </a>
-          </div>
-        </Reveal>
-      </section>
     </>
   );
 }

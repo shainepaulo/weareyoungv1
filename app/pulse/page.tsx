@@ -50,13 +50,6 @@ const SIGNALS = [
   },
 ] as const;
 
-/** The offer, stated at the altitude of someone who already knows the codes. */
-const ADVISORY = [
-  { label: "Read", line: "We know which signals are noise and which ones are the next two years." },
-  { label: "Decode", line: "We speak the language before it reaches the deck." },
-  { label: "Move", line: "We build the thing that earns you the room." },
-] as const;
-
 export default function PulsePage() {
   // The plate leads on the work, not on stock imagery. The overhead dunk shot
   // (the previous pick) put the court's own branding — painted to be read
@@ -144,21 +137,6 @@ export default function PulsePage() {
         </ol>
       </section>
 
-      <section className="section tone-dark">
-        <header className="row-between pulse-feed__head">
-          <h2 className="display d3">What we do with it</h2>
-          <span className="mono-xs muted">Advisory</span>
-        </header>
-
-        <div className="pulse-advisory">
-          {ADVISORY.map((item, i) => (
-            <Reveal kind="up" delay={i * 80} key={item.label} className="pulse-advisory__item">
-              <span className="mono-xs accent">{item.label}</span>
-              <p className="mono-l pulse-advisory__line">{item.line}</p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
     </>
   );
 }

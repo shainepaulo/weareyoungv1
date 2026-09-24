@@ -352,6 +352,27 @@
   .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
+/* Two figures only, so they share the width rather than sitting in the left
+   half of a four-column row with the right half empty. */
+.stats--pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* --- About showreel ------------------------------------------------------ */
+.about__reel {
+  background: #000;
+}
+
+.about__reel-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  /* Never taller than the screen, so the band never needs scrolling through. */
+  max-height: 100svh;
+  object-fit: cover;
+  background: #000;
+}
+
 /* ==========================================================================
    Pulse — the observatory
    Its own grammar: no gridlines, no boxes, nothing to decode. The page is a
@@ -593,24 +614,6 @@
   letter-spacing: 0.16em;
 }
 
-/* --- Advisory ------------------------------------------------------------ */
-.pulse-advisory {
-  display: grid;
-  border-top: 1px solid var(--line);
-}
-
-.pulse-advisory__item {
-  display: grid;
-  gap: 10px;
-  padding: clamp(24px, 4vh, 40px) 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.pulse-advisory__line {
-  max-width: 42ch;
-}
-
-
 @media (min-width: 768px) {
   .pulse-signal {
     grid-template-columns: minmax(0, 22ch) minmax(0, 1fr);
@@ -622,11 +625,6 @@
     grid-column: 2;
   }
 
-  .pulse-advisory__item {
-    grid-template-columns: minmax(0, 22ch) minmax(0, 1fr);
-    gap: 32px;
-    align-items: baseline;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
