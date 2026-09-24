@@ -377,48 +377,60 @@
   transform-origin: left center;
   animation: pulse-beat 1.8s var(--ease-out) infinite;
   will-change: transform;
+  /* The glow, lifted from the reference: white type in a tight amber halo that
+     hugs the letters, then a wider warm spill. In em, so it holds its shape at
+     every size the title takes. The beat only turns it up; it never goes out. */
+  --pulse-glow:
+    0 0 0.04em rgba(255, 214, 160, 0.95),
+    0 0 0.1em rgba(255, 150, 50, 0.85),
+    0 0 0.22em rgba(255, 110, 20, 0.55);
+  --pulse-glow-peak:
+    0 0 0.05em rgba(255, 222, 175, 1),
+    0 0 0.14em rgba(255, 150, 50, 0.95),
+    0 0 0.34em rgba(255, 100, 10, 0.7);
+  text-shadow: var(--pulse-glow);
 }
 
 @keyframes pulse-beat {
   0% {
     transform: scale(1);
     color: var(--fg);
-    text-shadow: 0 0 0 rgba(255, 61, 0, 0);
+    text-shadow: var(--pulse-glow);
   }
   /* First beat — the hard one. */
   7% {
     transform: scale(1.045);
     color: #ff7a3c;
-    text-shadow: 0 0 46px rgba(255, 61, 0, 0.85), 0 0 110px rgba(255, 61, 0, 0.45);
+    text-shadow: var(--pulse-glow-peak);
   }
   16% {
     transform: scale(1.004);
     color: var(--fg);
-    text-shadow: 0 0 18px rgba(255, 61, 0, 0.24);
+    text-shadow: var(--pulse-glow);
   }
   /* Second beat — the softer one that follows it. */
   26% {
     transform: scale(1.028);
     color: #ff8a52;
-    text-shadow: 0 0 38px rgba(255, 61, 0, 0.7), 0 0 90px rgba(255, 61, 0, 0.32);
+    text-shadow: var(--pulse-glow-peak);
   }
   42% {
     transform: scale(1);
     color: var(--fg);
-    text-shadow: 0 0 14px rgba(255, 61, 0, 0.12);
+    text-shadow: var(--pulse-glow);
   }
   /* Then it rests, and the next beat lands on a still word. */
   100% {
     transform: scale(1);
     color: var(--fg);
-    text-shadow: 0 0 0 rgba(255, 61, 0, 0);
+    text-shadow: var(--pulse-glow);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pulse-hero__title {
     animation: none;
-    text-shadow: 0 0 40px rgba(255, 61, 0, 0.5);
+    text-shadow: var(--pulse-glow);
   }
 }
 

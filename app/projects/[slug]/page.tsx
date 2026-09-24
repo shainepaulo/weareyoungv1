@@ -6,7 +6,6 @@ import { notFound } from "next/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 import { SplitWords } from "@/components/motion/SplitWords";
 import { Vimeo } from "@/components/project/Vimeo";
-import { asidesFor } from "@/lib/block-asides";
 import { BY_SLUG, PROJECT_LIST } from "@/lib/projects";
 import { fitFontSize, longestTokenWidth } from "@/lib/type-metrics";
 import "@/components/project/project.css";
@@ -36,10 +35,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const prev = p.prev ? BY_SLUG.get(p.prev) : null;
   const next = p.next ? BY_SLUG.get(p.next) : null;
 
-  // Nothing the project has should fall off the page: whatever is not shown
-  // beside a word is collected underneath instead of being repeated there.
-  const beside = new Set(p.blocks.flatMap((_, i) => asidesFor(p.slug, i)));
-  const rest = p.gallery.filter((src) => !beside.has(src));
 
   return (
     <article className="case">
@@ -110,36 +105,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <section className="section tone-dark case__blocks">
           <div className="gridlines" />
           {p.blocks.map((b, i) => {
-            // Frames showing what the word names — see lib/block-asides.ts.
-            const asides = asidesFor(p.slug, i);
-
             return (
               <div className={`block block--${b.side}`} key={`${b.image}-${i}`}>
                 <Reveal kind="none" className="block__media">
-                  <Image src={b.image!} alt={b.caption} fill sizes="(min-width: 768px) 62vw, 100vw" style={{ objectFit: "cover" }} />
+                  <Image src={b.image!} alt={b.caption} fill sizes="(min-width: 768px) 66vw, 100vw" style={{ objectFit: "cover" }} />
                 </Reveal>
-
-                {asides.length > 0 && (
-                  <Reveal kind="none" className="block__asides" data-count={asides.length}>
-                    {asides.map((src) => (
-                      <span className="block__aside" key={src}>
-                        <Image
-                          src={src}
-                          alt=""
-                          fill
-                          sizes="(min-width: 768px) 62vw, 100vw"
-                          style={{ objectFit: "cover" }}
-                        />
-                      </span>
-                    ))}
-                  </Reveal>
-                )}
 
                 <div className="block__side">
                   <Reveal kind="up" delay={200} className="block__caption">
                     <span className="mono-xs accent">{String(i + 1).padStart(2, "0")}</span>
                     {/* Druk Wide is wide enough that SCENOGRAPHY overruns the
-                        slot left beside the frames; the stylesheet divides the
+                        column beside the picture; the stylesheet divides the
                         slot by this to find a size that fits. */}
                     <h2
                       className="display d3 block__word"
@@ -155,14 +131,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-      {/* Everything the project has that is not already standing beside a
-          word. The old gallery printed the lot a second time, which meant
-          scrolling past the same frames without their captions; this shows
-          only what would otherwise be missing from the page. */}
-      {rest.length > 0 && (
+      {/* One picture per word above; the rest of the project's frames here. */}
+      {p.gallery.length > 0 && (
         <section className="section section--tight tone-dark case__gallery">
           <ul className="gallery">
-            {rest.map((src, i) => (
+            {p.gallery.map((src, i) => (
               <Reveal as="li" kind="up" delay={(i % 2) * 120} key={src} className="gallery__item">
                 <Image src={src} alt="" fill sizes="(min-width: 768px) 48vw, 100vw" style={{ objectFit: "cover" }} />
               </Reveal>
