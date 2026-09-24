@@ -31,24 +31,6 @@ const ISSUE = { number: "001", title: "Generation Now" } as const;
 
 const SIGNALS = [
   {
-    tag: "Sport",
-    title: "Grassroots football is the new luxury runway",
-    city: "Paris",
-    age: "02h ago",
-  },
-  {
-    tag: "Music",
-    title: "Afrobeats crosses over into stadium-scale brand films",
-    city: "Lagos",
-    age: "05h ago",
-  },
-  {
-    tag: "Sneakers",
-    title: "Resale culture rewires how Gen-Z reads authenticity",
-    city: "Paris",
-    age: "08h ago",
-  },
-  {
     tag: "Basketball",
     title: "Quai 54 turns a tournament into a global style index",
     city: "Paris",
