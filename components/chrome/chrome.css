@@ -698,3 +698,7 @@ html.has-cursor * {
   cursor: default;
   pointer-events: none;
 }
+
+.menu__link--off {
+  cursor: default;
+}

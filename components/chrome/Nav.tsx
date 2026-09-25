@@ -17,8 +17,8 @@ const LINKS = [
 const PULSE = { href: "/pulse", label: "Pulse", hint: "Insights & Conseil" } as const;
 
 /**
- * Pulse is switched off for now: the mark stays in the nav but leads nowhere,
- * on desktop and in the mobile menu. Flip back to true to reopen it.
+ * Pulse is switched off for now: the mark stays visible, in the nav and in the
+ * mobile menu, but leads nowhere. Flip back to true to reopen it.
  */
 const PULSE_OPEN = false;
 
@@ -116,7 +116,23 @@ export function Nav() {
         <ul className="menu__list">
           {[...LINKS, PULSE].map((link, i) => {
             const isPulse = link.href === PULSE.href;
-            if (isPulse && !PULSE_OPEN) return null;
+            // Switched off: shown as it always is, but not a link.
+            if (isPulse && !PULSE_OPEN)
+              return (
+                <li className="menu__item" key={link.href}>
+                  <span
+                    className="menu__link display menu__link--pulse menu__link--off"
+                    style={{ "--i": i } as React.CSSProperties}
+                    aria-disabled="true"
+                  >
+                    <span className="menu__label">
+                      {link.label}
+                      <Pulse className="menu__pulse-mark" />
+                    </span>
+                    <small>{link.hint}</small>
+                  </span>
+                </li>
+              );
             return (
               <li className="menu__item" key={link.href}>
                 <Link
