@@ -692,3 +692,9 @@ html.has-cursor * {
   color: var(--accent);
 }
 
+
+/* Pulse switched off (PULSE_OPEN in Nav.tsx): the mark is shown, not a link. */
+.nav__pulse--off {
+  cursor: default;
+  pointer-events: none;
+}

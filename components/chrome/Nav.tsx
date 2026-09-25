@@ -16,6 +16,12 @@ const LINKS = [
 /** The observatory. It travels as a mark on desktop and as a word in the menu. */
 const PULSE = { href: "/pulse", label: "Pulse", hint: "Insights & Conseil" } as const;
 
+/**
+ * Pulse is switched off for now: the mark stays in the nav but leads nowhere,
+ * on desktop and in the mobile menu. Flip back to true to reopen it.
+ */
+const PULSE_OPEN = false;
+
 export function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -75,16 +81,22 @@ export function Nav() {
             </Link>
           ))}
 
-          <Link
-            href={PULSE.href}
-            className="nav__pulse"
-            aria-current={isCurrent(PULSE.href)}
-            data-live={inPulse ? "" : undefined}
-          >
-            <Pulse />
-            {/* The name stays for screen readers; nothing appears on hover. */}
-            <span className="sr-only">{PULSE.label}</span>
-          </Link>
+          {PULSE_OPEN ? (
+            <Link
+              href={PULSE.href}
+              className="nav__pulse"
+              aria-current={isCurrent(PULSE.href)}
+              data-live={inPulse ? "" : undefined}
+            >
+              <Pulse />
+              {/* The name stays for screen readers; nothing appears on hover. */}
+              <span className="sr-only">{PULSE.label}</span>
+            </Link>
+          ) : (
+            <span className="nav__pulse nav__pulse--off" aria-hidden="true">
+              <Pulse />
+            </span>
+          )}
         </nav>
 
         <button
@@ -104,6 +116,7 @@ export function Nav() {
         <ul className="menu__list">
           {[...LINKS, PULSE].map((link, i) => {
             const isPulse = link.href === PULSE.href;
+            if (isPulse && !PULSE_OPEN) return null;
             return (
               <li className="menu__item" key={link.href}>
                 <Link
