@@ -21,15 +21,18 @@ function TextColumn({
   pattern,
   reverse = false,
   seconds = 30,
+  desktopOnly = false,
 }: {
   word: string;
   area: string;
   pattern: number[];
   reverse?: boolean;
   seconds?: number;
+  /** Left out of the phone layout, which keeps one strip per word. */
+  desktopOnly?: boolean;
 }) {
   return (
-    <div className="ghero__cell ghero__cell--text" style={{ gridArea: area }} aria-hidden="true">
+    <div className={`ghero__cell ghero__cell--text${desktopOnly ? " ghero__cell--desk" : ""}`} style={{ gridArea: area }} aria-hidden="true">
       <div
         className="ghero__track"
         data-reverse={reverse}
@@ -142,7 +145,7 @@ export function GridHero({ projects }: { projects: Project[] }) {
 
         {/* The comp sets one more partner line under the echo still, hard
             against the bottom of the screen. */}
-        <TextColumn word="Production partner" area="pb" pattern={PARTNER_TAIL} reverse seconds={44} />
+        <TextColumn word="Production partner" area="pb" pattern={PARTNER_TAIL} reverse seconds={44} desktopOnly />
 
         <div className="ghero__cell ghero__note" style={{ gridArea: "hw" }}>
           <h2 className="mono-xs">Who we are</h2>
@@ -164,7 +167,7 @@ export function GridHero({ projects }: { projects: Project[] }) {
 
         {/* The comp runs the right edge in two halves: the studio's name down
             the top of it, the agency line closing the bottom. */}
-        <TextColumn word="Creative agency" area="cb" pattern={CREATIVE_TAIL} reverse seconds={38} />
+        <TextColumn word="Creative agency" area="cb" pattern={CREATIVE_TAIL} reverse seconds={38} desktopOnly />
       </div>
     </section>
   );

@@ -6,7 +6,7 @@ import type { CSSProperties } from "react";
 import { Instagram } from "@/components/brand/Instagram";
 import { Mark } from "@/components/brand/Mark";
 import { BRAND_MARKS } from "@/lib/brands";
-import { SITE, STATS } from "@/lib/projects";
+import { SITE } from "@/lib/projects";
 
 const LINE = ["Go", "your", "own", "WAY"];
 
@@ -163,9 +163,6 @@ export function Footer() {
       <div className="footer__base">
         <span>
           © {new Date().getFullYear()} {SITE.name} — Paris
-        </span>
-        <span>
-          {STATS.projects} projects · {STATS.brands} brands · {STATS.years} years
         </span>
       </div>
     </footer>

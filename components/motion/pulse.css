@@ -57,6 +57,20 @@
     height: clamp(64px, 18vw, 110px);
     padding-left: calc((var(--step) * 0.5 + 0.3) * (100% / var(--cols)));
   }
+
+  /* Two fragments side by side ran off a phone screen ("WHO DA…", "OW…").
+     Here each fragment takes its own line, still stepping down the staircase,
+     so the whole sentence is on screen. */
+  .pulse__row {
+    height: auto;
+    padding-block: 6px;
+  }
+
+  .pulse__track {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

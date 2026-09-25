@@ -18,15 +18,18 @@
   flex: 1;
   display: grid;
   gap: clamp(14px, 1.4vw, 26px);
-  /* Mobile: one column, every block in reading order. The drifting columns are
-     texture, not content, and are the only thing that drops. */
+  /* Mobile: one column, every block in reading order. The three drifting
+     words run as horizontal strips between the blocks. */
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto;
   grid-template-areas:
+    "ca"
     "ma"
     "wd"
     "wt"
+    "pp"
     "mb"
+    "wq"
     "hw";
 }
 
@@ -38,9 +41,15 @@
 
 /* --- Drifting columns ---------------------------------------------------- */
 .ghero__cell--text {
-  display: none;
   overflow: hidden;
 }
+
+/* The two tail columns only exist in the desktop comp. */
+.ghero__cell--desk {
+  display: none;
+}
+
+
 
 .ghero__track {
   display: flex;
@@ -237,7 +246,7 @@
       "ca wt wt pb .  cb";
   }
 
-  .ghero__cell--text {
+  .ghero__cell--desk {
     display: block;
   }
 
@@ -298,4 +307,28 @@
     transition: none;
     transform: none;
   }
+}
+
+/* Phone: each column turns on its side into a one-line strip drifting
+   sideways; the pattern's empty lines become the gaps between the words. */
+@media (max-width: 899px) {
+  .ghero__track,
+  .ghero__run {
+    flex-direction: row;
+    width: max-content;
+  }
+
+  .ghero__track {
+    animation-name: ghero-drift-x;
+  }
+
+  .ghero__line {
+    padding-right: 1.6em;
+    min-width: 1.6em;
+  }
+}
+
+@keyframes ghero-drift-x {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
