@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ProjectExplorer, type Card } from "@/components/home/ProjectExplorer";
 import { RosterBoard, type DirectorLink, type Tile } from "@/components/roster/RosterBoard";
 import { DIRECTORS } from "@/lib/directors";
-import { PROJECT_LIST, SHUFFLED, STATS, YEAR_RANGE } from "@/lib/projects";
+import { PROJECT_LIST, SHUFFLED, STATS } from "@/lib/projects";
 import "../pages.css";
 
 export const metadata: Metadata = {
@@ -47,7 +47,7 @@ export default function RosterPage() {
 
       {/* The catalogue, moved off the landing page: same filters, same
           height-capped grid, same control to unroll it. */}
-      <ProjectExplorer cards={cards} years={YEAR_RANGE} />
+      <ProjectExplorer cards={cards} />
     </>
   );
 }

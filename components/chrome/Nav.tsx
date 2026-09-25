@@ -75,9 +75,6 @@ export function Nav() {
             </Link>
           ))}
 
-          {/* The label carries the accessible name; the mark is decorative. It
-              is revealed on hover and on keyboard focus, out of the flow so it
-              cannot push the links beside it. */}
           <Link
             href={PULSE.href}
             className="nav__pulse"
@@ -85,9 +82,8 @@ export function Nav() {
             data-live={inPulse ? "" : undefined}
           >
             <Pulse />
-            <span className="nav__pulse-label">
-              {PULSE.label} — {PULSE.hint}
-            </span>
+            {/* The name stays for screen readers; nothing appears on hover. */}
+            <span className="sr-only">{PULSE.label}</span>
           </Link>
         </nav>
 

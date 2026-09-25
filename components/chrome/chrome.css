@@ -580,10 +580,6 @@ html.has-cursor * {
     animation: none !important;
     transform: none !important;
   }
-
-  .nav__pulse-label {
-    transition: none;
-  }
 }
 
 /* --- Pulse: the mark, and the one place it comes alive ------------------ */
@@ -606,27 +602,6 @@ html.has-cursor * {
 }
 
 /* The label is taken out of the flow for the same reason. */
-.nav__pulse-label {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: var(--m-xs);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(-4px);
-  pointer-events: none;
-  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
-}
-
-.nav__pulse:hover .nav__pulse-label,
-.nav__pulse:focus-visible .nav__pulse-label {
-  opacity: 1;
-  transform: none;
-}
-
 /* Inside the section: a real orange, so it steps out of the difference blend
    that would otherwise turn it cyan over the white sections. */
 .nav__pulse[data-live] {

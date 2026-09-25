@@ -72,3 +72,14 @@
   width: auto;
   color: currentColor;
 }
+
+/* The first line ("Creative agency") reads 16px larger than the rest, in the
+   same row height. Where the screen is too narrow for the full 16px, it takes
+   as much as still keeps the line on screen (6vw keeps it clear of the edge
+   with its drift), and it never drops below the other lines. */
+.pulse__row--lead .pulse__el {
+  font-size: max(
+    clamp(1.35rem, 4.45vw, 4.8rem),
+    min(calc(clamp(1.35rem, 4.45vw, 4.8rem) + 16px), 6vw)
+  );
+}

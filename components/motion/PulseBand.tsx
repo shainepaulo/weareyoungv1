@@ -108,7 +108,7 @@ export function PulseBand({
     >
       <div className="gridlines gridlines--rows" style={{ "--row": "calc(100% / var(--rows))" } as CSSProperties} />
       {rows.map((row, r) => (
-        <div className="pulse__row" key={r} style={{ "--step": r } as CSSProperties}>
+        <div className={r === 0 ? "pulse__row pulse__row--lead" : "pulse__row"} key={r} style={{ "--step": r } as CSSProperties}>
           <div className="pulse__track">
             {row.map((word, i) => (
               <span className="pulse__el" key={`${word}-${i}`} aria-hidden="true">

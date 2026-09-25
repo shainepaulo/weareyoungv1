@@ -1,8 +1,10 @@
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { WayTo } from "@/components/about/WayTo";
 import { Reveal } from "@/components/motion/Reveal";
+import { BRAND_MARKS } from "@/lib/brands";
 import { PROJECT_LIST, SITE, STATS, TYPES } from "@/lib/projects";
 import "../pages.css";
 
@@ -92,16 +94,47 @@ export default function AboutPage() {
 
       <section className="section tone-dark">
         <div className="gridlines" />
+        {/* Two figures, each hiding what it counts. Hover (or focus, or a tap
+            on a touch screen) opens it: the disciplines slide out beside 15+,
+            the client marks rise from behind 32. */}
         <ul className="stats stats--pair">
-          {[
-            [STATS.years, "years"],
-            [String(STATS.brands), "brands"],
-          ].map(([n, label], i) => (
-            <Reveal as="li" kind="up" delay={i * 90} key={label}>
-              <span className="display d1">{n}</span>
-              <span className="mono-xs muted">{label}</span>
-            </Reveal>
-          ))}
+          <Reveal as="li" kind="up" className="stat" tabIndex={0}>
+            <span className="stat__figure">
+              <span className="display d1 stat__n">{STATS.years}</span>
+            </span>
+            <span className="mono-xs muted stat__label">years</span>
+            <ul className="stat__disciplines mono-s" aria-label="Disciplines">
+              {TYPES.map((type, i) => (
+                <li key={type} style={{ "--i": i } as CSSProperties}>
+                  <span className="accent">{String(i + 1).padStart(2, "0")}</span> {type}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal as="li" kind="up" delay={90} className="stat stat--brands" tabIndex={0}>
+            <span className="stat__figure">
+              <span className="stat__marks" aria-label="Clients">
+                {BRAND_MARKS.map((brand, i) => (
+                  <span
+                    key={brand.name}
+                    className="stat__mark"
+                    role="img"
+                    aria-label={brand.name}
+                    style={
+                      {
+                        "--i": i,
+                        "--src": `url("${brand.src}")`,
+                        "--ratio": brand.ratio ?? 1,
+                      } as CSSProperties
+                    }
+                  />
+                ))}
+              </span>
+              <span className="display d1 stat__n">{STATS.brands}</span>
+            </span>
+            <span className="mono-xs muted stat__label">brands</span>
+          </Reveal>
         </ul>
       </section>
 

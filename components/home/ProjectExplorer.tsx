@@ -38,7 +38,7 @@ type GroupKey = (typeof GROUPS)[number]["key"];
 
 const CLIENTS = FILTER_LISTS["12"];
 
-export function ProjectExplorer({ cards, years }: { cards: Card[]; years: { from: number; to: number } }) {
+export function ProjectExplorer({ cards }: { cards: Card[] }) {
   const [group, setGroup] = useState<GroupKey>("all");
   const [filter, setFilter] = useState<Filter>({ kind: "all" });
   const [open, setOpen] = useState(false);
@@ -143,9 +143,6 @@ export function ProjectExplorer({ cards, years }: { cards: Card[]; years: { from
 
       <header className="explorer__head">
         <h2 className="display d3">All work</h2>
-        <span className="mono-s muted">
-          {String(cards.length).padStart(3, "0")} projects — {years.from}→{years.to}
-        </span>
       </header>
 
       <div className="filters" ref={anchor}>
